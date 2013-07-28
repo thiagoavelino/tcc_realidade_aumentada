@@ -1,0 +1,65 @@
+package View;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import java.awt.SystemColor;
+import javax.swing.JPanel;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+public class MainWindow {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainWindow window = new MainWindow();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public MainWindow() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
+		frame.getContentPane().setLayout(null);
+		WebcamPanel panelCam = camConfig();
+		frame.getContentPane().add(panelCam);
+		frame.setForeground(SystemColor.inactiveCaptionBorder);
+		frame.setResizable(false);
+		frame.setBounds(100, 100, 750, 500);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public WebcamPanel camConfig() {
+		Webcam webcam = Webcam.getDefault();
+		WebcamPanel panelCam = new WebcamPanel(webcam);
+		webcam.setViewSize(WebcamResolution.VGA.getSize());
+		panelCam.setBounds(20, 0, webcam.getViewSize().width , webcam.getViewSize().height);
+		return panelCam;
+	}
+}

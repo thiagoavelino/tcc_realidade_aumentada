@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path=""/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/Thiago/Documents/opencv/build/java/opencv-245.jar"/>
+	<classpathentry kind="lib" path="lib/AppleJavaExtensions-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/bridj-0.7-20130703.103049-42.jar"/>
+	<classpathentry kind="lib" path="lib/gstreamer-java-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/jna-3.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jna.jar"/>
+	<classpathentry kind="lib" path="lib/platform-3.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="lib/webcam-capture-0.3.10-RC4.jar"/>
+	<classpathentry kind="lib" path="lib/webcam-capture-driver-gstreamer-0.3.10-RC4.jar"/>
+	<classpathentry kind="lib" path="lib/x86_64-3.3.0-v3346.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
