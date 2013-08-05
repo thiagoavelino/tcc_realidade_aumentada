@@ -1,0 +1,129 @@
+package View;
+
+import java.awt.EventQueue;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import java.awt.SystemColor;
+import javax.swing.JFileChooser;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+
+import java.awt.Dimension;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+public class MainWindow {
+
+	private JFrame frmAplicaoDeRealidade;
+	public final String IMG_FORMAT = ".png";
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainWindow window = new MainWindow();
+					window.frmAplicaoDeRealidade.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public MainWindow() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmAplicaoDeRealidade = new JFrame();
+		frmAplicaoDeRealidade.setTitle("Aplica\u00E7\u00E3o de Realidade Aumentada");
+		frmAplicaoDeRealidade.getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
+		frmAplicaoDeRealidade.getContentPane().setLayout(null);
+		WebcamPanel panelCam = camConfig();
+		frmAplicaoDeRealidade.getContentPane().add(panelCam);
+		frmAplicaoDeRealidade.setForeground(SystemColor.inactiveCaptionBorder);
+		frmAplicaoDeRealidade.setResizable(false);
+		frmAplicaoDeRealidade.setBounds(100, 100, 1000, 520);
+		frmAplicaoDeRealidade.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JMenuBar menuBar = new JMenuBar();
+		frmAplicaoDeRealidade.setJMenuBar(menuBar);
+		
+		JMenu mnArquivo = new JMenu("Arquivo");
+		menuBar.add(mnArquivo);
+		
+		JMenuItem mntmSalvarImagem = new JMenuItem("Salvar Imagem...");
+		mntmSalvarImagem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser arquivo = new JFileChooser();
+				setFileChooser(arquivo);
+				int retorno = arquivo.showOpenDialog(null);
+				if(retorno == JFileChooser.APPROVE_OPTION){
+					String caminhoArquivo = arquivo.getSelectedFile().getAbsolutePath();
+					saveImage(caminhoArquivo);
+				}
+			}
+		});
+		mnArquivo.add(mntmSalvarImagem);
+		
+		JMenuItem mntmSair = new JMenuItem("Sair");
+		mnArquivo.add(mntmSair);
+	}
+
+	public WebcamPanel camConfig() {
+		Webcam webcam = Webcam.getDefault();
+		webcam.setViewSize(new Dimension(640, 480));
+		WebcamPanel panelCam = new WebcamPanel(webcam);
+		panelCam.setBounds(5, 5, webcam.getViewSize().width , webcam.getViewSize().height);
+		return panelCam;
+	}
+	
+	public void saveImage(String path) {
+		Webcam.setAutoOpenMode(true);
+		BufferedImage image = Webcam.getDefault().getImage();
+		try {
+			ImageIO.write(image, "PNG", new File(path+IMG_FORMAT));
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	public void setFileChooser(JFileChooser arquivo) {
+		arquivo.setFileFilter(setFileFilter());
+		arquivo.setApproveButtonText("Salvar");
+	}
+	public FileFilter setFileFilter () {
+		return new javax.swing.filechooser.FileFilter(){
+				public boolean accept(File f){
+					return f.getName().toLowerCase().endsWith(IMG_FORMAT) || f.isDirectory();
+				}
+				public String getDescription() {
+					return "Arquivos de imagem "+ IMG_FORMAT;
+				}
+			};
+	}
+}

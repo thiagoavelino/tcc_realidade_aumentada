@@ -1,0 +1,10 @@
+package Model;
+
+public class CamMonitor implements Runnable{
+
+	@Override
+	public void run() {
+		WebcamPanel panelCam = View.MainWindow.this.panelCam;
+	}
+
+}

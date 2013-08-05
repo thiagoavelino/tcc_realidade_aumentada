@@ -1,0 +1,78 @@
+package View;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import java.awt.SystemColor;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+
+import java.awt.Dimension;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
+public class MainWindow {
+
+	private JFrame frmAplicaoDeRealidade;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainWindow window = new MainWindow();
+					window.frmAplicaoDeRealidade.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public MainWindow() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmAplicaoDeRealidade = new JFrame();
+		frmAplicaoDeRealidade.setTitle("Aplica\u00E7\u00E3o de Realidade Aumentada");
+		frmAplicaoDeRealidade.getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
+		frmAplicaoDeRealidade.getContentPane().setLayout(null);
+		WebcamPanel panelCam = camConfig();
+		frmAplicaoDeRealidade.getContentPane().add(panelCam);
+		frmAplicaoDeRealidade.setForeground(SystemColor.inactiveCaptionBorder);
+		frmAplicaoDeRealidade.setResizable(false);
+		frmAplicaoDeRealidade.setBounds(100, 100, 1000, 520);
+		frmAplicaoDeRealidade.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JMenuBar menuBar = new JMenuBar();
+		frmAplicaoDeRealidade.setJMenuBar(menuBar);
+		
+		JMenu mnArquivo = new JMenu("Arquivo");
+		menuBar.add(mnArquivo);
+		
+		JMenuItem mntmSalvarImagem = new JMenuItem("Salvar Imagem...");
+		mnArquivo.add(mntmSalvarImagem);
+		
+		JMenuItem mntmSair = new JMenuItem("Sair");
+		mnArquivo.add(mntmSair);
+	}
+
+	public WebcamPanel camConfig() {
+		Webcam webcam = Webcam.getDefault();
+		webcam.setViewSize(new Dimension(640, 480));
+		WebcamPanel panelCam = new WebcamPanel(webcam);
+		panelCam.setBounds(5, 5, webcam.getViewSize().width , webcam.getViewSize().height);
+		return panelCam;
+	}
+}

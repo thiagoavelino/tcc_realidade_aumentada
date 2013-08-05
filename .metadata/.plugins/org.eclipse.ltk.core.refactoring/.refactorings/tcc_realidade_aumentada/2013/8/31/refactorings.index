@@ -1,0 +1,11 @@
+1375639227512	Extract method 'saveImage'
+1375640641058	Extract method 'setFileFilter'
+1375641658963	Extract method 'setFileChooser'
+1375642234011	Extract method 'actionListSalvarImg'
+1375643680084	Extract method 'closeFrame'
+1375644274215	Delete element
+1375644278826	Delete element
+1375644399274	Delete element
+1375644642670	Encapsulate field 'panelCam'
+1375644746314	Delete element
+1375644987961	Encapsulate field 'frmAplicaoDeRealidade'

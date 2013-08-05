@@ -1,0 +1,27 @@
+package Model;
+
+
+import java.awt.image.BufferedImage;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+
+
+public class CamMonitor implements Runnable{
+	private Cam cam;
+	private int counter;
+	
+	public CamMonitor(){
+		cam = new Cam();
+		counter = 0;
+	}
+
+	@Override
+	public void run() {
+		View.MainWindow mainView = new View.MainWindow();
+		WebcamPanel panelCam = mainView.getPanelCam();
+		Webcam.setAutoOpenMode(true);
+		BufferedImage image = Webcam.getDefault().getImage();
+	}
+
+}
