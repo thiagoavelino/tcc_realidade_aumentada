@@ -2,18 +2,28 @@ package View;
 
 import java.awt.EventQueue;
 
+import javax.swing.SwingWorker;
+
 
 public class StartApplication {
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				Model.CamMonitor camMonitor = new Model.CamMonitor();
-				MainWindow mainWindow = new MainWindow();
+				final MainWindow mainWindow = new MainWindow();
 				mainWindow.run();
-				//camMonitor.run();
+				SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+					   @Override
+					   protected Void doInBackground() throws Exception {
+						   Model.CamMonitor camMonitor = new Model.CamMonitor(mainWindow);
+						   camMonitor.run();
+					    return null;
+					   }
+				};
+				worker.execute();
 			}
 		});
 	}

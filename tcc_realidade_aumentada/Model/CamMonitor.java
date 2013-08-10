@@ -1,30 +1,39 @@
 package Model;
 
 
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorConvertOp;
+
+
+import View.CamRAPanel;
+import View.MainWindow;
 
 import com.github.sarxos.webcam.Webcam;
 
 
+
 public class CamMonitor implements Runnable{
-	private Cam cam;
-	private int counter;
+	private MainWindow mainWindow;
 	
-	public CamMonitor(){
-		cam = new Cam();
-		counter = 0;
+	public CamMonitor(MainWindow mainWindow){
+		this.mainWindow = mainWindow;
 	}
 
 	@Override
 	public void run() {
 		while(true){
-			//Webcam.setAutoOpenMode(true);
-			//BufferedImage image = Webcam.getDefault().getImage();
-			//cam.saveImage("test"+ counter, image);
-			counter++;
-			System.out.println("foto "+counter);
+			BufferedImage image = Webcam.getDefault().getImage();
+			BufferedImage imageGray = image;
+			ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
+			op.filter(imageGray, imageGray);
+            
+			CamRAPanel camRAPAnel = mainWindow.getRAPanel();
+			camRAPAnel.setMaster(imageGray);
+			camRAPAnel.repaint();
+			
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

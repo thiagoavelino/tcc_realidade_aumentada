@@ -22,6 +22,7 @@ public class MainWindow implements Runnable{
 	private JFrame frmAplicaoDeRealidade;
 	public final String IMG_FORMAT = ".png";
 	private WebcamPanel panelCam;
+	private CamRAPanel RAPanel;
 
 	/**
 	 * Create the application.
@@ -40,9 +41,11 @@ public class MainWindow implements Runnable{
 		getFrmAplicaoDeRealidade().getContentPane().setLayout(null);
 		setPanelCam(camConfig());
 		getFrmAplicaoDeRealidade().getContentPane().add(getPanelCam());
+		setRAPanel(new CamRAPanel(Webcam.getDefault().getImage()));
+		getFrmAplicaoDeRealidade().getContentPane().add(getRAPanel());
 		getFrmAplicaoDeRealidade().setForeground(SystemColor.inactiveCaptionBorder);
 		getFrmAplicaoDeRealidade().setResizable(false);
-		getFrmAplicaoDeRealidade().setBounds(50, 50, 1000, 540);
+		getFrmAplicaoDeRealidade().setBounds(50, 50, 1400, 540);
 		getFrmAplicaoDeRealidade().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -134,5 +137,13 @@ public class MainWindow implements Runnable{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public CamRAPanel getRAPanel() {
+		return RAPanel;
+	}
+
+	private void setRAPanel(CamRAPanel rAPanel) {
+		RAPanel = rAPanel;
 	}
 }

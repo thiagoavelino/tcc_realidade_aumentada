@@ -1,0 +1,53 @@
+package View;
+
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+public class CamRAPanel extends JPanel {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private BufferedImage master;
+	private BufferedImage blackWhite;
+	
+	public CamRAPanel() {
+        try {
+            master = ImageIO.read(new File("test0.png"));
+            /*grayScale = ImageIO.read(new File("C:/Users/shane/Dropbox/pictures/439px-Join!_It's_your_duty!.jpg"));
+            ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
+            op.filter(grayScale, grayScale);*/
+
+            blackWhite = new BufferedImage(master.getWidth(), master.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+            Graphics2D g2d = blackWhite.createGraphics();
+            g2d.drawImage(master, 0, 0, this);
+            g2d.dispose();
+            setBounds(new Rectangle(700, 5, 640, 480)));
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        Dimension size = new Dimension(master.getWidth(), master.getHeight());
+        return size;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+    	super.paintComponent(g);
+    	g.drawImage(master, 0, 0, this);
+    }
+
+}
