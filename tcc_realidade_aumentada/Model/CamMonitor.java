@@ -24,16 +24,13 @@ public class CamMonitor implements Runnable{
 	public void run() {
 		while(true){
 			BufferedImage image = Webcam.getDefault().getImage();
-			BufferedImage imageGray = image;
-			ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
-			op.filter(imageGray, imageGray);
-            
+			ImgAlgorithms imgAlgorithms = new ImgAlgorithms(image);
+			imgAlgorithms.toBinary();
 			CamRAPanel camRAPAnel = mainWindow.getRAPanel();
-			camRAPAnel.setMaster(imageGray);
+			camRAPAnel.setMaster(imgAlgorithms.getOutput());
 			camRAPAnel.repaint();
-			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

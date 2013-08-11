@@ -1,0 +1,67 @@
+package Model;
+
+import java.awt.Color;
+import java.awt.color.ColorSpace;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorConvertOp;
+import java.awt.image.DataBufferByte;
+
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
+public class ImgAlgorithms {
+	
+	private BufferedImage image;
+	private Mat imageMatTemp;
+	
+	public ImgAlgorithms(BufferedImage imageTemp){
+		this.setImage(imageTemp);
+/*		byte[] pixels = ((DataBufferByte) imageTemp.getRaster().getDataBuffer()).getData();
+		int rows = imageTemp.getWidth();
+        int cols = imageTemp.getHeight();
+        int type = CvType.CV_8UC3;
+        Mat imageMatTemp = new Mat(rows,cols,type);
+        imageMatTemp.put(0, 0, pixels);*/
+	}
+	
+	public void transformBw(){
+		/*Imgproc.cvtColor(imageMatTemp, imageMatTemp,Imgproc.COLOR_GRAY2BGR);
+		setImage(new BufferedImage(imageMatTemp.cols(), imageMatTemp.rows(), BufferedImage.TYPE_3BYTE_BGR));
+		byte[] data = new byte[imageMatTemp.rows()*imageMatTemp.cols()*(int)(imageMatTemp.elemSize())];
+		getImage().getRaster().setDataElements(0, 0, imageMatTemp.cols(), imageMatTemp.rows(), data);*/
+		BufferedImage imageGray = image;
+		ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
+		op.filter(imageGray, imageGray);
+		image = imageGray;
+	}
+	
+	public void toBinary() {
+		int BLACK = Color.BLACK.getRGB();
+		int WHITE = Color.WHITE.getRGB();
+
+		BufferedImage output = new BufferedImage(image.getWidth(),
+				image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+
+		// Percorre a imagem definindo na saída o pixel como branco se o valor
+		// na entrada for menor que o threshold, ou como preto se for maior.
+		for (int y = 0; y < image.getHeight(); y++)
+			for (int x = 0; x < image.getWidth(); x++) {
+				Color pixel = new Color(image.getRGB(x, y));
+				output.setRGB(x, y, pixel.getRed() < 100 ? BLACK : WHITE);
+			}
+		
+		image = output;
+
+	}
+
+
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+
+}

@@ -27,7 +27,7 @@ public class UnitTestsImgAlgorithms {
 
 	@Test
 	public void transformBwTest() {
-		this.imgAlgorithms.transformBw();
+		//this.imgAlgorithms.transformBw();
 	}
 
 }

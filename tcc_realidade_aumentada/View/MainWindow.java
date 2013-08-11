@@ -21,31 +21,23 @@ public class MainWindow implements Runnable{
 
 	private JFrame frmAplicaoDeRealidade;
 	public final String IMG_FORMAT = ".png";
-	private WebcamPanel panelCam;
 	private CamRAPanel RAPanel;
 
-	/**
-	 * Create the application.
-	 */
 	public MainWindow() {
 		initialize();
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	
 	private void initialize() {
 		setFrmAplicaoDeRealidade(new JFrame());
 		getFrmAplicaoDeRealidade().setTitle("Aplica\u00E7\u00E3o de Realidade Aumentada");
 		getFrmAplicaoDeRealidade().getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
 		getFrmAplicaoDeRealidade().getContentPane().setLayout(null);
-		setPanelCam(camConfig());
-		getFrmAplicaoDeRealidade().getContentPane().add(getPanelCam());
+		camConfig();		
 		setRAPanel(new CamRAPanel(Webcam.getDefault().getImage()));
 		getFrmAplicaoDeRealidade().getContentPane().add(getRAPanel());
 		getFrmAplicaoDeRealidade().setForeground(SystemColor.inactiveCaptionBorder);
 		getFrmAplicaoDeRealidade().setResizable(false);
-		getFrmAplicaoDeRealidade().setBounds(50, 50, 1400, 540);
+		getFrmAplicaoDeRealidade().setBounds(50, 50, 900, 540);
 		getFrmAplicaoDeRealidade().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -72,12 +64,10 @@ public class MainWindow implements Runnable{
 		};
 	}
 
-	public WebcamPanel camConfig() {
+	public void camConfig() {
 		Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(new Dimension(640, 480));
 		WebcamPanel panelCam = new WebcamPanel(webcam);
-		panelCam.setBounds(5, 5, webcam.getViewSize().width , webcam.getViewSize().height);
-		return panelCam;
 	}
 	
 	public ActionListener actionListSalvarImg() {
@@ -112,14 +102,6 @@ public class MainWindow implements Runnable{
 					return "Arquivos de imagem "+ IMG_FORMAT;
 				}
 			};
-	}
-
-	public WebcamPanel getPanelCam() {
-		return panelCam;
-	}
-
-	public void setPanelCam(WebcamPanel panelCam) {
-		this.panelCam = panelCam;
 	}
 
 	public JFrame getFrmAplicaoDeRealidade() {

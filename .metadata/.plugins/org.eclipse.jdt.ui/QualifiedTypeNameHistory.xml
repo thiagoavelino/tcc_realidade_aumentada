@@ -12,13 +12,11 @@
 <fullyQualifiedTypeName name="java.lang.Runnable"/>
 <fullyQualifiedTypeName name="javax.swing.SwingWorker"/>
 <fullyQualifiedTypeName name="java.awt.image.DataBufferByte"/>
-<fullyQualifiedTypeName name="Model.ImgAlgorithms"/>
 <fullyQualifiedTypeName name="java.awt.Dimension"/>
 <fullyQualifiedTypeName name="java.awt.Graphics"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
 <fullyQualifiedTypeName name="java.io.File"/>
-<fullyQualifiedTypeName name="java.awt.Graphics2D"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="javax.swing.JPanel"/>
 <fullyQualifiedTypeName name="java.awt.Rectangle"/>
@@ -27,4 +25,8 @@
 <fullyQualifiedTypeName name="View.CamRAPanel"/>
 <fullyQualifiedTypeName name="java.awt.image.ColorConvertOp"/>
 <fullyQualifiedTypeName name="java.awt.color.ColorSpace"/>
+<fullyQualifiedTypeName name="org.opencv.imgproc.Imgproc"/>
+<fullyQualifiedTypeName name="Model.ImgAlgorithms"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="java.awt.Graphics2D"/>
 </qualifiedTypeNameHistroy>

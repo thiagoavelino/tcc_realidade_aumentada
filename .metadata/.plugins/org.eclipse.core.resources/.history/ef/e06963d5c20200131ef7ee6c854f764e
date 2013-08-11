@@ -1,0 +1,37 @@
+package Model;
+
+import java.awt.color.ColorSpace;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorConvertOp;
+import java.awt.image.DataBufferByte;
+
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
+public class ImgAlgorithms {
+	
+	private BufferedImage image;
+	private Mat imageMatTemp;
+	
+	public ImgAlgorithms(BufferedImage imageTemp){
+		this.image = imageTemp;
+		byte[] pixels = ((DataBufferByte) imageTemp.getRaster().getDataBuffer()).getData();
+		int rows = imageTemp.getWidth();
+        int cols = imageTemp.getHeight();
+        int type = CvType.CV_8UC3;
+        Mat imageMatTemp = new Mat(rows,cols,type);
+        imageMatTemp.put(0, 0, pixels);
+	}
+	
+	public void transformBw(){
+		Imgproc.cvtColor(imageMatTemp, imageMatTemp,Imgproc.COLOR_GRAY2BGR);
+		image = new BufferedImage(imageMatTemp.cols(), imageMatTemp.rows(), BufferedImage.TYPE_3BYTE_BGR);
+		byte[] data = new byte[imageMatTemp.rows()*imageMatTemp.cols()*(int)(imageMatTemp.elemSize())];
+		image.getRaster().setDataElements(0, 0, imageMatTemp.cols(), imageMatTemp.rows(), data);
+		/*BufferedImage imageGray = image;
+		ColorConvertOp op = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
+		op.filter(imageGray, imageGray);*/
+	}
+
+}
