@@ -61,11 +61,11 @@ public class ImgAlgorithms {
 		this.output = output;
 	}
 
-	public int getThreshold() {
+	private int getThreshold() {
 		return threshold;
 	}
 
-	public void setThreshold(int threshold) {
+	private void setThreshold(int threshold) {
 		this.threshold = threshold;
 	}
 

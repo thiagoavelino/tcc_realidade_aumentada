@@ -41,11 +41,11 @@ public class MainWindow implements Runnable{
 		setRAPanel(new CamRAPanel(Webcam.getDefault().getImage()));
 		getFrmAplicaoDeRealidade().getContentPane().add(getRAPanel());
 		
-		setSliderThreshold(new JSlider());
-		getSliderThreshold().setValue(125);
-		getSliderThreshold().setMaximum(255);
-		getSliderThreshold().setBounds(661, 44, 200, 23);
-		frmAplicaoDeRealidade.getContentPane().add(getSliderThreshold());
+		sliderThreshold = new JSlider();
+		sliderThreshold.setValue(125);
+		sliderThreshold.setMaximum(255);
+		sliderThreshold.setBounds(661, 44, 200, 23);
+		frmAplicaoDeRealidade.getContentPane().add(sliderThreshold);
 		
 		JLabel lblNewLabel = new JLabel("Threshold: ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -143,13 +143,5 @@ public class MainWindow implements Runnable{
 
 	private void setRAPanel(CamRAPanel rAPanel) {
 		RAPanel = rAPanel;
-	}
-
-	public JSlider getSliderThreshold() {
-		return sliderThreshold;
-	}
-
-	public void setSliderThreshold(JSlider sliderThreshold) {
-		this.sliderThreshold = sliderThreshold;
 	}
 }

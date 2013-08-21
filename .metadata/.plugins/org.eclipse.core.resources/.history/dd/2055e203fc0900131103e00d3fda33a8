@@ -15,10 +15,9 @@ public class ImgAlgorithms {
 	
 	private BufferedImage image;
 	private BufferedImage output;
-	private int threshold;
+	private int THRESHOLD = 80;
 	
 	public ImgAlgorithms(BufferedImage imageTemp){
-		threshold =15;
 		this.setImage(imageTemp);
 	}
 	
@@ -40,7 +39,7 @@ public class ImgAlgorithms {
 		for (int y = 0; y < image.getHeight(); y++)
 			for (int x = 0; x < image.getWidth(); x++) {
 				Color pixel = new Color(image.getRGB(x, y));
-				output.setRGB(x, y, pixel.getRed() < getThreshold() ? BLACK : WHITE);
+				output.setRGB(x, y, pixel.getRed() < THRESHOLD ? BLACK : WHITE);
 			}
 
 	}
@@ -59,14 +58,6 @@ public class ImgAlgorithms {
 
 	public void setOutput(BufferedImage output) {
 		this.output = output;
-	}
-
-	public int getThreshold() {
-		return threshold;
-	}
-
-	public void setThreshold(int threshold) {
-		this.threshold = threshold;
 	}
 
 }

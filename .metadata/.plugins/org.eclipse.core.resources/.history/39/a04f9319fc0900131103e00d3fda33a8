@@ -18,7 +18,6 @@ public class ImgAlgorithms {
 	private int threshold;
 	
 	public ImgAlgorithms(BufferedImage imageTemp){
-		threshold =15;
 		this.setImage(imageTemp);
 	}
 	
@@ -61,11 +60,11 @@ public class ImgAlgorithms {
 		this.output = output;
 	}
 
-	public int getThreshold() {
+	private int getThreshold() {
 		return threshold;
 	}
 
-	public void setThreshold(int threshold) {
+	private void setThreshold(int threshold) {
 		this.threshold = threshold;
 	}
 
