@@ -2,32 +2,31 @@ package Model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorConvertOp;
-import java.awt.image.DataBufferByte;
-
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
+import java.util.ArrayList;
 
 public class ImgAlgorithms {
 	
 	private BufferedImage image;
 	private BufferedImage output;
+	private ArrayList<LabelArea> labeledAreas;
 	private int threshold;
 	
 	public ImgAlgorithms(BufferedImage imageTemp){
 		threshold =15;
 		this.setImage(imageTemp);
+		labeledAreas = new ArrayList<LabelArea>();
 	}
 	
 	public void toGrayscale()  {  
+		
+		//Img img = new Img(getImage());
+		//setOutput(img.getImageGreyScale());
         setOutput(new BufferedImage(image.getWidth(),  
                 image.getHeight(), BufferedImage.TYPE_BYTE_GRAY));
         Graphics2D g2d = output.createGraphics();  
         g2d.drawImage(image, 0, 0, null);  
-        g2d.dispose(); 
+        g2d.dispose();
     } 
 	
 	public void toBinary() {
@@ -45,6 +44,28 @@ public class ImgAlgorithms {
 
 	}
 	
+	public void labeling(){
+		for (int y = 0; y < image.getHeight(); y++)
+			for (int x = 0; x < image.getWidth(); x++) {
+				Color pixelColor = new Color(image.getRGB(x, y));
+				if(recognizeElement(pixelColor)){
+					//does it belong  to any area?
+					int iterator = 0;
+					for(LabelArea labelArea: labeledAreas){
+						Pixel pixel = new Pixel(x,y);
+						if(labelArea.checkExistPixelAdjacent(pixel));
+						//continuar aqui.
+						
+					}
+					
+				}
+			}
+	}
+
+	public boolean recognizeElement(Color pixel) {
+		return pixel.getRGB() == Color.BLACK.getRGB();
+	}
+		
 	public BufferedImage getImage() {
 		return image;
 	}

@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<watchExpressions>\r\n<expression enabled\="true" text\="deviceList"/>\r\n<expression enabled\="true" text\="WebcamResolution.VGA.getSize()"/>\r\n</watchExpressions>\r\n
+prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<watchExpressions>\r\n<expression enabled\="true" text\="aux"/>\r\n<expression enabled\="true" text\="original.getWidth()"/>\r\n<expression enabled\="true" text\="original.getHeight()"/>\r\n<expression enabled\="true" text\=" original.getType()"/>\r\n<expression enabled\="true" text\="imgAlgorithms.getOutput()"/>\r\n<expression enabled\="true" text\="labelArea.getPixelsAdjacents()"/>\r\n</watchExpressions>\r\n

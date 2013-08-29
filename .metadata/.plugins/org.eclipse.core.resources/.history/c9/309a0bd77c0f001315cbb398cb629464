@@ -1,0 +1,31 @@
+package Model;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+public class Img {
+	
+	private BufferedImage image;
+	private ArrayList<PixelGrey> arrayPixels;
+	
+	public Img(BufferedImage image){
+		this.image = image;
+		arrayPixels = new ArrayList<PixelGrey>();
+		trasnformRGBGrayScale();
+	}
+
+	public void trasnformRGBGrayScale() {
+		for (int y = 0; y < image.getHeight(); y++)
+			for (int x = 0; x < image.getWidth(); x++) {
+				Color pixel = new Color(image.getRGB(x, y));
+				int color = (int) calculateGrey(pixel) ;
+				arrayPixels.add(new PixelGrey(x, y, color));
+			}
+	}
+
+	public double calculateGrey(Color pixel) {
+		return 0.299*pixel.getRed() + 0.587*pixel.getGreen() + 0.114*pixel.getBlue();
+	}
+
+}

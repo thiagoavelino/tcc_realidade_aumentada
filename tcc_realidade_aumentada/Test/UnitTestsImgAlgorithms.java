@@ -29,5 +29,10 @@ public class UnitTestsImgAlgorithms {
 	public void transformBwTest() {
 		//this.imgAlgorithms.transformBw();
 	}
+	
+	@Test
+	public void automatedThreshold() {
+		//this.imgAlgorithms.automatedThreshold();
+	}
 
 }

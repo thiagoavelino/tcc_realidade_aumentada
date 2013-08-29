@@ -1,0 +1,31 @@
+package Test;
+
+import java.awt.image.BufferedImage;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import Model.LabelArea;
+import Model.Pixel;
+
+public class UnitTestsLabelArea {
+	private LabelArea labelArea;
+
+	@Before
+	public void setUp() throws Exception {
+		labelArea = new LabelArea();
+	}
+
+	@Test
+	public void testAddPixelAreaTest() {
+		Pixel pix = new Pixel(0,0);
+		labelArea.addPixelArea(pix);
+		Assert.assertSame(labelArea.getPixelsArea().get(0).getX(), pix.getX());
+		Assert.assertSame(labelArea.getPixelsArea().get(0).getY(), pix.getY());
+		Assert.assertSame(labelArea.getPixelsAdjacents().get(0).getX(), -1);
+		Assert.assertSame(labelArea.getPixelsAdjacents().get(0).getY(), -1);
+	}
+	
+
+}

@@ -1,0 +1,10 @@
+package Model;
+
+import java.awt.image.BufferedImage;
+
+public class Img {
+	
+	private BufferedImage image;
+	
+
+}
