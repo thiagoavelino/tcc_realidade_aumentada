@@ -116,27 +116,13 @@ public class UnitTestsImgAlgorithms {
 	public void labelingImageTestWithRealImg() {
 		BufferedImage img = null;
 		try {
-		    img = ImageIO.read(new File("test_img_real_graph.png"));
+		    img = ImageIO.read(new File("test_img_real.png"));
 		} catch (IOException e) {
 		}
 		Model.ImgAlgorithms imgAlgorithms = new Model.ImgAlgorithms(img);
 		imgAlgorithms.toBinary();
 		imgAlgorithms.setImage(imgAlgorithms.getOutput());
 		imgAlgorithms.labeling();
-		Assert.assertEquals(imgAlgorithms.getLabeledAreas().size(), 14);
-	}
-	
-	@Ignore @Test
-	public void labelingImageTestPiorCaso() {
-		BufferedImage img = null;
-		try {
-		    img = ImageIO.read(new File("test_pior_caso.png"));
-		} catch (IOException e) {
-		}
-		Model.ImgAlgorithms imgAlgorithms = new Model.ImgAlgorithms(img);
-		imgAlgorithms.toBinary();
-		imgAlgorithms.setImage(imgAlgorithms.getOutput());
-		imgAlgorithms.labeling();
-		Assert.assertEquals(imgAlgorithms.getLabeledAreas().size(), 14);
+		Assert.assertSame(imgAlgorithms.getLabeledAreas().size(), 184);
 	}
 }

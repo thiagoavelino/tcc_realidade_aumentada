@@ -1,0 +1,5 @@
+1378258377620	Extract method 'firstArea'
+1378258462258	Extract method 'doesntBelongtoAnyArea'
+1378258498253	Extract method 'belongsToOneArea'
+1378258553770	Extract method 'belongsToTwoAreas'
+1378258569254	Extract method 'mergeAreas'

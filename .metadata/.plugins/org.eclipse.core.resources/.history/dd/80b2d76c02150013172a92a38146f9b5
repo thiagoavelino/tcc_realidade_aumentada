@@ -20,6 +20,9 @@ public class ImgAlgorithms {
 	}
 	
 	public void toGrayscale()  {  
+		
+		//Img img = new Img(getImage());
+		//setOutput(img.getImageGreyScale());
         setOutput(new BufferedImage(image.getWidth(),  
                 image.getHeight(), BufferedImage.TYPE_BYTE_GRAY));
         Graphics2D g2d = output.createGraphics();  
@@ -48,45 +51,30 @@ public class ImgAlgorithms {
 				Color pixelColor = new Color(image.getRGB(x, y));
 				if(recognizeElement(pixelColor)){
 					Pixel pixel = new Pixel(x,y);
-					if(firstArea()) createNewArea(pixel);
+					
+					// primeiro pixel encontrado
+					if(labeledAreas.size() == 0) createNewArea(pixel);
+					
+					// a partir do segundo pixel encontrado
 					else{
+						//buscar index de areas que o pixel pertence.
 						ArrayList<Integer> indexAreas = indexAreasPixelBelongs(pixel);
-						if(doesntBelongtoAnyArea(indexAreas)){
+						if(indexAreas.size()==0){
 							createNewArea(pixel);
 						}
-						if(belongsToOneArea(indexAreas)){
+						if(indexAreas.size()==1){
 							labeledAreas.get(indexAreas.get(0)).addPixelArea(pixel);
 						}
-						if(belongsToTwoAreas(indexAreas)){
-							mergeAreas(pixel, indexAreas);
+						if(indexAreas.size()==2){
+							LabelArea area01 = labeledAreas.get(indexAreas.get(0));
+							LabelArea area02 = labeledAreas.get(indexAreas.get(1));
+							area01.addPixelArea(pixel);
+							area01.mergeArea(area02.getPixelsArea());
+							labeledAreas.remove(area02);
 						}
 					}					
 				}
 			}
-	}
-
-	public void mergeAreas(Pixel pixel, ArrayList<Integer> indexAreas) {
-		LabelArea area01 = labeledAreas.get(indexAreas.get(0));
-		LabelArea area02 = labeledAreas.get(indexAreas.get(1));
-		area01.addPixelArea(pixel);
-		area01.mergeArea(area02.getPixelsArea());
-		labeledAreas.remove(area02);
-	}
-
-	public boolean belongsToTwoAreas(ArrayList<Integer> indexAreas) {
-		return indexAreas.size()==2;
-	}
-
-	public boolean belongsToOneArea(ArrayList<Integer> indexAreas) {
-		return indexAreas.size()==1;
-	}
-
-	public boolean doesntBelongtoAnyArea(ArrayList<Integer> indexAreas) {
-		return indexAreas.size()==0;
-	}
-
-	public boolean firstArea() {
-		return labeledAreas.size() == 0;
 	}
 
 	public ArrayList<Integer> indexAreasPixelBelongs(Pixel pixel) {

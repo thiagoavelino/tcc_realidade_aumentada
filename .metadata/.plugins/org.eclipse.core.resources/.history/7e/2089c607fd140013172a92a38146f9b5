@@ -16,6 +16,9 @@ public class LabelArea {
 		pixelsArea = new ArrayList<Pixel>();
 		pixelsAdjacents = new ArrayList<Pixel>();
 		arrayAdjacents = new int [641][481];
+		for (int i = 0; i < 641; i++)
+            for (int j = 0; j < 481; j++)
+                    this.arrayAdjacents[i][j] = 0;
 	}
 	
 	public void addPixelArea(Pixel pix){
@@ -29,8 +32,8 @@ public class LabelArea {
 	}
 	
 	public void addPixelAdjacent(Pixel pix){
-		if(pix.getX()>=0 & pix.getY()>=0){
-				arrayAdjacents[pix.getX()][pix.getY()] = 1;
+		if(!checkExistPixelAdjacent(pix)){
+			if(pix.getX()>=0 & pix.getY()>=0)arrayAdjacents[pix.getX()][pix.getY()] = 1;
 		}
 	}
 	

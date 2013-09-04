@@ -126,7 +126,7 @@ public class UnitTestsImgAlgorithms {
 		Assert.assertEquals(imgAlgorithms.getLabeledAreas().size(), 14);
 	}
 	
-	@Ignore @Test
+	@Test
 	public void labelingImageTestPiorCaso() {
 		BufferedImage img = null;
 		try {
