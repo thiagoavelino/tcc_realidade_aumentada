@@ -1,0 +1,41 @@
+package Test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import Model.ImgAlgorithms;
+
+import com.github.sarxos.webcam.Webcam;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import org.opencv.core.Core;
+
+public class UnitTestsImgAlgorithms {
+	
+	private Model.ImgAlgorithms imgAlgorithms;
+
+	@Before
+	public void setUp() throws Exception {
+		BufferedImage img = null;
+		try {
+		    img = ImageIO.read(new File("test_label.png"));
+		} catch (IOException e) {
+		}
+		this.imgAlgorithms = new Model.ImgAlgorithms(img);
+	}
+
+	@Test
+	public void labelingImageTestWith4Areas() {
+		this.imgAlgorithms.labeling();
+		Assert.assertSame(imgAlgorithms.getLabeledAreas().size(), 4);
+	}
+
+}

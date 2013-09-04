@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ImgAlgorithms {
 	
@@ -49,17 +50,48 @@ public class ImgAlgorithms {
 			for (int x = 0; x < image.getWidth(); x++) {
 				Color pixelColor = new Color(image.getRGB(x, y));
 				if(recognizeElement(pixelColor)){
-					//does it belong  to any area?
-					int iterator = 0;
-					for(LabelArea labelArea: labeledAreas){
-						Pixel pixel = new Pixel(x,y);
-						if(labelArea.checkExistPixelAdjacent(pixel));
-						//continuar aqui.
-						
-					}
+					Pixel pixel = new Pixel(x,y);
 					
+					// primeiro pixel encontrado
+					if(labeledAreas.size() == 0) createNewArea(pixel);
+					
+					// a partir do segundo pixel encontrado
+					else{
+						//buscar index de areas que o pixel pertence.
+						ArrayList<Integer> indexAreas = indexAreasPixelBelongs(pixel);
+						if(indexAreas.size()==0){
+							createNewArea(pixel);
+						}
+						if(indexAreas.size()==1){
+							labeledAreas.get(indexAreas.get(0)).addPixelArea(pixel);
+						}
+						if(indexAreas.size()==2){
+							LabelArea area01 = labeledAreas.get(indexAreas.get(0));
+							LabelArea area02 = labeledAreas.get(indexAreas.get(1));
+							area01.addPixelArea(pixel);
+							area01.mergeArea(area02.getPixelsArea());
+							labeledAreas.remove(area02);
+						}
+					}					
 				}
 			}
+	}
+
+	public ArrayList<Integer> indexAreasPixelBelongs(Pixel pixel) {
+		ArrayList<Integer> indexAreas = new ArrayList<Integer>();
+		for(int i = 0; i < labeledAreas.size(); i++){
+			LabelArea labelArea = labeledAreas.get(i);
+			if(labelArea.checkExistPixelAdjacent(pixel)){
+				indexAreas.add(i);
+			}
+		}
+		return indexAreas;
+	}
+
+	public void createNewArea(Pixel pixel) {
+		LabelArea newArea = new LabelArea();
+		newArea.addPixelArea(pixel);
+		labeledAreas.add(newArea);
 	}
 
 	public boolean recognizeElement(Color pixel) {
@@ -88,6 +120,14 @@ public class ImgAlgorithms {
 
 	public void setThreshold(int threshold) {
 		this.threshold = threshold;
+	}
+
+	public ArrayList<LabelArea> getLabeledAreas() {
+		return labeledAreas;
+	}
+
+	public void setLabeledAreas(ArrayList<LabelArea> labeledAreas) {
+		this.labeledAreas = labeledAreas;
 	}
 
 }

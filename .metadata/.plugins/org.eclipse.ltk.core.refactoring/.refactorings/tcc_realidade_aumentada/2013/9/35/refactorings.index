@@ -1,0 +1,3 @@
+1378066864489	Encapsulate field 'labeledAreas'
+1378067789022	Extract method 'createNewArea'
+1378073374899	Extract method 'numberOfAreasPixelBelongs'
