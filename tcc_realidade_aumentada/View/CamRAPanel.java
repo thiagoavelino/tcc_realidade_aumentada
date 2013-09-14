@@ -18,8 +18,8 @@ public class CamRAPanel extends JPanel {
 	public CamRAPanel(BufferedImage master) {
 		setMaster(master);
         Graphics2D g2d = getMaster().createGraphics();
-        g2d.drawImage(getMaster(), 0, 0, this);
-        g2d.dispose();
+        g2d.drawImage(getMaster(), 0, 0, null);
+       // g2d.dispose();
         setBounds(new Rectangle(5, 5, 640, 480));
     }
 
@@ -32,7 +32,7 @@ public class CamRAPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
     	super.paintComponent(g);
-    	g.drawImage(getMaster(), 0, 0, this);
+    	g.drawImage(getMaster(), 0, 0, null);
     }
 
 	public BufferedImage getMaster() {

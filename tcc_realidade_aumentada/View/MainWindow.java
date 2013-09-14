@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
 import java.awt.event.ActionEvent;
@@ -21,18 +23,23 @@ import java.awt.ScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.JToggleButton;
 public class MainWindow implements Runnable{
 
 	private JFrame frmAplicaoDeRealidade;
 	public final String IMG_FORMAT = ".png";
 	private CamRAPanel RAPanel;
 	private JSlider sliderThreshold;
+	private JToggleButton tglbtnAcionarAlgoritmo;
+	private boolean algoritmoLigado;
 
 	public MainWindow() {
 		initialize();
 	}
 	
 	private void initialize() {
+		
+		algoritmoLigado = false;
 		setFrmAplicaoDeRealidade(new JFrame());
 		getFrmAplicaoDeRealidade().setTitle("Aplica\u00E7\u00E3o de Realidade Aumentada");
 		getFrmAplicaoDeRealidade().getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
@@ -42,7 +49,7 @@ public class MainWindow implements Runnable{
 		getFrmAplicaoDeRealidade().getContentPane().add(getRAPanel());
 		
 		setSliderThreshold(new JSlider());
-		getSliderThreshold().setValue(125);
+		getSliderThreshold().setValue(255);
 		getSliderThreshold().setMaximum(255);
 		getSliderThreshold().setBounds(661, 44, 200, 23);
 		frmAplicaoDeRealidade.getContentPane().add(getSliderThreshold());
@@ -51,6 +58,16 @@ public class MainWindow implements Runnable{
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setBounds(661, 11, 136, 23);
 		frmAplicaoDeRealidade.getContentPane().add(lblNewLabel);
+		
+		tglbtnAcionarAlgoritmo = new JToggleButton("Acionar Algoritmo");
+		tglbtnAcionarAlgoritmo.setBounds(655, 117, 200, 23);
+		tglbtnAcionarAlgoritmo.addChangeListener(new ChangeListener( ) {
+		      public void stateChanged(ChangeEvent ev) {
+		    	  if(algoritmoLigado) algoritmoLigado=false;
+		    	  else algoritmoLigado=true;
+		      }
+		    });
+		frmAplicaoDeRealidade.getContentPane().add(tglbtnAcionarAlgoritmo);
 		getFrmAplicaoDeRealidade().setForeground(SystemColor.inactiveCaptionBorder);
 		getFrmAplicaoDeRealidade().setResizable(false);
 		getFrmAplicaoDeRealidade().setBounds(50, 50, 900, 540);
@@ -151,5 +168,21 @@ public class MainWindow implements Runnable{
 
 	public void setSliderThreshold(JSlider sliderThreshold) {
 		this.sliderThreshold = sliderThreshold;
+	}
+
+	public JToggleButton getTglbtnAcionarAlgoritmo() {
+		return tglbtnAcionarAlgoritmo;
+	}
+
+	public void setTglbtnAcionarAlgoritmo(JToggleButton tglbtnAcionarAlgoritmo) {
+		this.tglbtnAcionarAlgoritmo = tglbtnAcionarAlgoritmo;
+	}
+
+	public boolean isAlgoritmoLigado() {
+		return algoritmoLigado;
+	}
+
+	public void setAlgoritmoLigado(boolean algoritmoLigado) {
+		this.algoritmoLigado = algoritmoLigado;
 	}
 }

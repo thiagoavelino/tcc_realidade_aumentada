@@ -8,20 +8,24 @@ import java.util.Iterator;
 
 public class ImgAlgorithms {
 	
+	public final int WIDTH_SCREEN = 640;
+	public final int HEIGHT_SCREEN = 480;
 	private BufferedImage image;
 	private BufferedImage output;
 	private ArrayList<LabelArea> labeledAreas;
+	private ArrayList<Pixel> centroids;
 	private int threshold;
 	
 	public ImgAlgorithms(BufferedImage imageTemp){
 		threshold =15;
 		this.setImage(imageTemp);
 		labeledAreas = new ArrayList<LabelArea>();
+		centroids = new ArrayList<Pixel>();
 	}
 	
 	public void toGrayscale()  {  
         setOutput(new BufferedImage(image.getWidth(),  
-                image.getHeight(), BufferedImage.TYPE_BYTE_GRAY));
+                image.getHeight(), BufferedImage.TYPE_INT_RGB));
         Graphics2D g2d = output.createGraphics();  
         g2d.drawImage(image, 0, 0, null);  
         g2d.dispose();
@@ -32,7 +36,7 @@ public class ImgAlgorithms {
 		int WHITE = Color.WHITE.getRGB();
 
 		output = new BufferedImage(image.getWidth(),
-				image.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+				image.getHeight(), BufferedImage.TYPE_INT_RGB);
 		
 		for (int y = 0; y < image.getHeight(); y++)
 			for (int x = 0; x < image.getWidth(); x++) {
@@ -42,7 +46,47 @@ public class ImgAlgorithms {
 
 	}
 	
+	public void calculateArrayCentroides(){
+		this.labeling();
+		centroids.clear();
+		for(int i=0; i<this.labeledAreas.size(); i++){
+			centroids.add(labeledAreas.get(i).calculateCentroide());
+		}
+	}
+	
+	public void augumentedReality(){
+		/*BufferedImage outputAugmented = new BufferedImage(image.getWidth(),
+				image.getHeight(), BufferedImage.TYPE_INT_RGB);
+		
+		for (int y = 0; y < output.getHeight(); y++)
+			for (int x = 0; x < output.getWidth(); x++) {
+				Color pixel = new Color(output.getRGB(x, y));
+				outputAugmented.setRGB(x, y, pixel.getRGB());
+			}
+		output = outputAugmented;*/
+		
+		for(int i=0; i<this.centroids.size(); i++){
+			Pixel centroid = centroids.get(i);
+			int xPix = centroid.getX(); 
+			int yPix =centroid.getY();
+			
+			int color = Color.RED.getRGB();
+			int tam = 1;
+			paintPoint(xPix, yPix, color, tam);
+			
+		}
+	}
+
+	public void paintPoint(int xPix, int yPix, int color, int tam) {
+		for (int y = yPix-tam ; y <= yPix+tam; y++)
+			for (int x = xPix-tam ; x <= xPix+tam; x++) {
+				if(y>0 && y<=WIDTH_SCREEN && x>0 && x<=HEIGHT_SCREEN)
+				output.setRGB(x, y, color);
+			}
+	}
+	
 	public void labeling(){
+		labeledAreas.clear();
 		for (int y = 0; y < image.getHeight(); y++)
 			for (int x = 0; x < image.getWidth(); x++) {
 				Color pixelColor = new Color(image.getRGB(x, y));
@@ -140,6 +184,14 @@ public class ImgAlgorithms {
 
 	public void setLabeledAreas(ArrayList<LabelArea> labeledAreas) {
 		this.labeledAreas = labeledAreas;
+	}
+
+	public ArrayList<Pixel> getCentroids() {
+		return centroids;
+	}
+
+	public void setCentroids(ArrayList<Pixel> centroids) {
+		this.centroids = centroids;
 	}
 
 }

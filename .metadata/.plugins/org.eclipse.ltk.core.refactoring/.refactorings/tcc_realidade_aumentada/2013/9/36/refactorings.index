@@ -3,3 +3,5 @@
 1378258498253	Extract method 'belongsToOneArea'
 1378258553770	Extract method 'belongsToTwoAreas'
 1378258569254	Extract method 'mergeAreas'
+1378664758844	Encapsulate field 'tglbtnAcionarAlgoritmo'
+1378665139006	Encapsulate field 'algoritmoLigado'

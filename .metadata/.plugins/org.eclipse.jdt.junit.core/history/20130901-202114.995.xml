@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="UnitTestsImgAlgorithms" project="tcc_realidade_aumentada" tests="4" started="4" failures="0" errors="0" ignored="3">
-  <testsuite name="Test.UnitTestsImgAlgorithms" incomplete="true">
-    <testcase name="labelingImageTestWith5Areas39x18Image" classname="Test.UnitTestsImgAlgorithms" time="0.0" ignored="true"/>
-    <testcase name="labelingImageTestWith1Area2x2Image" classname="Test.UnitTestsImgAlgorithms" time="0.0" ignored="true"/>
-    <testcase name="labelingImageTestWith2Areas5x5Image" classname="Test.UnitTestsImgAlgorithms" time="0.0" ignored="true"/>
-    <testcase name="labelingImageTestWith1AreaMergeAreas" classname="Test.UnitTestsImgAlgorithms" incomplete="true"/>
-  </testsuite>
-</testrun>

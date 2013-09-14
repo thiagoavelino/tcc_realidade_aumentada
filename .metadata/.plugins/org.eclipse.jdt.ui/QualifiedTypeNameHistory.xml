@@ -36,4 +36,6 @@
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="org.junit.Ignore"/>
+<fullyQualifiedTypeName name="javax.swing.event.ChangeEvent"/>
+<fullyQualifiedTypeName name="javax.swing.event.ChangeListener"/>
 </qualifiedTypeNameHistroy>

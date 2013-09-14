@@ -7,15 +7,17 @@ import java.util.Iterator;
 public class LabelArea {
 	
 	private ArrayList<Pixel> pixelsArea;
-	private ArrayList<Pixel> pixelsAdjacents;
-	
-	private int [][] arrayAdjacents;
+	private boolean [][] arrayAdjacents;
+	private Pixel centroid;
 	
 	
 	public LabelArea(){
 		pixelsArea = new ArrayList<Pixel>();
-		pixelsAdjacents = new ArrayList<Pixel>();
-		arrayAdjacents = new int [641][481];
+		arrayAdjacents = new boolean [641][481];
+		for (int y = 0; y < 481; y++)
+			for (int x = 0; x < 641; x++){
+				arrayAdjacents[x][y]=false;
+			}
 	}
 	
 	public void addPixelArea(Pixel pix){
@@ -30,14 +32,12 @@ public class LabelArea {
 	
 	public void addPixelAdjacent(Pixel pix){
 		if(pix.getX()>=0 & pix.getY()>=0){
-				arrayAdjacents[pix.getX()][pix.getY()] = 1;
+				arrayAdjacents[pix.getX()][pix.getY()] = true;
 		}
 	}
 	
 	public boolean checkExistPixelAdjacent(Pixel pix){
-		boolean operator = false;
-		if(arrayAdjacents[pix.getX()][pix.getY()]==1) operator=true;
-		return operator;
+		return arrayAdjacents[pix.getX()][pix.getY()];
 	}
 	
 	public void mergeArea(ArrayList<Pixel> newPixelsArea){
@@ -46,13 +46,24 @@ public class LabelArea {
 			this.addPixelArea(pixel);
 		}
 	}
+	
+	public Pixel calculateCentroide(){
+		int SumX = 0;
+		int SumY = 0;
+		
+		for(int i=0; i<this.pixelsArea.size(); i++){
+			Pixel pix  = pixelsArea.get(i);
+			SumX += pix.getX()+1;
+			SumY += pix.getY()+1;
+		}
+		int x  = (int) Math.ceil(SumX/pixelsArea.size())-1;
+		int y  = (int) Math.ceil(SumY/pixelsArea.size())-1;
+		centroid = new Pixel(x,y);
+		return centroid;
+	}
 
 	public ArrayList<Pixel> getPixelsArea() {
 		return pixelsArea;
-	}
-	
-	public ArrayList<Pixel> getPixelsAdjacents() {
-		return pixelsAdjacents;
 	}
 
 }
