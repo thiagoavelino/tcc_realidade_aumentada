@@ -151,9 +151,10 @@ public class ImgAlgorithms {
 	}
 	
 	public void erosion(){
-		ImagePlus implus = new ImagePlus("cam",output);
+		ImagePlus implus = new ImagePlus("cam",image);
 		ij.process.ImageProcessor ip = implus.getProcessor();
 		ip.erode();
+		//ip.dilate();
 		output = ip.getBufferedImage();
 		//ImageProcessor ip = IJ.openImage("/path/to/image.tif");
 	}

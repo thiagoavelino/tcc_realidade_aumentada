@@ -34,13 +34,12 @@ public class CamMonitor implements Runnable{
 				imgAlgorithms.setThreshold(mainWindow.getSliderThreshold().getValue());
 				imgAlgorithms.toBinary();
 				imgAlgorithms.setCentroids(centroidsTemp);
-				if(timeCallAlgorithm == 20){
+				if(timeCallAlgorithm == 50){
 					timeCallAlgorithm = 0;
 					imgAlgorithms.setImage(imgAlgorithms.getOutput());
 					imgAlgorithms.calculateArrayCentroides();
 					centroidsTemp = imgAlgorithms.getCentroids();
 				}
-				imgAlgorithms.erosion();
 				imgAlgorithms.augumentedReality();
 				CamRAPanel camRAPAnel = mainWindow.getRAPanel();
 				camRAPAnel.setMaster(imgAlgorithms.getOutput());

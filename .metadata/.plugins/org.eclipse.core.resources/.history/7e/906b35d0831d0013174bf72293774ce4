@@ -1,8 +1,5 @@
 package Model;
 
-import ij.ImagePlus;
-import ij.process.ImageProcessor;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -148,14 +145,6 @@ public class ImgAlgorithms {
 
 	public boolean recognizeElement(Color pixel) {
 		return pixel.getRGB() == Color.BLACK.getRGB();
-	}
-	
-	public void erosion(){
-		ImagePlus implus = new ImagePlus("cam",output);
-		ij.process.ImageProcessor ip = implus.getProcessor();
-		ip.erode();
-		output = ip.getBufferedImage();
-		//ImageProcessor ip = IJ.openImage("/path/to/image.tif");
 	}
 		
 	public BufferedImage getImage() {

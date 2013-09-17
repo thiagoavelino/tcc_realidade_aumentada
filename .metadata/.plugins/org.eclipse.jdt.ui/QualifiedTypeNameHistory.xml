@@ -38,4 +38,6 @@
 <fullyQualifiedTypeName name="org.junit.Ignore"/>
 <fullyQualifiedTypeName name="javax.swing.event.ChangeEvent"/>
 <fullyQualifiedTypeName name="javax.swing.event.ChangeListener"/>
+<fullyQualifiedTypeName name="ij.ImagePlus"/>
+<fullyQualifiedTypeName name="ij.process.ImageProcessor"/>
 </qualifiedTypeNameHistroy>

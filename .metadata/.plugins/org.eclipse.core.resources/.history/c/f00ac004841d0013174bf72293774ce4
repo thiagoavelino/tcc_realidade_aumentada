@@ -40,7 +40,6 @@ public class CamMonitor implements Runnable{
 					imgAlgorithms.calculateArrayCentroides();
 					centroidsTemp = imgAlgorithms.getCentroids();
 				}
-				imgAlgorithms.erosion();
 				imgAlgorithms.augumentedReality();
 				CamRAPanel camRAPAnel = mainWindow.getRAPanel();
 				camRAPAnel.setMaster(imgAlgorithms.getOutput());

@@ -1,8 +1,5 @@
 package Model;
 
-import ij.ImagePlus;
-import ij.process.ImageProcessor;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -58,16 +55,23 @@ public class ImgAlgorithms {
 	}
 	
 	public void augumentedReality(){
+		/*BufferedImage outputAugmented = new BufferedImage(image.getWidth(),
+				image.getHeight(), BufferedImage.TYPE_INT_RGB);
+		
+		for (int y = 0; y < output.getHeight(); y++)
+			for (int x = 0; x < output.getWidth(); x++) {
+				Color pixel = new Color(output.getRGB(x, y));
+				outputAugmented.setRGB(x, y, pixel.getRGB());
+			}
+		output = outputAugmented;*/
+		
 		for(int i=0; i<this.centroids.size(); i++){
 			Pixel centroid = centroids.get(i);
 			int xPix = centroid.getX(); 
 			int yPix =centroid.getY();
 			
-			int color = Color.DARK_GRAY.getRGB();
-			int tam = 2;
-			paintPoint(xPix, yPix, color, tam);
-			color = Color.YELLOW.getRGB();
-			tam = 1;
+			int color = Color.RED.getRGB();
+			int tam = 1;
 			paintPoint(xPix, yPix, color, tam);
 			
 		}
@@ -148,14 +152,6 @@ public class ImgAlgorithms {
 
 	public boolean recognizeElement(Color pixel) {
 		return pixel.getRGB() == Color.BLACK.getRGB();
-	}
-	
-	public void erosion(){
-		ImagePlus implus = new ImagePlus("cam",output);
-		ij.process.ImageProcessor ip = implus.getProcessor();
-		ip.erode();
-		output = ip.getBufferedImage();
-		//ImageProcessor ip = IJ.openImage("/path/to/image.tif");
 	}
 		
 	public BufferedImage getImage() {
