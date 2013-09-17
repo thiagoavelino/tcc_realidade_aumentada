@@ -4,6 +4,7 @@ package Model;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
+import java.util.ArrayList;
 
 
 import View.CamRAPanel;
@@ -22,19 +23,24 @@ public class CamMonitor implements Runnable{
 
 	@Override
 	public void run() {
-		Integer timeCallAlgorithm = 0;
+		int timeCallAlgorithm = 0;
+		ArrayList<Pixel> centroidsTemp = new ArrayList<Pixel>();
 		while(true){
 			BufferedImage image = Webcam.getDefault().getImage();
+			
 			
 			if(mainWindow.isAlgoritmoLigado()){
 				ImgAlgorithms imgAlgorithms = new ImgAlgorithms(image);
 				imgAlgorithms.setThreshold(mainWindow.getSliderThreshold().getValue());
 				imgAlgorithms.toBinary();
-				if(timeCallAlgorithm.equals(20000)){
+				imgAlgorithms.setCentroids(centroidsTemp);
+				if(timeCallAlgorithm == 20){
 					timeCallAlgorithm = 0;
 					imgAlgorithms.setImage(imgAlgorithms.getOutput());
 					imgAlgorithms.calculateArrayCentroides();
+					centroidsTemp = imgAlgorithms.getCentroids();
 				}
+				imgAlgorithms.erosion();
 				imgAlgorithms.augumentedReality();
 				CamRAPanel camRAPAnel = mainWindow.getRAPanel();
 				camRAPAnel.setMaster(imgAlgorithms.getOutput());
@@ -47,7 +53,6 @@ public class CamMonitor implements Runnable{
 				CamRAPanel camRAPAnel = mainWindow.getRAPanel();
 				camRAPAnel.setMaster(imgAlgorithms.getImage());
 				camRAPAnel.repaint();
-				timeCallAlgorithm++;
 			}
 			
 			try {
