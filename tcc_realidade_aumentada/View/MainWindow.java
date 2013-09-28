@@ -2,6 +2,8 @@ package View;
 
 import javax.swing.JFrame;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
+
 import javax.swing.JFileChooser;
 
 import com.github.sarxos.webcam.Webcam;
@@ -29,9 +31,10 @@ public class MainWindow implements Runnable{
 	private JFrame frmAplicaoDeRealidade;
 	public final String IMG_FORMAT = ".png";
 	private CamRAPanel RAPanel;
-	private JSlider sliderThreshold;
 	private JToggleButton tglbtnAcionarAlgoritmo;
+	private JSlider sliderThreshold;
 	private boolean algoritmoLigado;
+	private boolean binaryImage;
 
 	public MainWindow() {
 		initialize();
@@ -41,26 +44,44 @@ public class MainWindow implements Runnable{
 		
 		algoritmoLigado = false;
 		setFrmAplicaoDeRealidade(new JFrame());
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int height = screenSize.height * 2 / 3;
+		int width = screenSize.width * 2 / 3;
+		getFrmAplicaoDeRealidade().setPreferredSize(new Dimension(1000, 600));
+		getFrmAplicaoDeRealidade().pack();
 		getFrmAplicaoDeRealidade().setTitle("Aplica\u00E7\u00E3o de Realidade Aumentada");
-		getFrmAplicaoDeRealidade().getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
 		getFrmAplicaoDeRealidade().getContentPane().setLayout(null);
 		camConfig();		
 		setRAPanel(new CamRAPanel(Webcam.getDefault().getImage()));
 		getFrmAplicaoDeRealidade().getContentPane().add(getRAPanel());
 		
-		setSliderThreshold(new JSlider());
-		getSliderThreshold().setValue(255);
-		getSliderThreshold().setMaximum(255);
-		getSliderThreshold().setBounds(661, 44, 200, 23);
+		getFrmAplicaoDeRealidade().setForeground(SystemColor.inactiveCaptionBorder);
+		
+		getFrmAplicaoDeRealidade().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+
+		setSliderThreshold(new JSlider(JSlider.HORIZONTAL, 0, 255, 125));
+		getSliderThreshold().setMinorTickSpacing(5);
+		getSliderThreshold().setMajorTickSpacing(20);
+		getSliderThreshold().setBounds(655, 31, 300, 40);
+		getSliderThreshold().setPaintTicks(true);
+		getSliderThreshold().setPaintLabels(true);
+		getSliderThreshold().setFont(new Font("Tahoma", Font.PLAIN, 11));
 		frmAplicaoDeRealidade.getContentPane().add(getSliderThreshold());
 		
 		JLabel lblNewLabel = new JLabel("Threshold: ");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel.setBounds(661, 11, 136, 23);
 		frmAplicaoDeRealidade.getContentPane().add(lblNewLabel);
 		
-		tglbtnAcionarAlgoritmo = new JToggleButton("Acionar Algoritmo");
-		tglbtnAcionarAlgoritmo.setBounds(655, 117, 200, 23);
+		JLabel lblNewLabel2 = new JLabel("Defina o limite de limiarização da imagem.");
+		lblNewLabel2.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblNewLabel2.setBounds(730, 11, 270, 23);
+		frmAplicaoDeRealidade.getContentPane().add(lblNewLabel2);
+		
+		tglbtnAcionarAlgoritmo = new JToggleButton("Visualizar Algoritmo");
+		tglbtnAcionarAlgoritmo.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		tglbtnAcionarAlgoritmo.setBounds(655, 82, 117, 19);
 		tglbtnAcionarAlgoritmo.addChangeListener(new ChangeListener( ) {
 		      public void stateChanged(ChangeEvent ev) {
 		    	  if(algoritmoLigado) algoritmoLigado=false;
@@ -68,10 +89,6 @@ public class MainWindow implements Runnable{
 		      }
 		    });
 		frmAplicaoDeRealidade.getContentPane().add(tglbtnAcionarAlgoritmo);
-		getFrmAplicaoDeRealidade().setForeground(SystemColor.inactiveCaptionBorder);
-		getFrmAplicaoDeRealidade().setResizable(false);
-		getFrmAplicaoDeRealidade().setBounds(50, 50, 900, 540);
-		getFrmAplicaoDeRealidade().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
 		getFrmAplicaoDeRealidade().setJMenuBar(menuBar);
@@ -160,6 +177,7 @@ public class MainWindow implements Runnable{
 
 	private void setRAPanel(CamRAPanel rAPanel) {
 		RAPanel = rAPanel;
+		RAPanel.setSize(640, 480);
 	}
 
 	public JSlider getSliderThreshold() {
