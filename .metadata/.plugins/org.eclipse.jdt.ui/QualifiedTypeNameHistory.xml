@@ -40,4 +40,5 @@
 <fullyQualifiedTypeName name="javax.swing.event.ChangeListener"/>
 <fullyQualifiedTypeName name="ij.ImagePlus"/>
 <fullyQualifiedTypeName name="ij.process.ImageProcessor"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
 </qualifiedTypeNameHistroy>
