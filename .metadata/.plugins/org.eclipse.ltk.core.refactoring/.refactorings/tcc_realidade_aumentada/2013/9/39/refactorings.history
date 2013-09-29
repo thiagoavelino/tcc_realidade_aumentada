@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Encapsulate field &apos;Model.LinearHT.houghArray&apos; in &apos;Model.LinearHT&apos;&#x0D;&#x0A;- Original project: &apos;tcc_realidade_aumentada&apos;&#x0D;&#x0A;- Original element: &apos;Model.LinearHT.houghArray&apos;&#x0D;&#x0A;- Getter method name: &apos;getHoughArray&apos;&#x0D;&#x0A;- Setter method name: &apos;setHoughArray&apos;&#x0D;&#x0A;- Field visibility: &apos;public&apos;&#x0D;&#x0A;- Do not use getter and setter methods in declaring type" comments="false" declaring="false" description="Encapsulate field &apos;houghArray&apos;" flags="589830" getter="getHoughArray" id="org.eclipse.jdt.ui.self.encapsulate" input="/&lt;Model{LinearHT.java[LinearHT^houghArray" insertion="2" setter="setHoughArray" stamp="1380484898296" version="1.0" visibility="1"/>
+</session>

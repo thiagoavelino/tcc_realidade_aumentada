@@ -1,0 +1,33 @@
+package Test;
+
+import ij.ImagePlus;
+import ij.process.ImageProcessor;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import Model.LinearHT;
+
+public class UnitTestHoughTransform {
+	
+	@Test
+	public void testAddPixelAreaTest() {
+		BufferedImage img = null;
+		try {
+		    img = ImageIO.read(new File("test_hough_01.png"));
+		} catch (IOException e) {
+		}
+		ImagePlus implus = new ImagePlus("houghtest",img);
+		ImageProcessor ip = implus.getProcessor();
+		LinearHT lht = new LinearHT(ip, 255, 576);
+		lht.fillHoughAccumulattor();
+		
+		//Assert.assertEquals(imgAlgorithms.getLabeledAreas().size(), 14);
+	}
+}

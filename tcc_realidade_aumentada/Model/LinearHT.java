@@ -32,7 +32,7 @@ public class LinearHT {
 		int w = ip.getWidth();
 		for(int v=0; v<h;v++)
 			for(int u=0; u<w; u++){
-				if(ip.get(u,v)>0){
+				if(ip.get(u,v)<-1){
 					doPixel(u,v);
 				}
 			}
@@ -47,6 +47,14 @@ public class LinearHT {
 				houghArray[i][r]++;
 			}
 		}
+	}
+
+	public int [][] getHoughArray() {
+		return houghArray;
+	}
+
+	public void setHoughArray(int [][] houghArray) {
+		this.houghArray = houghArray;
 	}
 
 }
