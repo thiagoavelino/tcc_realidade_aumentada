@@ -60,8 +60,6 @@ public class KMeans
 		for(int j=0; j<this.num_clusters; j++)
 			centroids.add(new Centroid (getMinX()+((2*j+1)*(stepX/2)),getMinY()+((2*j+1)*(stepY/2))));
 		
-		System.out.println(centroids.get(0));
-		System.out.println(centroids.get(1));
 		System.out.print("\n");
 		return;
 	}
