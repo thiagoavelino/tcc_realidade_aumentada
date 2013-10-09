@@ -23,9 +23,7 @@
 <fullyQualifiedTypeName name="java.awt.color.ColorSpace"/>
 <fullyQualifiedTypeName name="org.opencv.imgproc.Imgproc"/>
 <fullyQualifiedTypeName name="Model.ImgAlgorithms"/>
-<fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="java.awt.Graphics2D"/>
-<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
 <fullyQualifiedTypeName name="Model.LabelArea"/>
 <fullyQualifiedTypeName name="Model.Pixel"/>
 <fullyQualifiedTypeName name="org.junit.Assert"/>
@@ -37,10 +35,16 @@
 <fullyQualifiedTypeName name="org.junit.Ignore"/>
 <fullyQualifiedTypeName name="javax.swing.event.ChangeEvent"/>
 <fullyQualifiedTypeName name="javax.swing.event.ChangeListener"/>
-<fullyQualifiedTypeName name="ij.ImagePlus"/>
-<fullyQualifiedTypeName name="ij.process.ImageProcessor"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="com.sun.media.sound.Toolkit"/>
 <fullyQualifiedTypeName name="java.awt.Toolkit"/>
 <fullyQualifiedTypeName name="javax.swing.JSlider"/>
+<fullyQualifiedTypeName name="ij.ImagePlus"/>
+<fullyQualifiedTypeName name="ij.process.ImageProcessor"/>
+<fullyQualifiedTypeName name="Model.LinearHT"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="Model.HoughTransform"/>
+<fullyQualifiedTypeName name="Model.HoughLine"/>
+<fullyQualifiedTypeName name="java.util.Vector"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
 </qualifiedTypeNameHistroy>

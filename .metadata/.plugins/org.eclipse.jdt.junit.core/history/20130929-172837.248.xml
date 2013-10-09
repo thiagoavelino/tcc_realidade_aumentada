@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="UnitTestHoughTransform" project="tcc_realidade_aumentada" tests="1" started="1" failures="0" errors="0" ignored="0">
-  <testsuite name="Test.UnitTestHoughTransform" time="0.19">
-    <testcase name="testAddPixelAreaTest" classname="Test.UnitTestHoughTransform" time="0.19"/>
-  </testsuite>
-</testrun>

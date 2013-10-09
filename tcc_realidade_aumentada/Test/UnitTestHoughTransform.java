@@ -28,19 +28,12 @@ public class UnitTestHoughTransform {
 		} catch (IOException e) {
 		}
 		HoughTransform h = new HoughTransform(img.getWidth(), img.getHeight()); 
-	 
-        // add the points from the image (or call the addPoint method separately if your points are not in an image 
         h.addPoints(img); 
- 
-        // get the lines out 
         Vector<HoughLine> lines = h.getLines(200); 
- 
-        // draw the lines back onto the image 
         for (int j = 0; j < lines.size(); j++) { 
             HoughLine line = lines.elementAt(j); 
             line.draw(img, Color.RED.getRGB()); 
         } 
         ImageIO.write(img, "PNG", new File("ttest.png"));
-		//Assert.assertEquals(imgAlgorithms.getLabeledAreas().size(), 14);
 	}
 }
