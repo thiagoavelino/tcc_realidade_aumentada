@@ -1,6 +1,8 @@
 package View;
 
 import javax.swing.JFrame;
+
+import java.awt.BorderLayout;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 
@@ -10,9 +12,14 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 
 import java.awt.Dimension;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JToolBar;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
@@ -35,6 +42,10 @@ public class MainWindow implements Runnable{
 	private JSlider sliderThreshold;
 	private boolean algoritmoLigado;
 	private boolean binaryImage;
+	private JToolBar toolBar;
+	private JButton buttonKmeans;
+	private JButton buttonLinear;
+	private JButton buttonPolinomial;
 
 	public MainWindow() {
 		initialize();
@@ -56,7 +67,9 @@ public class MainWindow implements Runnable{
 		
 		getFrmAplicaoDeRealidade().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-
+		//Tool Bar
+		createToolBar();
+		
 		setSliderThreshold(new JSlider(JSlider.HORIZONTAL, 0, 255, 125));
 		getSliderThreshold().setMinorTickSpacing(5);
 		getSliderThreshold().setMajorTickSpacing(20);
@@ -87,6 +100,7 @@ public class MainWindow implements Runnable{
 		    });
 		frmAplicaoDeRealidade.getContentPane().add(tglbtnAcionarAlgoritmo);
 		
+		
 		JMenuBar menuBar = new JMenuBar();
 		getFrmAplicaoDeRealidade().setJMenuBar(menuBar);
 		
@@ -100,6 +114,22 @@ public class MainWindow implements Runnable{
 		JMenuItem mntmSair = new JMenuItem("Sair");
 		mntmSair.addActionListener(closeFrame());
 		mnArquivo.add(mntmSair);
+	}
+
+	public void createToolBar() {
+		toolBar = new JToolBar();
+		buttonKmeans = new JButton();
+		buttonKmeans.setIcon(new ImageIcon("icons/kmeans.jpg"));
+		toolBar.add(buttonKmeans);
+		buttonLinear = new JButton();
+		buttonLinear.setIcon(new ImageIcon("icons/linear.jpg"));
+		toolBar.add(buttonLinear);
+		buttonPolinomial = new JButton();
+		buttonPolinomial.setIcon(new ImageIcon("icons/polinomial.jpg"));
+		toolBar.add(buttonPolinomial);
+		toolBar.setBounds(0, 0, 645, 40);
+		toolBar.setFloatable(false);
+		frmAplicaoDeRealidade.getContentPane().add(toolBar);
 	}
 
 	public ActionListener closeFrame() {

@@ -20,7 +20,7 @@ public class CamRAPanel extends JPanel {
         Graphics2D g2d = getMaster().createGraphics();
         g2d.drawImage(getMaster(), 0, 0, null);
        // g2d.dispose();
-        setBounds(new Rectangle(5, 5, 640, 480));
+        setBounds(new Rectangle(5, 45, 640, 480));
     }
 
     @Override
