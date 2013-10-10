@@ -33,9 +33,6 @@ import javax.swing.JSlider;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JToggleButton;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 public class MainWindow implements Runnable{
 
 	private JFrame frmAplicaoDeRealidade;
@@ -49,7 +46,6 @@ public class MainWindow implements Runnable{
 	private JButton buttonKmeans;
 	private JButton buttonLinear;
 	private JButton buttonPolinomial;
-	private JPanel panelConfig;
 
 	public MainWindow() {
 		initialize();
@@ -95,7 +91,7 @@ public class MainWindow implements Runnable{
 		
 		tglbtnAcionarAlgoritmo = new JToggleButton("Visualizar Algoritmo");
 		tglbtnAcionarAlgoritmo.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		tglbtnAcionarAlgoritmo.setBounds(665, 82, 117, 19);
+		tglbtnAcionarAlgoritmo.setBounds(655, 82, 117, 19);
 		tglbtnAcionarAlgoritmo.addChangeListener(new ChangeListener( ) {
 		      public void stateChanged(ChangeEvent ev) {
 		    	  if(algoritmoLigado) algoritmoLigado=false;
@@ -103,14 +99,6 @@ public class MainWindow implements Runnable{
 		      }
 		    });
 		frmAplicaoDeRealidade.getContentPane().add(tglbtnAcionarAlgoritmo);
-		
-		generatePainelInitial();
-		
-		
-		JLabel lblPainelAlgoritmo = new JLabel("Painel Algoritmo:");
-		lblPainelAlgoritmo.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblPainelAlgoritmo.setBounds(665, 115, 117, 14);
-		frmAplicaoDeRealidade.getContentPane().add(lblPainelAlgoritmo);
 		
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -128,29 +116,16 @@ public class MainWindow implements Runnable{
 		mnArquivo.add(mntmSair);
 	}
 
-	public void generatePainelInitial() {
-		panelConfig = new JPanel();
-		panelConfig.setBorder(new LineBorder(Color.GRAY, 1, true));
-		panelConfig.setBounds(666, 140, 309, 385);
-		frmAplicaoDeRealidade.getContentPane().add(panelConfig);
-		JLabel initialText = new JLabel("Selecione um algoritmo na barra acima da image.");
-		initialText.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panelConfig.add(initialText);
-	}
-
 	public void createToolBar() {
 		toolBar = new JToolBar();
 		buttonKmeans = new JButton();
 		buttonKmeans.setIcon(new ImageIcon("icons/kmeans.jpg"));
-		buttonKmeans.addActionListener(this.buttonKmeansAction());
 		toolBar.add(buttonKmeans);
 		buttonLinear = new JButton();
 		buttonLinear.setIcon(new ImageIcon("icons/linear.jpg"));
-		buttonLinear.addActionListener(this.buttonLinearAction());
 		toolBar.add(buttonLinear);
 		buttonPolinomial = new JButton();
 		buttonPolinomial.setIcon(new ImageIcon("icons/polinomial.jpg"));
-		buttonPolinomial.addActionListener(this.buttonPolinomialAction());
 		toolBar.add(buttonPolinomial);
 		toolBar.setBounds(0, 0, 645, 40);
 		toolBar.setFloatable(false);
@@ -186,49 +161,6 @@ public class MainWindow implements Runnable{
 					Model.Cam cam = new Model.Cam();
 					cam.saveImage(caminhoArquivo, image);
 				}
-			}
-		};
-	}
-	
-	public ActionListener buttonKmeansAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panelConfig.removeAll();
-				JLabel kmeans = new JLabel("K-means");
-				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(kmeans);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	public ActionListener buttonLinearAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panelConfig.removeAll();
-				JLabel kmeans = new JLabel("Linear");
-				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(kmeans);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	public ActionListener buttonPolinomialAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panelConfig.removeAll();
-				JLabel kmeans = new JLabel("Polinomial");
-				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(kmeans);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
 			}
 		};
 	}

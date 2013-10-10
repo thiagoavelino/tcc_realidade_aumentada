@@ -146,11 +146,9 @@ public class MainWindow implements Runnable{
 		toolBar.add(buttonKmeans);
 		buttonLinear = new JButton();
 		buttonLinear.setIcon(new ImageIcon("icons/linear.jpg"));
-		buttonLinear.addActionListener(this.buttonLinearAction());
 		toolBar.add(buttonLinear);
 		buttonPolinomial = new JButton();
 		buttonPolinomial.setIcon(new ImageIcon("icons/polinomial.jpg"));
-		buttonPolinomial.addActionListener(this.buttonPolinomialAction());
 		toolBar.add(buttonPolinomial);
 		toolBar.setBounds(0, 0, 645, 40);
 		toolBar.setFloatable(false);
@@ -196,34 +194,6 @@ public class MainWindow implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				panelConfig.removeAll();
 				JLabel kmeans = new JLabel("K-means");
-				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(kmeans);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	public ActionListener buttonLinearAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panelConfig.removeAll();
-				JLabel kmeans = new JLabel("Linear");
-				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(kmeans);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	public ActionListener buttonPolinomialAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panelConfig.removeAll();
-				JLabel kmeans = new JLabel("Polinomial");
 				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));
 				panelConfig.add(kmeans);
 				panelConfig.revalidate();

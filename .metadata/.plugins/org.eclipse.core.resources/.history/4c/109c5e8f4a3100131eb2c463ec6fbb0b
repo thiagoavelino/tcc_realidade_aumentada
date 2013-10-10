@@ -146,11 +146,9 @@ public class MainWindow implements Runnable{
 		toolBar.add(buttonKmeans);
 		buttonLinear = new JButton();
 		buttonLinear.setIcon(new ImageIcon("icons/linear.jpg"));
-		buttonLinear.addActionListener(this.buttonLinearAction());
 		toolBar.add(buttonLinear);
 		buttonPolinomial = new JButton();
 		buttonPolinomial.setIcon(new ImageIcon("icons/polinomial.jpg"));
-		buttonPolinomial.addActionListener(this.buttonPolinomialAction());
 		toolBar.add(buttonPolinomial);
 		toolBar.setBounds(0, 0, 645, 40);
 		toolBar.setFloatable(false);
