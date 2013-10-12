@@ -1,5 +1,6 @@
 package View;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
@@ -16,10 +17,14 @@ import java.awt.Dimension;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JToolBar;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
@@ -28,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.awt.ScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JLabel;
@@ -36,6 +42,7 @@ import javax.swing.JToggleButton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.JTextPane;
 public class MainWindow implements Runnable{
 
 	private JFrame frmAplicaoDeRealidade;
@@ -198,6 +205,25 @@ public class MainWindow implements Runnable{
 				JLabel kmeans = new JLabel("K-means");
 				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));
 				panelConfig.add(kmeans);
+				ImageIcon imageKmeans = new ImageIcon("textos/kmeans.jpg"); 
+				JLabel imageKmeansLabel = new JLabel(); 
+				imageKmeansLabel.setIcon(imageKmeans); 
+				panelConfig.add(imageKmeansLabel);
+				JLabel numeroPontos = new JLabel("Número de pontos detectados: ");
+				numeroPontos.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panelConfig.add(numeroPontos);
+				JLabel numeroPontosField = new JLabel("1");
+				numeroPontosField.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panelConfig.add(numeroPontosField);
+				JLabel numeroClustersField = new JLabel("Defina o número de clusters:");
+				numeroClustersField.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panelConfig.add(numeroClustersField);
+				SpinnerNumberModel model = new SpinnerNumberModel(1.0, 1.0, 10.0, 1.0);  
+				JSpinner spinnerKmeans = new JSpinner(model);
+				JFormattedTextField tf = ((JSpinner.DefaultEditor)spinnerKmeans.getEditor())
+						.getTextField();
+						  tf.setEditable(false);
+				panelConfig.add(spinnerKmeans);
 				panelConfig.revalidate();
 				panelConfig.repaint();
 				
