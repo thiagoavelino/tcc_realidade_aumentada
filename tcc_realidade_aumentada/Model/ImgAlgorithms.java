@@ -1,5 +1,6 @@
 package Model;
 
+import KMeansPackage.*;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
@@ -18,12 +19,16 @@ public class ImgAlgorithms {
 	private ArrayList<LabelArea> labeledAreas;
 	private ArrayList<Pixel> centroids;
 	private int threshold;
+	private ArrayList<Color> colors;
+	private int numberClustersKmeans;
 	
 	public ImgAlgorithms(BufferedImage imageTemp){
+		numberClustersKmeans = 1;
 		threshold =15;
 		this.setImage(imageTemp);
 		labeledAreas = new ArrayList<LabelArea>();
 		centroids = new ArrayList<Pixel>();
+		this.CreateArrayColors();
 	}
 	
 	public void toGrayscale()  {  
@@ -57,20 +62,43 @@ public class ImgAlgorithms {
 		}
 	}
 	
-	public void augumentedReality(){
-		for(int i=0; i<this.centroids.size(); i++){
-			Pixel centroid = centroids.get(i);
-			int xPix = centroid.getX(); 
-			int yPix =centroid.getY();
-			
-			int color = Color.DARK_GRAY.getRGB();
-			int tam = 2;
-			paintPoint(xPix, yPix, color, tam);
-			color = Color.YELLOW.getRGB();
-			tam = 1;
-			paintPoint(xPix, yPix, color, tam);
-			
+	public void centroidsPainting(String algoritmo){
+		switch(algoritmo){
+			case"kmeans":
+				if(this.centroids.size()>0){
+					ArrayList<Data> dataList = new ArrayList<Data>();
+					for(int i=0; i<this.centroids.size(); i++){
+						Pixel dataPixel  = centroids.get(i);
+						dataList.add(new Data(dataPixel.getX(),dataPixel.getY()));
+					}
+					KMeans kmeans = new KMeans(dataList, this.numberClustersKmeans);
+					ArrayList<Data> dataKmeans = kmeans.getProcessedData();
+					for(int i=0; i< dataKmeans.size(); i++){
+						Data data = dataKmeans.get(i);
+						int xPix = (int)data.X(); 
+						int yPix = (int)data.Y();
+						int color = data.cluster();
+						paintPointColor(xPix, yPix, colors.get(color).getRGB());
+					}
+				}
+				break;
+			default:
+				for(int i=0; i<this.centroids.size(); i++){
+					Pixel centroid = centroids.get(i);
+					int xPix = centroid.getX(); 
+					int yPix =centroid.getY();
+					paintPointColor(xPix, yPix, Color.YELLOW.getRGB());
+					
+				}	
 		}
+	}
+
+	public void paintPointColor(int xPix, int yPix, int colorPoint) {
+		int color = Color.DARK_GRAY.getRGB();
+		int tam = 3;
+		paintPoint(xPix, yPix, color, tam);
+		tam = 2;
+		paintPoint(xPix, yPix, colorPoint, tam);
 	}
 
 	public void paintPoint(int xPix, int yPix, int color, int tam) {
@@ -155,7 +183,21 @@ public class ImgAlgorithms {
 		ij.process.ImageProcessor ip = implus.getProcessor();
 		ip.erode();
 		output = ip.getBufferedImage();
-		//ImageProcessor ip = IJ.openImage("/path/to/image.tif");
+	}
+	
+	public void CreateArrayColors(){
+		colors = new ArrayList<Color>();
+		int j = 255;
+		for (int i= 1; i<8; i++){
+			colors.add(new Color(0,0,j));
+			colors.add(new Color(j,0,0));
+			colors.add(new Color(0,j,0));
+			colors.add(new Color(j,j,0));
+			colors.add(new Color(0,j,j));
+			colors.add(new Color(j,0,j));
+			colors.add(new Color(j,j,j));
+			j = j/(2*i);
+		}
 	}
 		
 	public BufferedImage getImage() {
@@ -196,6 +238,14 @@ public class ImgAlgorithms {
 
 	public void setCentroids(ArrayList<Pixel> centroids) {
 		this.centroids = centroids;
+	}
+
+	public int getNumberClustersKmeans() {
+		return numberClustersKmeans;
+	}
+
+	public void setNumberClustersKmeans(int numberClustersKmeans) {
+		this.numberClustersKmeans = numberClustersKmeans;
 	}
 
 }

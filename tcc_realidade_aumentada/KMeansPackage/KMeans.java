@@ -4,23 +4,12 @@ import java.util.ArrayList;
 
 public class KMeans
 {
-	private int num_clusters = 2;    // Total clusters.
-	private int TOTAL_DATA = 7;      // Total data points.
+	private int num_clusters;    // Total clusters.
+	private int TOTAL_DATA;      // Total data points.
 
 	private ArrayList<Data> Samples;
 	private static ArrayList<Data> dataSet = new ArrayList<Data>();
 	private static ArrayList<Centroid> centroids = new ArrayList<Centroid>();
-
-	public KMeans(ArrayList<Data> alData, ArrayList<Centroid> alCentroid, int numClusters){
-		Samples = new ArrayList<Data>();
-		for(Data d: alData){
-			Samples.add(d);
-		}
-		this.num_clusters = numClusters;
-		this.TOTAL_DATA = alData.size();
-		this.initialize();
-		this.kMeanCluster();
-	}
 	
 	public KMeans(ArrayList<Data> alData, int numClusters){
 		Samples = new ArrayList<Data>();
@@ -42,7 +31,6 @@ public class KMeans
 	}
 
 	public ArrayList<Data> getProcessedData(){
-		//return SAMPLES;
 		return dataSet;
 	}
 	
@@ -52,7 +40,7 @@ public class KMeans
 
 	private void initialize()
 	{
-		System.out.println("Centroids initialized at:");
+		//System.out.println("Centroids initialized at:");
 		//centroids.add(new Centroid(1.0, 1.0)); // lowest set.
 		//centroids.add(new Centroid(5.0, 7.0)); // highest set.
 		double stepX = (Math.abs(getMinX())+Math.abs(getMaxX()))/num_clusters;

@@ -57,6 +57,8 @@ public class MainWindow implements Runnable{
 	private JButton buttonLinear;
 	private JButton buttonPolinomial;
 	private JPanel panelConfig;
+	private String algorithmSelected;
+	private JSpinner spinnerKmeans;
 
 	public MainWindow() {
 		initialize();
@@ -65,6 +67,7 @@ public class MainWindow implements Runnable{
 	private void initialize() {
 		
 		algoritmoLigado = false;
+		algorithmSelected = "";
 		setFrmAplicaoDeRealidade(new JFrame());
 		getFrmAplicaoDeRealidade().setPreferredSize(new Dimension(1000, 600));
 		getFrmAplicaoDeRealidade().pack();
@@ -201,6 +204,7 @@ public class MainWindow implements Runnable{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				algorithmSelected = "kmeans";
 				panelConfig.removeAll();
 				JLabel kmeans = new JLabel("K-means");
 				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -218,8 +222,8 @@ public class MainWindow implements Runnable{
 				JLabel numeroClustersField = new JLabel("Defina o número de clusters:");
 				numeroClustersField.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				panelConfig.add(numeroClustersField);
-				SpinnerNumberModel model = new SpinnerNumberModel(1.0, 1.0, 10.0, 1.0);  
-				JSpinner spinnerKmeans = new JSpinner(model);
+				SpinnerNumberModel model = new SpinnerNumberModel(1.0, 1.0, 30.0, 1.0);  
+				spinnerKmeans = new JSpinner(model);
 				JFormattedTextField tf = ((JSpinner.DefaultEditor)spinnerKmeans.getEditor())
 						.getTextField();
 						  tf.setEditable(false);
@@ -323,5 +327,21 @@ public class MainWindow implements Runnable{
 
 	public void setAlgoritmoLigado(boolean algoritmoLigado) {
 		this.algoritmoLigado = algoritmoLigado;
+	}
+
+	public String getAlgorithmSelected() {
+		return algorithmSelected;
+	}
+
+	public void setAlgorithmSelected(String algorithmSelected) {
+		this.algorithmSelected = algorithmSelected;
+	}
+
+	public JSpinner getSpinnerKmeans() {
+		return spinnerKmeans;
+	}
+
+	public void setSpinnerKmeans(JSpinner spinnerKmeans) {
+		this.spinnerKmeans = spinnerKmeans;
 	}
 }

@@ -1,6 +1,6 @@
 package KMeansPackage;
 
-    class Centroid
+    public class Centroid
     {
         private double mX = 0.0;
         private double mY = 0.0;
