@@ -47,8 +47,6 @@ public class KMeans
 		double stepY = (Math.abs(getMinY())+Math.abs(getMaxY()))/num_clusters;
 		for(int j=0; j<this.num_clusters; j++)
 			centroids.add(new Centroid (getMinX()+((2*j+1)*(stepX/2)),getMinY()+((2*j+1)*(stepY/2))));
-		
-		System.out.print("\n");
 		return;
 	}
 	
