@@ -43,10 +43,11 @@ public class CamMonitor implements Runnable{
 					linesTemp = houghTransform(imgAlgorithms); 
 				}
 				imgAlgorithms.setCentroids(centroidsTemp);
-				String spinnerValue = mainWindow.getSpinnerKmeans().getValue().toString();
+				/*String spinnerValue = mainWindow.getSpinnerKmeans().getValue().toString();
 				float spinnerFloatValue = Float.parseFloat(spinnerValue);
 				imgAlgorithms.setNumberClustersKmeans((int)spinnerFloatValue);
-				imgAlgorithms.centroidsPainting(mainWindow.getAlgorithmSelected());
+				imgAlgorithms.centroidsPainting(mainWindow.getAlgorithmSelected());*/
+				imgAlgorithms.centroidsPainting("");
 				
 				PaintHougLines(linesTemp, imgAlgorithms);
 				

@@ -18,7 +18,6 @@ import com.github.sarxos.webcam.Webcam;
 
 public class CamMonitor implements Runnable{
 	private MainWindow mainWindow;
-	private ArrayList<Pixel> centroidsTemp;
 	
 	public CamMonitor(MainWindow mainWindow){
 		this.mainWindow = mainWindow;
@@ -28,7 +27,7 @@ public class CamMonitor implements Runnable{
 	public void run() {
 		
 		int timeCallAlgorithm = 0;
-		centroidsTemp = new ArrayList<Pixel>();
+		ArrayList<Pixel> centroidsTemp = new ArrayList<Pixel>();
 		Vector<HoughLine> linesTemp = new Vector<HoughLine>();
 		
 		while(true){
@@ -36,20 +35,21 @@ public class CamMonitor implements Runnable{
 			
 			if(mainWindow.isAlgoritmoLigado()){
 				ImgAlgorithms imgAlgorithms = imageSegmentation(image);
-				
+				imgAlgorithms.setCentroids(centroidsTemp);
 				if(timeCallAlgorithm == 20){
 					timeCallAlgorithm = 0;
-					calculateCentroids(imgAlgorithms);
+					centroidsTemp = calculateCentroids(imgAlgorithms);
 					linesTemp = houghTransform(imgAlgorithms); 
 				}
-				imgAlgorithms.setCentroids(centroidsTemp);
 				String spinnerValue = mainWindow.getSpinnerKmeans().getValue().toString();
 				float spinnerFloatValue = Float.parseFloat(spinnerValue);
 				imgAlgorithms.setNumberClustersKmeans((int)spinnerFloatValue);
 				imgAlgorithms.centroidsPainting(mainWindow.getAlgorithmSelected());
-				
-				PaintHougLines(linesTemp, imgAlgorithms);
-				
+				//houghlines
+				for (int j = 0; j < linesTemp.size(); j++) { 
+		            HoughLine line = linesTemp.elementAt(j); 
+		            line.draw(imgAlgorithms.getOutput(), Color.RED.getRGB()); 
+		        }
 				CamRAPanel camRAPAnel = mainWindow.getRAPanel();
 				camRAPAnel.setMaster(imgAlgorithms.getOutput());
 				camRAPAnel.repaint();
@@ -72,13 +72,6 @@ public class CamMonitor implements Runnable{
 		
 	}
 
-	public void PaintHougLines(Vector<HoughLine> linesTemp,	ImgAlgorithms imgAlgorithms) {
-		for (int j = 0; j < linesTemp.size(); j++) { 
-		    HoughLine line = linesTemp.elementAt(j); 
-		    line.draw(imgAlgorithms.getOutput(), Color.RED.getRGB()); 
-		}
-	}
-
 	public Vector<HoughLine> houghTransform(ImgAlgorithms imgAlgorithms) {
 		Vector<HoughLine> linesTemp;
 		HoughTransform h = new HoughTransform(imgAlgorithms.getOutput().getWidth(), imgAlgorithms.getOutput().getHeight()); 
@@ -87,10 +80,12 @@ public class CamMonitor implements Runnable{
 		return linesTemp;
 	}
 
-	public void calculateCentroids(ImgAlgorithms imgAlgorithms) {
+	public ArrayList<Pixel> calculateCentroids(ImgAlgorithms imgAlgorithms) {
+		ArrayList<Pixel> centroidsTemp;
 		imgAlgorithms.setImage(imgAlgorithms.getOutput());
 		imgAlgorithms.calculateArrayCentroides();
 		centroidsTemp = imgAlgorithms.getCentroids();
+		return centroidsTemp;
 	}
 
 	public ImgAlgorithms imageSegmentation(BufferedImage image) {
@@ -99,14 +94,6 @@ public class CamMonitor implements Runnable{
 		imgAlgorithms.toBinary();
 		imgAlgorithms.erosion();
 		return imgAlgorithms;
-	}
-
-	public ArrayList<Pixel> getCentroidsTemp() {
-		return centroidsTemp;
-	}
-
-	public void setCentroidsTemp(ArrayList<Pixel> centroidsTemp) {
-		this.centroidsTemp = centroidsTemp;
 	}
 
 }

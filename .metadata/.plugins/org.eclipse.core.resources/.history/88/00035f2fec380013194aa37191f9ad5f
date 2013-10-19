@@ -36,13 +36,12 @@ public class CamMonitor implements Runnable{
 			
 			if(mainWindow.isAlgoritmoLigado()){
 				ImgAlgorithms imgAlgorithms = imageSegmentation(image);
-				
+				imgAlgorithms.setCentroids(centroidsTemp);
 				if(timeCallAlgorithm == 20){
 					timeCallAlgorithm = 0;
 					calculateCentroids(imgAlgorithms);
 					linesTemp = houghTransform(imgAlgorithms); 
 				}
-				imgAlgorithms.setCentroids(centroidsTemp);
 				String spinnerValue = mainWindow.getSpinnerKmeans().getValue().toString();
 				float spinnerFloatValue = Float.parseFloat(spinnerValue);
 				imgAlgorithms.setNumberClustersKmeans((int)spinnerFloatValue);
@@ -88,6 +87,7 @@ public class CamMonitor implements Runnable{
 	}
 
 	public void calculateCentroids(ImgAlgorithms imgAlgorithms) {
+		centroidsTemp
 		imgAlgorithms.setImage(imgAlgorithms.getOutput());
 		imgAlgorithms.calculateArrayCentroides();
 		centroidsTemp = imgAlgorithms.getCentroids();

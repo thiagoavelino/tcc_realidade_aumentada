@@ -8,10 +8,12 @@ public class KMeans
 	private int TOTAL_DATA;      // Total data points.
 
 	private ArrayList<Data> Samples;
-	private static ArrayList<Data> dataSet = new ArrayList<Data>();
-	private static ArrayList<Centroid> centroids = new ArrayList<Centroid>();
+	private static ArrayList<Data> dataSet;
+	private static ArrayList<Centroid> centroids;
 	
 	public KMeans(ArrayList<Data> alData, int numClusters){
+		dataSet = new ArrayList<Data>();
+		centroids = new ArrayList<Centroid>();
 		Samples = new ArrayList<Data>();
 		for(Data d: alData){
 			Samples.add(d);

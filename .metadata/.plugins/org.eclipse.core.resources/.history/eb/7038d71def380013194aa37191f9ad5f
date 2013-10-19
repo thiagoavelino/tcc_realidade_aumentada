@@ -67,7 +67,7 @@ public class ImgAlgorithms {
 			case"kmeans":
 				if(this.centroids.size()>0){
 					ArrayList<Data> dataList = new ArrayList<Data>();
-					dataList.clear();
+					dataList.removeAll();
 					for(int i=0; i<this.centroids.size(); i++){
 						Pixel dataPixel  = centroids.get(i);
 						dataList.add(new Data(dataPixel.getX(),dataPixel.getY()));
