@@ -16,60 +16,71 @@ import com.github.sarxos.webcam.Webcam;
 
 
 
-public class CamMonitor implements Runnable{
+public class CamMonitor extends Thread {
 	private MainWindow mainWindow;
 	private ArrayList<Pixel> centroidsTemp;
+	private BufferedImage image;
+	private BufferedImage imageCamera;
+	private Vector<HoughLine> linesTemp;
+	private int timeCallAlgorithm;
 	
 	public CamMonitor(MainWindow mainWindow){
 		this.mainWindow = mainWindow;
+		timeCallAlgorithm = 0;
+		centroidsTemp = new ArrayList<Pixel>();
+		linesTemp = new Vector<HoughLine>();
 	}
 
 	@Override
 	public void run() {
 		
-		int timeCallAlgorithm = 0;
-		centroidsTemp = new ArrayList<Pixel>();
-		Vector<HoughLine> linesTemp = new Vector<HoughLine>();
-		
 		while(true){
-			BufferedImage image = Webcam.getDefault().getImage();
-			
-			if(mainWindow.isAlgoritmoLigado()){
-				ImgAlgorithms imgAlgorithms = imageSegmentation(image);
-				
-				if(timeCallAlgorithm == 20){
-					timeCallAlgorithm = 0;
-					calculateCentroids(imgAlgorithms);
-					linesTemp = houghTransform(imgAlgorithms); 
-				}
-				imgAlgorithms.setCentroids(centroidsTemp);
-				String spinnerValue = mainWindow.getSpinnerKmeans().getValue().toString();
-				float spinnerFloatValue = Float.parseFloat(spinnerValue);
-				imgAlgorithms.setNumberClustersKmeans((int)spinnerFloatValue);
-				imgAlgorithms.centroidsPainting(mainWindow.getAlgorithmSelected());
-				
-				PaintHougLines(linesTemp, imgAlgorithms);
-				
-				CamRAPanel camRAPAnel = mainWindow.getRAPanel();
-				camRAPAnel.setMaster(imgAlgorithms.getOutput());
-				camRAPAnel.repaint();
-				timeCallAlgorithm++;
-			}else{
-				ImgAlgorithms imgAlgorithms = new ImgAlgorithms(image);
-				imgAlgorithms.setThreshold(mainWindow.getSliderThreshold().getValue());
-				imgAlgorithms.toBinary();
-				CamRAPanel camRAPAnel = mainWindow.getRAPanel();
-				camRAPAnel.setMaster(imgAlgorithms.getImage());
-				camRAPAnel.repaint();
+			image = Webcam.getDefault().getImage();
+			ImgAlgorithms imgAlgorithms = imageSegmentation(image);
+			imgAlgorithms.setCentroids(centroidsTemp);
+			getInformation(imgAlgorithms);
+			if(!mainWindow.isAlgoritmoLigado()){
+				imgAlgorithms.setOutput(image);
+				//PaintHougLines(linesTemp, imgAlgorithms);
 			}
+			CamRAPanel camRAPAnel = mainWindow.getRAPanel();
+			String selectedAlgorithm = mainWindow.getAlgorithmSelected();
+			camRAPAnel.setAlgorithm(selectedAlgorithm);
+			switch(selectedAlgorithm){
+				case"kmeans":
+					String spinnerValue = mainWindow.getSpinnerKmeans().getValue().toString();
+					float spinnerFloatValue = Float.parseFloat(spinnerValue);
+					imgAlgorithms.setNumberClustersKmeans((int)spinnerFloatValue);
+					imgAlgorithms.calculateKmeans();
+					camRAPAnel.setDataKmeans(imgAlgorithms.getDataKmeans());
+					camRAPAnel.setAlgorithm(selectedAlgorithm);
+					break;
+				default:
+					camRAPAnel.setCentroids(centroidsTemp);
+					break;
+			}
+			
+			getInformation(imgAlgorithms);
+			camRAPAnel.setMaster(imgAlgorithms.getOutput());
+			camRAPAnel.revalidate();
+			camRAPAnel.repaint();
 			
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+
 		}
-		
+	}
+
+	public void getInformation(ImgAlgorithms imgAlgorithms) {
+		if(timeCallAlgorithm == 10){
+			timeCallAlgorithm = 0;
+			calculateCentroids(imgAlgorithms);
+			linesTemp = houghTransform(imgAlgorithms); 
+		}
+		timeCallAlgorithm++;
 	}
 
 	public void PaintHougLines(Vector<HoughLine> linesTemp,	ImgAlgorithms imgAlgorithms) {

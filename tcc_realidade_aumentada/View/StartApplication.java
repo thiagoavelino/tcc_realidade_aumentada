@@ -1,8 +1,14 @@
 package View;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.SwingWorker;
+import javax.swing.Timer;
+
+import com.github.sarxos.webcam.Webcam;
 
 
 public class StartApplication {
@@ -23,7 +29,7 @@ public class StartApplication {
 					    return null;
 					   }
 				};
-				worker.execute();
+				worker.execute();				
 			}
 		});
 	}

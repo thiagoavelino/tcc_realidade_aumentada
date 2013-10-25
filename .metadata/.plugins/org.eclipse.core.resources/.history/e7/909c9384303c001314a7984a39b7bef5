@@ -1,0 +1,49 @@
+package View;
+
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.SwingWorker;
+import javax.swing.Timer;
+
+import com.github.sarxos.webcam.Webcam;
+
+
+public class StartApplication {
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				final MainWindow mainWindow = new MainWindow();
+				mainWindow.run();
+				SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+					   @Override
+					   protected Void doInBackground() throws Exception {
+						   int delay = 10; //milliseconds
+						   final Model.CamMonitor2 camMonitor2 = new Model.CamMonitor2(mainWindow);
+						   ActionListener taskPerformer = new ActionListener() {
+						       public void actionPerformed(ActionEvent evt) {
+						    	   try {
+									camMonitor2.executeMonitor();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+						       }
+						   };
+						   new Timer(delay, taskPerformer).start();
+						   //Model.CamMonitor camMonitor = new Model.CamMonitor(mainWindow);
+						   //camMonitor.run();
+					    return null;
+					   }
+				};
+				worker.execute();
+			}
+		});
+	}
+}

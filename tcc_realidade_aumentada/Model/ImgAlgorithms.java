@@ -21,6 +21,8 @@ public class ImgAlgorithms {
 	private int threshold;
 	private ArrayList<Color> colors;
 	private int numberClustersKmeans;
+	private ArrayList<Data> dataKmeans;
+	
 	
 	public ImgAlgorithms(BufferedImage imageTemp){
 		numberClustersKmeans = 1;
@@ -28,6 +30,7 @@ public class ImgAlgorithms {
 		this.setImage(imageTemp);
 		labeledAreas = new ArrayList<LabelArea>();
 		centroids = new ArrayList<Pixel>();
+		dataKmeans = new ArrayList<Data>();
 		this.CreateArrayColors();
 	}
 	
@@ -42,73 +45,48 @@ public class ImgAlgorithms {
 	public void toBinary() {
 		int BLACK = Color.BLACK.getRGB();
 		int WHITE = Color.WHITE.getRGB();
-
 		output = new BufferedImage(image.getWidth(),
 				image.getHeight(), BufferedImage.TYPE_INT_RGB);
-		
 		for (int y = 0; y < image.getHeight(); y++)
 			for (int x = 0; x < image.getWidth(); x++) {
 				Color pixel = new Color(image.getRGB(x, y));
 				output.setRGB(x, y, pixel.getRed() < getThreshold() ? BLACK : WHITE);
 			}
-
 	}
 	
 	public void calculateArrayCentroides(){
 		this.labeling();
 		centroids.clear();
+		removeBiggerArea();
 		for(int i=0; i<this.labeledAreas.size(); i++){
 			centroids.add(labeledAreas.get(i).calculateCentroide());
 		}
 	}
-	
-	public void centroidsPainting(String algoritmo){
-		switch(algoritmo){
-			case"kmeans":
-				if(this.centroids.size()>0){
-					ArrayList<Data> dataList = new ArrayList<Data>();
-					dataList.clear();
-					for(int i=0; i<this.centroids.size(); i++){
-						Pixel dataPixel  = centroids.get(i);
-						dataList.add(new Data(dataPixel.getX(),dataPixel.getY()));
-					}
-					KMeans kmeans = new KMeans(dataList, this.numberClustersKmeans);
-					ArrayList<Data> dataKmeans = kmeans.getProcessedData();
-					for(int i=0; i< dataKmeans.size(); i++){
-						Data data = dataKmeans.get(i);
-						int xPix = (int)data.X(); 
-						int yPix = (int)data.Y();
-						int color = data.cluster();
-						paintPointColor(xPix, yPix, colors.get(color).getRGB());
-					}
-				}
-				break;
-			default:
-				for(int i=0; i<this.centroids.size(); i++){
-					Pixel centroid = centroids.get(i);
-					int xPix = centroid.getX(); 
-					int yPix =centroid.getY();
-					paintPointColor(xPix, yPix, Color.YELLOW.getRGB());
-					
-				}	
-		}
-	}
 
-	public void paintPointColor(int xPix, int yPix, int colorPoint) {
-		int color = Color.DARK_GRAY.getRGB();
-		int tam = 3;
-		paintPoint(xPix, yPix, color, tam);
-		tam = 2;
-		paintPoint(xPix, yPix, colorPoint, tam);
-	}
-
-	public void paintPoint(int xPix, int yPix, int color, int tam) {
-		for (int y = yPix-tam ; y <= yPix+tam; y++)
-			for (int x = xPix-tam ; x <= xPix+tam; x++) {
-				if(y>0 && y<=WIDTH_SCREEN && x>0 && x<=HEIGHT_SCREEN)
-				output.setRGB(x, y, color);
+	public void removeBiggerArea() {
+		int biggerLabeledArea = 0;
+		int idBiggerlabeledArea = 0;
+		for(int i=0; i<this.labeledAreas.size(); i++){
+			int sizeArea = labeledAreas.get(i).getPixelsArea().size();
+			if(sizeArea>biggerLabeledArea){
+				biggerLabeledArea = sizeArea;
+				idBiggerlabeledArea = i;
 			}
+		}
+		labeledAreas.remove(idBiggerlabeledArea);
 	}
+	
+	public void calculateKmeans(){
+		ArrayList<Data> dataList = new ArrayList<Data>();
+		for(int i=0; i<this.centroids.size(); i++){
+			Pixel dataPixel  = centroids.get(i);
+			dataList.add(new Data(dataPixel.getX(),dataPixel.getY()));
+		}
+		KMeans kmeans = new KMeans(dataList, this.numberClustersKmeans);
+		dataKmeans.clear();
+		dataKmeans = kmeans.getProcessedData();
+	}
+	
 	
 	public void labeling(){
 		labeledAreas.clear();
@@ -247,6 +225,14 @@ public class ImgAlgorithms {
 
 	public void setNumberClustersKmeans(int numberClustersKmeans) {
 		this.numberClustersKmeans = numberClustersKmeans;
+	}
+
+	public ArrayList<Data> getDataKmeans() {
+		return dataKmeans;
+	}
+
+	public void setDataKmeans(ArrayList<Data> dataKmeans) {
+		this.dataKmeans = dataKmeans;
 	}
 
 }

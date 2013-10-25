@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
 org.eclipse.debug.core.USE_STEP_FILTERS=false
-prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<watchExpressions>\r\n<expression enabled\="true" text\="centroids"/>\r\n<expression enabled\="true" text\="kmeans.getProcessedData()"/>\r\n</watchExpressions>\r\n
+prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<watchExpressions>\r\n<expression enabled\="true" text\="centroids"/>\r\n<expression enabled\="true" text\="kmeans.getProcessedData()"/>\r\n<expression enabled\="true" text\="imgAlgorithms.getOutput()"/>\r\n<expression enabled\="true" text\="imageCamera"/>\r\n<expression enabled\="true" text\="imageCamera.getType()"/>\r\n<expression enabled\="true" text\="Webcam.getDefault().getLock().unlock()"/>\r\n<expression enabled\="true" text\="Webcam.getDefault().getLock().isLocked()"/>\r\n<expression enabled\="true" text\="timeCallAlgorithm"/>\r\n</watchExpressions>\r\n

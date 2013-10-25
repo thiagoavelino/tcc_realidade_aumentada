@@ -18,7 +18,7 @@ public class HoughLine {
     /** 
      * Draws the line on the image of your choice with the RGB colour of your choice. 
      */ 
-    public void draw(BufferedImage image, int color) { 
+    public synchronized void draw(BufferedImage image, int color) { 
  
         int height = image.getHeight(); 
         int width = image.getWidth(); 

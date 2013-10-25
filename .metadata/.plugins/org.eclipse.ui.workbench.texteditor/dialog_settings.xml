@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="alCentroid" key="selection"/>
+		<item value="Model.CamMonitor camMonitor = new Model.CamMonitor(mainWindow);" key="selection"/>
 		<list key="findhistory">
+			<item value="Model.CamMonitor camMonitor = new Model.CamMonitor(mainWindow);"/>
+			<item value="try {"/>
+			<item value="We"/>
+			<item value="Cam"/>
 			<item value="alCentroid"/>
 			<item value="text"/>
 			<item value="write"/>
 			<item value="layout"/>
-			<item value="true"/>
-			<item value="4"/>
-			<item value="48"/>
-			<item value="480"/>
 		</list>
 		<list key="replacehistory">
 		</list>

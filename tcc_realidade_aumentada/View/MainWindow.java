@@ -179,6 +179,7 @@ public class MainWindow implements Runnable{
 	public void camConfig() {
 		Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(new Dimension(640, 480));
+		
 		WebcamPanel panelCam = new WebcamPanel(webcam);
 	}
 	

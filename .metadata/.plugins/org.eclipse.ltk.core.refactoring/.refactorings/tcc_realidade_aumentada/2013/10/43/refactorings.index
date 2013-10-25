@@ -1,0 +1,8 @@
+1382655179753	Encapsulate field 'centroids'
+1382656327456	Extract method 'removeBigggerArea'
+1382656347584	Rename method 'removeBigggerArea'
+1382657418312	Encapsulate field 'algorithm'
+1382657464905	Encapsulate field 'dataKmeans'
+1382657873943	Encapsulate field 'dataKmeans'
+1382658289024	Extract method 'getInformation'
+1382660528118	Delete element
