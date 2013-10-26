@@ -84,7 +84,7 @@ public class MainWindow implements Runnable{
 		//Tool Bar
 		createToolBar();
 		
-		setSliderThreshold(new JSlider(JSlider.HORIZONTAL, 0, 255, 125));
+		setSliderThreshold(new JSlider(JSlider.HORIZONTAL, 0, 255, 110));
 		getSliderThreshold().setMinorTickSpacing(5);
 		getSliderThreshold().setMajorTickSpacing(20);
 		getSliderThreshold().setBounds(655, 31, 300, 40);

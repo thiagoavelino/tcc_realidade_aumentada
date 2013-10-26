@@ -17,11 +17,15 @@ import com.github.sarxos.webcam.Webcam;
 
 
 public class CamMonitor extends Thread {
+	public static final int GETIMAGETIMEMILI = 500;
+	public static final int NUMBERCYCLESGETINFORMATION = 10;
 	private MainWindow mainWindow;
 	private ArrayList<Pixel> centroidsTemp;
 	private BufferedImage image;
 	private BufferedImage imageCamera;
 	private Vector<HoughLine> linesTemp;
+	private int linearXTemp;
+	private int linearYTemp;
 	private int timeCallAlgorithm;
 	public static final double THRESHOLANGLE = 0.2;
 	public static final double ANGLEX = Math.PI;
@@ -63,13 +67,14 @@ public class CamMonitor extends Thread {
 					break;
 			}
 			
-			defineAxes(camRAPAnel);
+			camRAPAnel.setAxeX(linearXTemp);
+			camRAPAnel.setAxeY(linearYTemp);
 			camRAPAnel.setMaster(imgAlgorithms.getOutput());
 			camRAPAnel.revalidate();
 			camRAPAnel.repaint();
 			
 			try {
-				Thread.sleep(10);
+				Thread.sleep(GETIMAGETIMEMILI);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -77,7 +82,7 @@ public class CamMonitor extends Thread {
 		}
 	}
 
-	public void defineAxes(CamRAPanel camRAPAnel) {
+	public void defineAxes() {
 		boolean selectedAxeX = false;
 		boolean selectedAxeY = false;
 		for(int i=0;i<linesTemp.size();i++){
@@ -85,23 +90,24 @@ public class CamMonitor extends Thread {
 			if( selected.getTheta()<(ANGLEX+THRESHOLANGLE) && selected.getTheta()>(ANGLEX-THRESHOLANGLE)){
 				if(!selectedAxeX){
 					selectedAxeX = true;
-					camRAPAnel.setAxeX(selected.getVertical(image.getWidth(), image.getHeight()));
+					linearXTemp = selected.getVertical(image.getWidth(), image.getHeight());
 				}
 			}
 			if( selected.getTheta()<(ANGLEY+THRESHOLANGLE) && selected.getTheta()>(ANGLEY-THRESHOLANGLE)){
 				if(!selectedAxeY){
 					selectedAxeY = true;
-					camRAPAnel.setAxeY(selected.getHorizontal(image.getWidth(), image.getHeight()));
+					linearYTemp = selected.getHorizontal(image.getWidth(), image.getHeight());
 				}
 			}
 		}
 	}
 
 	public void getInformation(ImgAlgorithms imgAlgorithms) {
-		if(timeCallAlgorithm == 10){
+		if(timeCallAlgorithm == NUMBERCYCLESGETINFORMATION){
 			timeCallAlgorithm = 0;
 			calculateCentroids(imgAlgorithms);
 			linesTemp = houghTransform(imgAlgorithms); 
+			defineAxes();
 		}
 		timeCallAlgorithm++;
 	}

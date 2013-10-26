@@ -1,0 +1,195 @@
+package View;
+
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Composite;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Vector;
+import ij.gui.*;
+import ij.process.PolygonFiller;
+
+import javax.swing.JPanel;
+
+import KMeansPackage.Data;
+import Model.HoughLine;
+import Model.Pixel;
+
+public class CamRAPanel extends JPanel {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String algorithm;
+	private BufferedImage master;
+	private ArrayList<Pixel> centroids;
+	private ArrayList<Color> colors;
+	private ArrayList<Data> dataKmeans;
+	private int axeX;
+	private int axeY;
+	
+	
+	public CamRAPanel(BufferedImage master) {
+		setMaster(master);
+		centroids = new ArrayList<Pixel>();
+		dataKmeans = new ArrayList<Data>();
+        Graphics2D g2d = getMaster().createGraphics();
+        g2d.drawImage(getMaster(), 0, 0, null);
+        g2d.dispose();
+        setBounds(new Rectangle(5, 45, 640, 480));
+        this.CreateArrayColors();
+        algorithm = "";
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        Dimension size = new Dimension(getMaster().getWidth(), getMaster().getHeight());
+        return size;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+    	super.paintComponent(g);
+    	g.drawImage(getMaster(), 0, 0, null);
+    	paintAxes(g);
+    	switch(algorithm){
+	    	case "kmeans":
+	    		paintClusters(g);
+	    		break;
+	    	default:
+	    		paintDots(g);
+	    		break;
+	    }
+    }
+
+	public void paintAxes(Graphics g) {
+		g.setColor(Color.RED);
+		g.drawLine(axeX, 0, axeX, this.getHeight());
+		g.drawLine(0, axeY, this.getWidth(), axeY);
+	}
+
+	public void paintClusters(Graphics g) {
+		ArrayList<Integer> clusters = new ArrayList<Integer>();
+		for(int i=0; i< dataKmeans.size(); i++){
+			Data data = dataKmeans.get(i);
+			int cluster = data.cluster();
+			boolean exist = false;
+			for(int j=0; j< clusters.size(); j++){
+				if(cluster == clusters.get(j)){
+					exist = true;
+				}
+			}
+			if(!exist){
+				clusters.add(cluster);
+			}
+		}
+		
+		for(int k=0; k< clusters.size(); k++){
+			int numberOfPoints = 0;
+			int []xPoints = new int[100];
+			int []yPoints = new int[100];
+			for(int l=0; l<dataKmeans.size(); l++){
+				Data data = dataKmeans.get(l);
+				int xPix = (int)data.X(); 
+				int yPix = (int)data.Y();
+				int cluster = data.cluster();
+				if(cluster == clusters.get(k)){
+					xPoints[numberOfPoints] = xPix;
+					yPoints[numberOfPoints] = yPix;
+					numberOfPoints++;
+				}
+				
+			}
+			Polygon p = new Polygon(xPoints, yPoints, numberOfPoints);
+			PolygonRoi polygonRoi = new PolygonRoi(p,Roi.POLYGON);
+			float alpha = 0.75f;
+			
+			Color colorCluster = new Color(colors.get(clusters.get(k)).getRed(), 
+					colors.get(clusters.get(k)).getGreen(), 
+					colors.get(clusters.get(k)).getBlue(), alpha);
+					
+			g.setColor(colorCluster);
+			
+			g.fillPolygon(polygonRoi.getConvexHull());
+		}
+		//g.setColor(colors.get(color));
+	    //g.fillRect(xPix,yPix , 4, 4);
+	}
+	
+	public void paintDots(Graphics g) {
+		for(int i=0; i<centroids.size();i++){
+			g.setColor(Color.red);
+		    g.fillRect(centroids.get(i).getX(),centroids.get(i).getY() , 4, 4);
+		}
+	}
+
+	public BufferedImage getMaster() {
+		return master;
+	}
+
+	public void setMaster(BufferedImage master) {
+		this.master = master;
+	}
+
+	public ArrayList<Pixel> getCentroids() {
+		return centroids;
+	}
+
+	public void setCentroids(ArrayList<Pixel> centroids) {
+		this.centroids = centroids;
+	}
+
+	public String getAlgorithm() {
+		return algorithm;
+	}
+
+	public void setAlgorithm(String algorithm) {
+		this.algorithm = algorithm;
+	}
+	
+	public void CreateArrayColors(){
+		colors = new ArrayList<Color>();
+		int j = 255;
+		for (int i= 1; i<8; i++){
+			colors.add(new Color(0,0,j));
+			colors.add(new Color(j,0,0));
+			colors.add(new Color(0,j,0));
+			colors.add(new Color(j,j,0));
+			colors.add(new Color(0,j,j));
+			colors.add(new Color(j,0,j));
+			colors.add(new Color(j,j,j));
+			j = j/(2*i);
+		}
+	}
+
+	public ArrayList<Data> getDataKmeans() {
+		return dataKmeans;
+	}
+
+	public void setDataKmeans(ArrayList<Data> dataKmeans) {
+		this.dataKmeans = dataKmeans;
+	}
+
+	public int getAxeX() {
+		return axeX;
+	}
+
+	public void setAxeX(int axeX) {
+		this.axeX = axeX;
+	}
+
+	public int getAxeY() {
+		return axeY;
+	}
+
+	public void setAxeY(int axeY) {
+		this.axeY = axeY;
+	}
+
+}

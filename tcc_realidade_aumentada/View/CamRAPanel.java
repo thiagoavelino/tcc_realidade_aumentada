@@ -1,13 +1,18 @@
 package View;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Vector;
+import ij.gui.*;
+import ij.process.PolygonFiller;
 
 import javax.swing.JPanel;
 
@@ -70,16 +75,53 @@ public class CamRAPanel extends JPanel {
 	}
 
 	public void paintClusters(Graphics g) {
+		ArrayList<Integer> clusters = new ArrayList<Integer>();
 		for(int i=0; i< dataKmeans.size(); i++){
 			Data data = dataKmeans.get(i);
+			int cluster = data.cluster();
 			int xPix = (int)data.X(); 
 			int yPix = (int)data.Y();
-			int color = data.cluster();
-			g.setColor(colors.get(color));
+			boolean exist = false;
+			for(int j=0; j< clusters.size(); j++){
+				if(cluster == clusters.get(j)){
+					exist = true;
+				}
+			}
+			if(!exist){
+				clusters.add(cluster);
+			}
+			g.setColor(colors.get(cluster));
 		    g.fillRect(xPix,yPix , 4, 4);
 		}
+		
+		for(int k=0; k< clusters.size(); k++){
+			int numberOfPoints = 0;
+			int []xPoints = new int[100];
+			int []yPoints = new int[100];
+			for(int l=0; l<dataKmeans.size(); l++){
+				Data data = dataKmeans.get(l);
+				int xPix = (int)data.X(); 
+				int yPix = (int)data.Y();
+				int cluster = data.cluster();
+				if(cluster == clusters.get(k)){
+					xPoints[numberOfPoints] = xPix;
+					yPoints[numberOfPoints] = yPix;
+					numberOfPoints++;
+				}
+				
+			}
+			Polygon p = new Polygon(xPoints, yPoints, numberOfPoints);
+			PolygonRoi polygonRoi = new PolygonRoi(p,Roi.POLYGON);
+			Color colorCluster = new Color(colors.get(clusters.get(k)).getRed(), 
+					colors.get(clusters.get(k)).getGreen(), 
+					colors.get(clusters.get(k)).getBlue(), 125);
+			g.setColor(colorCluster);
+			g.fillPolygon(polygonRoi.getConvexHull());
+		}
+		//g.setColor(colors.get(color));
+	    //g.fillRect(xPix,yPix , 4, 4);
 	}
-
+	
 	public void paintDots(Graphics g) {
 		for(int i=0; i<centroids.size();i++){
 			g.setColor(Color.red);

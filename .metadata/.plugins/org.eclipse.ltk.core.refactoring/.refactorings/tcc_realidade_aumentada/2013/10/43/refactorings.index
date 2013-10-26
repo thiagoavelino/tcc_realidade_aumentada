@@ -15,3 +15,5 @@
 1382788429976	Encapsulate field 'axeY'
 1382789814041	Extract method 'defineAxes'
 1382789862084	Extract method 'paintAxes'
+1382795383093	Extract constant 'NUMBERCYCLESGETINFORMATION'
+1382795417971	Extract constant 'GETIMAGETIMEMILI'
