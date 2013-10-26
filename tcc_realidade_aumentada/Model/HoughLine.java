@@ -4,21 +4,15 @@ import java.awt.image.BufferedImage;
 
 public class HoughLine { 
 	 
-    protected double theta; 
-    protected double r; 
+    private double theta; 
+    private double r; 
  
-    /** 
-     * Initialises the hough line 
-     */ 
     public HoughLine(double theta, double r) { 
         this.theta = theta; 
         this.r = r; 
     } 
- 
-    /** 
-     * Draws the line on the image of your choice with the RGB colour of your choice. 
-     */ 
-    public synchronized void draw(BufferedImage image, int color) { 
+
+    public void draw(BufferedImage image, int color) { 
  
         int height = image.getHeight(); 
         int width = image.getWidth(); 
@@ -51,5 +45,61 @@ public class HoughLine {
                 } 
             } 
         } 
-    } 
+    }
+    
+    public int getHorizontal(int width, int height) { 
+        
+        int houghHeight = (int) (Math.sqrt(2) * Math.max(height, width)) / 2; 
+        float centerX = width / 2; 
+        float centerY = height / 2; 
+        
+        double tsin = Math.sin(theta); 
+        double tcos = Math.cos(theta); 
+ 
+    	int x1 = 0;
+        int y1 = (int) ((((r - houghHeight) - ((x1 - centerX) * tcos)) / tsin) + centerY); 
+        int x2 = width-1;
+        int y2 = (int) ((((r - houghHeight) - ((x2 - centerX) * tcos)) / tsin) + centerY);
+        
+        return (y1+y2)/2;
+  
+    }
+    
+    public int getVertical(int width, int height) { 
+        
+        int houghHeight = (int) (Math.sqrt(2) * Math.max(height, width)) / 2; 
+        float centerX = width / 2; 
+        float centerY = height / 2; 
+        
+        double tsin = Math.sin(theta); 
+        double tcos = Math.cos(theta); 
+ 
+    	int y1 = 0;
+    	int x1 = (int) ((((r - houghHeight) - ((y1 - centerY) * tsin)) / tcos) + centerX); 
+        int y2 = height-1;
+        int x2 = (int) ((((r - houghHeight) - ((y2 - centerY) * tsin)) / tcos) + centerX); 
+        
+        return (x1+x2)/2;
+  
+    }
+
+
+	public double getTheta() {
+		return theta;
+	}
+
+
+	public void setTheta(double theta) {
+		this.theta = theta;
+	}
+
+
+	public double getR() {
+		return r;
+	}
+
+
+	public void setR(double r) {
+		this.r = r;
+	} 
 } 

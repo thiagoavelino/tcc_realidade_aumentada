@@ -239,6 +239,7 @@ public class MainWindow implements Runnable{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				algorithmSelected = "linear";
 				panelConfig.removeAll();
 				JLabel kmeans = new JLabel("Linear");
 				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -253,6 +254,7 @@ public class MainWindow implements Runnable{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				algorithmSelected = "polinomial";
 				panelConfig.removeAll();
 				JLabel kmeans = new JLabel("Polinomial");
 				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));

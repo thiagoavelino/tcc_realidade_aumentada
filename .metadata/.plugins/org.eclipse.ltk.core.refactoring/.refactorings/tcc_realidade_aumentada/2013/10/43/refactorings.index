@@ -6,3 +6,12 @@
 1382657873943	Encapsulate field 'dataKmeans'
 1382658289024	Extract method 'getInformation'
 1382660528118	Delete element
+1382785109489	Extract method 'paintDots'
+1382785135441	Extract method 'paintClusters'
+1382785931603	Encapsulate field 'axes'
+1382787210045	Encapsulate field 'theta'
+1382787280921	Encapsulate field 'r'
+1382788394846	Encapsulate field 'axeX'
+1382788429976	Encapsulate field 'axeY'
+1382789814041	Extract method 'defineAxes'
+1382789862084	Extract method 'paintAxes'

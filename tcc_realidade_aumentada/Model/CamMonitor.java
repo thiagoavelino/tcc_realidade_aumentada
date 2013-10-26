@@ -23,6 +23,9 @@ public class CamMonitor extends Thread {
 	private BufferedImage imageCamera;
 	private Vector<HoughLine> linesTemp;
 	private int timeCallAlgorithm;
+	public static final double THRESHOLANGLE = 0.2;
+	public static final double ANGLEX = Math.PI;
+	public static final double ANGLEY = Math.PI/2;
 	
 	public CamMonitor(MainWindow mainWindow){
 		this.mainWindow = mainWindow;
@@ -60,7 +63,7 @@ public class CamMonitor extends Thread {
 					break;
 			}
 			
-			getInformation(imgAlgorithms);
+			defineAxes(camRAPAnel);
 			camRAPAnel.setMaster(imgAlgorithms.getOutput());
 			camRAPAnel.revalidate();
 			camRAPAnel.repaint();
@@ -71,6 +74,26 @@ public class CamMonitor extends Thread {
 				e.printStackTrace();
 			}
 
+		}
+	}
+
+	public void defineAxes(CamRAPanel camRAPAnel) {
+		boolean selectedAxeX = false;
+		boolean selectedAxeY = false;
+		for(int i=0;i<linesTemp.size();i++){
+			HoughLine selected = linesTemp.get(i);
+			if( selected.getTheta()<(ANGLEX+THRESHOLANGLE) && selected.getTheta()>(ANGLEX-THRESHOLANGLE)){
+				if(!selectedAxeX){
+					selectedAxeX = true;
+					camRAPAnel.setAxeX(selected.getVertical(image.getWidth(), image.getHeight()));
+				}
+			}
+			if( selected.getTheta()<(ANGLEY+THRESHOLANGLE) && selected.getTheta()>(ANGLEY-THRESHOLANGLE)){
+				if(!selectedAxeY){
+					selectedAxeY = true;
+					camRAPAnel.setAxeY(selected.getHorizontal(image.getWidth(), image.getHeight()));
+				}
+			}
 		}
 	}
 
