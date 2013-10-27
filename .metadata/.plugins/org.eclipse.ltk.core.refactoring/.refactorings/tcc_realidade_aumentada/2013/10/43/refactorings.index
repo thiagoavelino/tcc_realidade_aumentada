@@ -20,3 +20,7 @@
 1382811825112	Encapsulate field 'linearRegressionInit'
 1382811837810	Encapsulate field 'linearRegressionFinal'
 1382900696948	Encapsulate field 'functionLinear'
+1382905218825	Encapsulate field 'dataPolinomial'
+1382906999280	Extract method 'calculatePolinomial'
+1382912467329	Encapsulate field 'functionPolinomioValue'
+1382912640082	Encapsulate field 'spinnerPolinomio'

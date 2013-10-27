@@ -16,5 +16,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv-2.4.6.0"/>
 	<classpathentry kind="lib" path="C:/Users/Thiago/Documents/GitHub/tcc_realidade_aumentada/tcc_realidade_aumentada/lib/ij.jar"/>
 	<classpathentry kind="lib" path="lib/itextpdf-5.4.4.jar"/>
+	<classpathentry kind="lib" path="lib/Jama-1.0.3.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

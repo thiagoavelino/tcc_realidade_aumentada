@@ -31,6 +31,7 @@ public class CamRAPanel extends JPanel {
 	private ArrayList<Pixel> centroids;
 	private ArrayList<Color> colors;
 	private ArrayList<Data> dataKmeans;
+	private ArrayList<Data> dataPolinomial;
 	private int axeX;
 	private int axeY;
 	private Pixel linearRegressionInit;
@@ -41,6 +42,7 @@ public class CamRAPanel extends JPanel {
 		setMaster(master);
 		centroids = new ArrayList<Pixel>();
 		dataKmeans = new ArrayList<Data>();
+		dataPolinomial = new ArrayList<Data>();
         Graphics2D g2d = getMaster().createGraphics();
         g2d.drawImage(getMaster(), 0, 0, null);
         g2d.dispose();
@@ -67,10 +69,21 @@ public class CamRAPanel extends JPanel {
 	    	case "linear":
 	    		g.setColor(Color.BLACK);
 	    		
-	    		g.drawLine(linearRegressionInit.getX(), linearRegressionInit.getY(), 
+	    		/*g.drawLine(linearRegressionInit.getX(), linearRegressionInit.getY(), 
 	    				linearRegressionFinal.getX(), linearRegressionFinal.getY());
 	    		g.drawLine(linearRegressionInit.getX()-1, linearRegressionInit.getY()-1, 
-	    				linearRegressionFinal.getX()-1, linearRegressionFinal.getY()-1);
+	    				linearRegressionFinal.getX()-1, linearRegressionFinal.getY()-1);*/
+	    		g.setColor(Color.BLACK);
+	    		for(int i=0; i<dataPolinomial.size(); i++){
+	    			g.drawRect((int) Math.round(dataPolinomial.get(i).X()), (int) Math.round(dataPolinomial.get(i).Y()), 1, 1);
+	    		}
+	    		paintDots(g);
+	    		break;
+	    	case "polinomial":
+	    		g.setColor(Color.BLACK);
+	    		for(int i=0; i<dataPolinomial.size(); i++){
+	    			g.drawRect((int) Math.round(dataPolinomial.get(i).X()), (int) Math.round(dataPolinomial.get(i).Y()), 1, 1);
+	    		}
 	    		paintDots(g);
 	    		break;
 	    	default:
@@ -135,7 +148,7 @@ public class CamRAPanel extends JPanel {
 	
 	public void paintDots(Graphics g) {
 		for(int i=0; i<centroids.size();i++){
-			g.setColor(Color.red);
+			g.setColor(Color.BLUE);
 		    g.fillRect(centroids.get(i).getX(),centroids.get(i).getY() , 4, 4);
 		}
 	}
@@ -217,6 +230,14 @@ public class CamRAPanel extends JPanel {
 
 	public void setLinearRegressionFinal(Pixel linearRegressionFinal) {
 		this.linearRegressionFinal = linearRegressionFinal;
+	}
+
+	public ArrayList<Data> getDataPolinomial() {
+		return dataPolinomial;
+	}
+
+	public void setDataPolinomial(ArrayList<Data> dataPolinomial) {
+		this.dataPolinomial = dataPolinomial;
 	}
 
 }

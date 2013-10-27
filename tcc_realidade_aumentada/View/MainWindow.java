@@ -59,7 +59,9 @@ public class MainWindow implements Runnable{
 	private JPanel panelConfig;
 	private String algorithmSelected;
 	private JSpinner spinnerKmeans;
+	private JSpinner spinnerPolinomio;
 	private JLabel functionLinear;
+	private JLabel functionPolinomioValue;
 
 	public MainWindow() {
 		initialize();
@@ -252,7 +254,7 @@ public class MainWindow implements Runnable{
 				JLabel linearFuncao = new JLabel("Fun\u00E7\u00E3o Linear encontrada:");
 				linearFuncao.setFont(new Font("Tahoma", Font.BOLD, 11));
 				panelConfig.add(linearFuncao);
-				functionLinear = new JLabel("Fun\u00E7\u00E3o Linear encontrada:");
+				functionLinear = new JLabel("");
 				functionLinear.setFont(new Font("Tahoma", Font.PLAIN, 11));
 				panelConfig.add(functionLinear);
 				panelConfig.revalidate();
@@ -270,6 +272,25 @@ public class MainWindow implements Runnable{
 				JLabel kmeans = new JLabel("Polinomial");
 				kmeans.setFont(new Font("Tahoma", Font.BOLD, 11));
 				panelConfig.add(kmeans);
+				ImageIcon imagePolinomial = new ImageIcon("textos/polinomial.jpg"); 
+				JLabel imagePolinomialLabel = new JLabel(); 
+				imagePolinomialLabel.setIcon(imagePolinomial); 
+				panelConfig.add(imagePolinomialLabel);
+				JLabel grauPolinomio = new JLabel("Defina o grau do polinomio:");
+				grauPolinomio.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panelConfig.add(grauPolinomio);
+				SpinnerNumberModel modelPolinomio = new SpinnerNumberModel(2.0, 2.0, 3.0, 1.0);  
+				spinnerPolinomio = new JSpinner(modelPolinomio);
+				JFormattedTextField tfPolinomio = ((JSpinner.DefaultEditor)spinnerPolinomio.getEditor())
+						.getTextField();
+				tfPolinomio.setEditable(false);
+				panelConfig.add(spinnerPolinomio);
+				JLabel functionPolinomio = new JLabel("Fun\u00E7\u00E3o Polinomial encontrada:");
+				functionPolinomio.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panelConfig.add(functionPolinomio);
+				functionPolinomioValue = new JLabel("");
+				functionPolinomioValue.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panelConfig.add(functionPolinomioValue);
 				panelConfig.revalidate();
 				panelConfig.repaint();
 				
@@ -365,5 +386,21 @@ public class MainWindow implements Runnable{
 
 	public void setFunctionLinear(JLabel functionLinear) {
 		this.functionLinear = functionLinear;
+	}
+
+	public JLabel getFunctionPolinomioValue() {
+		return functionPolinomioValue;
+	}
+
+	public void setFunctionPolinomioValue(JLabel functionPolinomioValue) {
+		this.functionPolinomioValue = functionPolinomioValue;
+	}
+
+	public JSpinner getSpinnerPolinomio() {
+		return spinnerPolinomio;
+	}
+
+	public void setSpinnerPolinomio(JSpinner spinnerPolinomio) {
+		this.spinnerPolinomio = spinnerPolinomio;
 	}
 }

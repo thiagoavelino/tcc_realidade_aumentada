@@ -8,7 +8,9 @@ import java.awt.image.ColorConvertOp;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import KMeansPackage.Data;
 import LinearRegression.LinearRegression;
+import PolyRegression.PolynomialRegression;
 import View.CamRAPanel;
 import View.MainWindow;
 
@@ -65,31 +67,20 @@ public class CamMonitor extends Thread {
 					camRAPAnel.setAlgorithm(selectedAlgorithm);
 					break;
 				case"linear":
-					LinearRegression lr = new LinearRegression();
-					double[] xp = new double[centroidsTemp.size()];
-					double[] yp = new double[centroidsTemp.size()];
-					for(int i=0; i<centroidsTemp.size(); i++){
-						xp[i] = centroidsTemp.get(i).getX();
-						yp[i] = image.getHeight() - centroidsTemp.get(i).getY();
+					if(centroidsTemp.size()>0){
+						PolynomialRegression poliReg = calculatePolinomial(camRAPAnel,1);
+						PolynomialRegression poliReal = calculatePolinomialRealFunction(1);
+						mainWindow.getFunctionLinear().setText(poliReal.toString());
 					}
-					try {
-						regressionArray = lr.getRegression(xp, yp);
-						double x1 = 0;
-						double y1 = x1*regressionArray[3] + regressionArray[4];
-						y1 = Math.abs(y1-image.getHeight());
-						
-						double x2 = image.getWidth()-1;
-						double y2 = x2*regressionArray[3] + regressionArray[4];
-						y2 = Math.abs(y2-image.getHeight());
-						camRAPAnel.setLinearRegressionInit(new Pixel((int)x1,(int)y1));
-						camRAPAnel.setLinearRegressionFinal(new Pixel((int)x2,(int)y2));
-						mainWindow.getFunctionLinear().setText("y = "+ Double.toString(regressionArray[3]) + "x + " 
-																+ Double.toString(regressionArray[4]));
-					} catch (Exception e1) {
-						e1.printStackTrace();
+					break;
+				case"polinomial":
+					if(centroidsTemp.size()>0){
+						String spinnerPoly = mainWindow.getSpinnerPolinomio().getValue().toString();
+						float spinnerPolyFloat = Float.parseFloat(spinnerPoly);
+						PolynomialRegression poliRegValue = calculatePolinomial(camRAPAnel,(int)spinnerPolyFloat);
+						PolynomialRegression poliReal = calculatePolinomialRealFunction((int)spinnerPolyFloat);
+						mainWindow.getFunctionPolinomioValue().setText(poliReal.toString());
 					}
-					
-					
 					break;
 				default:
 					camRAPAnel.setCentroids(centroidsTemp);
@@ -109,6 +100,37 @@ public class CamMonitor extends Thread {
 			}
 
 		}
+	}
+
+	public PolynomialRegression calculatePolinomial(CamRAPanel camRAPAnel, int degree) {
+		double[] xPoly = new double[centroidsTemp.size()];
+		double[] yPoly = new double[centroidsTemp.size()];
+		for(int i=0; i<centroidsTemp.size(); i++){
+			xPoly[i] = centroidsTemp.get(i).getX();
+			yPoly[i] = image.getHeight() - centroidsTemp.get(i).getY();
+		}
+		PolynomialRegression pReg = new PolynomialRegression(xPoly, yPoly, degree);
+		ArrayList<Data> dataPolinomial = new ArrayList<Data>();
+		for(int x=0; x<image.getWidth(); x++){
+			double yCalc = pReg.calculatePoly(x);
+			if(yCalc<image.getHeight())	dataPolinomial.add(new Data(x,Math.abs(yCalc-image.getHeight())));
+			else dataPolinomial.add(new Data(x,Math.abs(yCalc+image.getHeight())));
+		}
+		camRAPAnel.setDataPolinomial(dataPolinomial);
+		return pReg;
+	}
+	
+	public PolynomialRegression calculatePolinomialRealFunction(int degree) {
+		double[] xPoly = new double[centroidsTemp.size()];
+		double[] yPoly = new double[centroidsTemp.size()];
+		int yReal = image.getHeight() - this.linearYTemp;
+		for(int i=0; i<centroidsTemp.size(); i++){
+			xPoly[i] = centroidsTemp.get(i).getX() - this.linearXTemp;
+			yPoly[i] = image.getHeight() - centroidsTemp.get(i).getY();
+			yPoly[i] = yPoly[i] - yReal;
+		}
+		PolynomialRegression pReg = new PolynomialRegression(xPoly, yPoly, degree);
+		return pReg;
 	}
 
 	public void defineAxes() {
