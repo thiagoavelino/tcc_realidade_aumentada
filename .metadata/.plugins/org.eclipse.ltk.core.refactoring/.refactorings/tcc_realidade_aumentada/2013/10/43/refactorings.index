@@ -17,3 +17,6 @@
 1382789862084	Extract method 'paintAxes'
 1382795383093	Extract constant 'NUMBERCYCLESGETINFORMATION'
 1382795417971	Extract constant 'GETIMAGETIMEMILI'
+1382811825112	Encapsulate field 'linearRegressionInit'
+1382811837810	Encapsulate field 'linearRegressionFinal'
+1382900696948	Encapsulate field 'functionLinear'

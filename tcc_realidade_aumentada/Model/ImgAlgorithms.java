@@ -161,6 +161,7 @@ public class ImgAlgorithms {
 		ImagePlus implus = new ImagePlus("cam",output);
 		ij.process.ImageProcessor ip = implus.getProcessor();
 		ip.erode();
+		ip.dilate();
 		output = ip.getBufferedImage();
 	}
 	

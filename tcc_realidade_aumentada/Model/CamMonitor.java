@@ -8,7 +8,7 @@ import java.awt.image.ColorConvertOp;
 import java.util.ArrayList;
 import java.util.Vector;
 
-
+import LinearRegression.LinearRegression;
 import View.CamRAPanel;
 import View.MainWindow;
 
@@ -27,6 +27,9 @@ public class CamMonitor extends Thread {
 	private int linearXTemp;
 	private int linearYTemp;
 	private int timeCallAlgorithm;
+	private double[]regressionArray;
+	private Pixel linearRegressionInit;
+	private Pixel linearRegressionFinal;
 	public static final double THRESHOLANGLE = 0.2;
 	public static final double ANGLEX = Math.PI;
 	public static final double ANGLEY = Math.PI/2;
@@ -48,7 +51,6 @@ public class CamMonitor extends Thread {
 			getInformation(imgAlgorithms);
 			if(!mainWindow.isAlgoritmoLigado()){
 				imgAlgorithms.setOutput(image);
-				//PaintHougLines(linesTemp, imgAlgorithms);
 			}
 			CamRAPanel camRAPAnel = mainWindow.getRAPanel();
 			String selectedAlgorithm = mainWindow.getAlgorithmSelected();
@@ -61,6 +63,33 @@ public class CamMonitor extends Thread {
 					imgAlgorithms.calculateKmeans();
 					camRAPAnel.setDataKmeans(imgAlgorithms.getDataKmeans());
 					camRAPAnel.setAlgorithm(selectedAlgorithm);
+					break;
+				case"linear":
+					LinearRegression lr = new LinearRegression();
+					double[] xp = new double[centroidsTemp.size()];
+					double[] yp = new double[centroidsTemp.size()];
+					for(int i=0; i<centroidsTemp.size(); i++){
+						xp[i] = centroidsTemp.get(i).getX();
+						yp[i] = image.getHeight() - centroidsTemp.get(i).getY();
+					}
+					try {
+						regressionArray = lr.getRegression(xp, yp);
+						double x1 = 0;
+						double y1 = x1*regressionArray[3] + regressionArray[4];
+						y1 = Math.abs(y1-image.getHeight());
+						
+						double x2 = image.getWidth()-1;
+						double y2 = x2*regressionArray[3] + regressionArray[4];
+						y2 = Math.abs(y2-image.getHeight());
+						camRAPAnel.setLinearRegressionInit(new Pixel((int)x1,(int)y1));
+						camRAPAnel.setLinearRegressionFinal(new Pixel((int)x2,(int)y2));
+						mainWindow.getFunctionLinear().setText("y = "+ Double.toString(regressionArray[3]) + "x + " 
+																+ Double.toString(regressionArray[4]));
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					
+					
 					break;
 				default:
 					camRAPAnel.setCentroids(centroidsTemp);
@@ -87,7 +116,8 @@ public class CamMonitor extends Thread {
 		boolean selectedAxeY = false;
 		for(int i=0;i<linesTemp.size();i++){
 			HoughLine selected = linesTemp.get(i);
-			if( selected.getTheta()<(ANGLEX+THRESHOLANGLE) && selected.getTheta()>(ANGLEX-THRESHOLANGLE)){
+			if( (selected.getTheta()<(ANGLEX+THRESHOLANGLE) && selected.getTheta()>(ANGLEX-THRESHOLANGLE))
+					|| (selected.getTheta()<(THRESHOLANGLE) && selected.getTheta()>(-THRESHOLANGLE)) ){
 				if(!selectedAxeX){
 					selectedAxeX = true;
 					linearXTemp = selected.getVertical(image.getWidth(), image.getHeight());
@@ -138,6 +168,7 @@ public class CamMonitor extends Thread {
 		imgAlgorithms.setThreshold(mainWindow.getSliderThreshold().getValue());
 		imgAlgorithms.toBinary();
 		imgAlgorithms.erosion();
+		
 		return imgAlgorithms;
 	}
 

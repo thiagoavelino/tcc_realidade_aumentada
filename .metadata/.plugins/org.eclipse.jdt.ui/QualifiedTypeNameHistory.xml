@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.lang.String"/>
-<fullyQualifiedTypeName name="Model.CamMonitor"/>
 <fullyQualifiedTypeName name="java.lang.Runnable"/>
 <fullyQualifiedTypeName name="javax.swing.SwingWorker"/>
 <fullyQualifiedTypeName name="java.awt.image.DataBufferByte"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="java.awt.Polygon"/>
 <fullyQualifiedTypeName name="java.awt.AlphaComposite"/>
 <fullyQualifiedTypeName name="java.awt.Composite"/>
+<fullyQualifiedTypeName name="LinearRegression.LinearRegression"/>
+<fullyQualifiedTypeName name="org.gstreamer.lowlevel.MainLoop"/>
 </qualifiedTypeNameHistroy>

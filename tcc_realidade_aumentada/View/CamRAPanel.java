@@ -33,6 +33,8 @@ public class CamRAPanel extends JPanel {
 	private ArrayList<Data> dataKmeans;
 	private int axeX;
 	private int axeY;
+	private Pixel linearRegressionInit;
+	private Pixel linearRegressionFinal;
 	
 	
 	public CamRAPanel(BufferedImage master) {
@@ -61,6 +63,15 @@ public class CamRAPanel extends JPanel {
     	switch(algorithm){
 	    	case "kmeans":
 	    		paintClusters(g);
+	    		break;
+	    	case "linear":
+	    		g.setColor(Color.BLACK);
+	    		
+	    		g.drawLine(linearRegressionInit.getX(), linearRegressionInit.getY(), 
+	    				linearRegressionFinal.getX(), linearRegressionFinal.getY());
+	    		g.drawLine(linearRegressionInit.getX()-1, linearRegressionInit.getY()-1, 
+	    				linearRegressionFinal.getX()-1, linearRegressionFinal.getY()-1);
+	    		paintDots(g);
 	    		break;
 	    	default:
 	    		paintDots(g);
@@ -190,6 +201,22 @@ public class CamRAPanel extends JPanel {
 
 	public void setAxeY(int axeY) {
 		this.axeY = axeY;
+	}
+
+	public Pixel getLinearRegressionInit() {
+		return linearRegressionInit;
+	}
+
+	public void setLinearRegressionInit(Pixel linearRegressionInit) {
+		this.linearRegressionInit = linearRegressionInit;
+	}
+
+	public Pixel getLinearRegressionFinal() {
+		return linearRegressionFinal;
+	}
+
+	public void setLinearRegressionFinal(Pixel linearRegressionFinal) {
+		this.linearRegressionFinal = linearRegressionFinal;
 	}
 
 }

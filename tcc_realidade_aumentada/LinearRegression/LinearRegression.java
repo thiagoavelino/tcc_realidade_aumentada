@@ -11,7 +11,7 @@ public class LinearRegression {
 	 * @return Array Z com os parametros sendo Z[0]=R, Z[1]=stderr(a), Z[2]=stderr(b), Z[3]=a, Z[4]=b
 	 * @throws Exception
 	 */
-	public static double[] LinearRegression(double[] xp, double[] yp) throws Exception {
+	public double[] getRegression(double[] xp, double[] yp) throws Exception {
 		int n=xp.length;
 		double xbar,ybar;
 		double xxbar = 0.0, yybar = 0.0, xybar = 0.0;
