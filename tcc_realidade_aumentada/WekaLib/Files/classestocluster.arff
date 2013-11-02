@@ -1,0 +1,16 @@
+@RELATION xyRelation
+
+@ATTRIBUTE X 		NUMERIC
+@ATTRIBUTE Y 		NUMERIC
+
+
+@DATA
+1,2
+2,4
+7,20
+7,19
+7,16
+7,10
+7,14
+7,11
+   	

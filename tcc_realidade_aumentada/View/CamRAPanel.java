@@ -16,7 +16,7 @@ import ij.process.PolygonFiller;
 
 import javax.swing.JPanel;
 
-import KMeansPackage.Data;
+import WekaLib.Data;
 import Model.HoughLine;
 import Model.Pixel;
 

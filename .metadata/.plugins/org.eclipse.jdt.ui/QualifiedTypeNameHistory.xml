@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.awt.image.DataBufferByte"/>
-<fullyQualifiedTypeName name="java.awt.Dimension"/>
-<fullyQualifiedTypeName name="java.awt.Graphics"/>
-<fullyQualifiedTypeName name="javax.swing.JPanel"/>
-<fullyQualifiedTypeName name="java.awt.Rectangle"/>
-<fullyQualifiedTypeName name="javax.swing.text.View"/>
-<fullyQualifiedTypeName name="View.MainWindow"/>
 <fullyQualifiedTypeName name="View.CamRAPanel"/>
 <fullyQualifiedTypeName name="java.awt.image.ColorConvertOp"/>
 <fullyQualifiedTypeName name="java.awt.color.ColorSpace"/>
@@ -14,9 +7,7 @@
 <fullyQualifiedTypeName name="Model.ImgAlgorithms"/>
 <fullyQualifiedTypeName name="java.awt.Graphics2D"/>
 <fullyQualifiedTypeName name="Model.LabelArea"/>
-<fullyQualifiedTypeName name="Model.Pixel"/>
 <fullyQualifiedTypeName name="org.junit.Assert"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="org.junit.Ignore"/>
@@ -60,4 +51,13 @@
 <fullyQualifiedTypeName name="org.gstreamer.lowlevel.MainLoop"/>
 <fullyQualifiedTypeName name="KMeansPackage.Data"/>
 <fullyQualifiedTypeName name="PolyRegression.PolynomialRegression"/>
+<fullyQualifiedTypeName name="View.SplashScreenSetaRA"/>
+<fullyQualifiedTypeName name="weka.core.Instance"/>
+<fullyQualifiedTypeName name="WekaLib.SimpleKMeansWeka"/>
+<fullyQualifiedTypeName name="weka.core.Instances"/>
+<fullyQualifiedTypeName name="weka.core.FastVector"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="Model.Pixel"/>
+<fullyQualifiedTypeName name="weka.classifiers.Evaluation"/>
+<fullyQualifiedTypeName name="weka.clusterers.ClusterEvaluation"/>
 </qualifiedTypeNameHistroy>

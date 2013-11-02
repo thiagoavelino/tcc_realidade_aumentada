@@ -1,0 +1,41 @@
+package WekaLib;
+
+import weka.clusterers.DensityBasedClusterer;
+import weka.clusterers.SimpleKMeans;
+import weka.core.converters.ConverterUtils.DataSource;
+import weka.core.Attribute;
+import weka.core.FastVector;
+import weka.core.Instance;
+import weka.core.Instances;
+
+import java.util.ArrayList;
+
+
+
+public class SimpleKMeansWeka {
+	
+	
+	public SimpleKMeansWeka() throws Exception{
+		ArrayList<Attribute> atts = new ArrayList<Attribute>(2);
+		atts.add(new Attribute("X"));
+		atts.add(new Attribute("Y"));
+		
+		FastVector fvWekaAttributes = new FastVector(2);
+		 fvWekaAttributes.addElement(atts.get(0));    
+		 fvWekaAttributes.addElement(atts.get(1));
+		
+		Instances data = new Instances("TestInstances",fvWekaAttributes,0);
+		
+		Instances data = DataSource.read("WekaLib/Files/classestocluster.arff");
+		SimpleKMeans simpleKMeans = new SimpleKMeans();
+		simpleKMeans.setNumClusters(2);
+		simpleKMeans.buildClusterer(data);
+		System.out.println(simpleKMeans.toString());
+		
+	}
+	
+	public static void main(String[] args) throws Exception {
+	    new SimpleKMeansWeka();
+	  }
+
+}

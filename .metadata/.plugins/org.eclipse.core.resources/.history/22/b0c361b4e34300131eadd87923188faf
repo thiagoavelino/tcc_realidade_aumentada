@@ -1,0 +1,20 @@
+package WekaLib;
+
+import weka.clusterers.DensityBasedClusterer;
+import weka.clusterers.SimpleKMeans;
+import weka.core.Instances;
+import weka.core.converters.ConverterUtils.DataSource;
+
+public class SimpleKMeansWeka {
+	
+	
+	public SimpleKMeansWeka() throws Exception{
+		Instances data = DataSource.read("WekaLib/Files/classestocluster.arff");
+		SimpleKMeans simpleKMeans = new SimpleKMeans();
+		simpleKMeans.setNumClusters(2);
+		simpleKMeans.buildClusterer(data);
+		System.out.println(simpleKMeans.toString());
+		
+	}
+
+}

@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="C:/Users/Thiago/Documents/GitHub/tcc_realidade_aumentada/tcc_realidade_aumentada/lib/ij.jar"/>
 	<classpathentry kind="lib" path="lib/itextpdf-5.4.4.jar"/>
 	<classpathentry kind="lib" path="lib/Jama-1.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/weka.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
