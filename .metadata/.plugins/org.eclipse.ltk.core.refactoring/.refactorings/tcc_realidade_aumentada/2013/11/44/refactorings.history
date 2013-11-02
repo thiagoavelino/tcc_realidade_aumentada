@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;View.SplashScreen&apos; to &apos;SplashScreenSetaRA&apos;&#x0D;&#x0A;- Original project: &apos;tcc_realidade_aumentada&apos;&#x0D;&#x0A;- Original element: &apos;View.SplashScreen&apos;&#x0D;&#x0A;- Renamed element: &apos;View.SplashScreenSetaRA&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;SplashScreen&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/&lt;View{SplashScreen.java[SplashScreen" matchStrategy="1" name="SplashScreenSetaRA" qualified="false" references="true" similarDeclarations="false" stamp="1383389216499" textual="false" version="1.0"/>
+</session>

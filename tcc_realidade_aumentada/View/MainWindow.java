@@ -72,9 +72,10 @@ public class MainWindow implements Runnable{
 		algoritmoLigado = false;
 		algorithmSelected = "";
 		setFrmAplicaoDeRealidade(new JFrame());
+		getFrmAplicaoDeRealidade().setIconImage(new ImageIcon("icons/iconWindow.png").getImage());
 		getFrmAplicaoDeRealidade().setPreferredSize(new Dimension(1000, 600));
 		getFrmAplicaoDeRealidade().pack();
-		getFrmAplicaoDeRealidade().setTitle("Aplica\u00E7\u00E3o de Realidade Aumentada");
+		getFrmAplicaoDeRealidade().setTitle("Seta Realidade Aumentada");
 		getFrmAplicaoDeRealidade().getContentPane().setLayout(null);
 		camConfig();		
 		setRAPanel(new CamRAPanel(Webcam.getDefault().getImage()));

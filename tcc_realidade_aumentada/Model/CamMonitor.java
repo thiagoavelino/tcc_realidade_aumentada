@@ -19,8 +19,8 @@ import com.github.sarxos.webcam.Webcam;
 
 
 public class CamMonitor extends Thread {
-	public static final int GETIMAGETIMEMILI = 500;
-	public static final int NUMBERCYCLESGETINFORMATION = 10;
+	public static final int GETIMAGETIMEMILI = 1000;
+	public static final int NUMBERCYCLESGETINFORMATION = 5;
 	private MainWindow mainWindow;
 	private ArrayList<Pixel> centroidsTemp;
 	private BufferedImage image;
