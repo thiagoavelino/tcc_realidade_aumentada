@@ -2,7 +2,6 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="org.opencv.imgproc.Imgproc"/>
 <fullyQualifiedTypeName name="Model.ImgAlgorithms"/>
-<fullyQualifiedTypeName name="java.awt.Graphics2D"/>
 <fullyQualifiedTypeName name="Model.LabelArea"/>
 <fullyQualifiedTypeName name="org.junit.Assert"/>
 <fullyQualifiedTypeName name="java.io.File"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="weka.clusterers.FarthestFirst"/>
 <fullyQualifiedTypeName name="javax.swing.JComboBox"/>
 <fullyQualifiedTypeName name="weka.core.Tag"/>
+<fullyQualifiedTypeName name="java.awt.Graphics2D"/>
 </qualifiedTypeNameHistroy>

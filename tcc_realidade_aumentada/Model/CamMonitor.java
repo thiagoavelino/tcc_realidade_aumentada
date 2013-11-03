@@ -49,78 +49,88 @@ public class CamMonitor extends Thread {
 		
 		while(true){
 			image = Webcam.getDefault().getImage();
-			ImgAlgorithms imgAlgorithms = imageSegmentation(image);
-			imgAlgorithms.setCentroids(centroidsTemp);
-			getInformation(imgAlgorithms);
-			if(!mainWindow.isAlgoritmoLigado()){
-				imgAlgorithms.setOutput(image);
+			if(!mainWindow.getChckbxDesativarRa().isSelected()){
+				ImgAlgorithms imgAlgorithms = imageSegmentation(image);
+				imgAlgorithms.setCentroids(centroidsTemp);
+				getInformation(imgAlgorithms);
+				if(!mainWindow.getChckbxImgBinria().isSelected()){
+					imgAlgorithms.setOutput(image);
+				}
+				CamRAPanel camRAPAnel = mainWindow.getRAPanel();
+				String selectedAlgorithm = mainWindow.getAlgorithmSelected();
+				camRAPAnel.setAlgorithm(selectedAlgorithm);
+				camRAPAnel.setAxesOn(mainWindow.getChckbxEixos().isSelected());
+				String spinnerValue;
+				float spinnerFloatValue;
+				switch(selectedAlgorithm){
+					case"kmeans":
+						spinnerValue = mainWindow.getSpinnerKmeans().getValue().toString();
+						spinnerFloatValue = Float.parseFloat(spinnerValue);
+						try {
+							Wekalib simpleKmeans = new Wekalib(centroidsTemp,(int)spinnerFloatValue);
+							camRAPAnel.setDataClusterAlgorithm(simpleKmeans.calculateKmeans());
+							camRAPAnel.setAlgorithm(selectedAlgorithm);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+						break;
+					case"farthestfirst":
+						spinnerValue = mainWindow.getSpinnerFarthestFirst().getValue().toString();
+						spinnerFloatValue = Float.parseFloat(spinnerValue);
+						try {
+							Wekalib farthestFirst = new Wekalib(centroidsTemp,(int)spinnerFloatValue);
+							camRAPAnel.setDataClusterAlgorithm(farthestFirst.calculateFarthestFirst());
+							camRAPAnel.setAlgorithm(selectedAlgorithm);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+						break;
+					case"hierarchical":
+						spinnerValue = mainWindow.getSpinnerHierarchical().getValue().toString();
+						spinnerFloatValue = Float.parseFloat(spinnerValue);
+						try {
+							Wekalib hierarchical = new Wekalib(centroidsTemp,(int)spinnerFloatValue);
+							hierarchical.setLinkType(mainWindow.getLinkTypesComboBox().getSelectedItem().toString());
+							camRAPAnel.setDataClusterAlgorithm(hierarchical.calculateHierarchical());
+							camRAPAnel.setAlgorithm(selectedAlgorithm);
+						} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					break;
+					case"linear":
+						if(centroidsTemp.size()>0){
+							PolynomialRegression poliReg = calculatePolinomial(camRAPAnel,1);
+							PolynomialRegression poliReal = calculatePolinomialRealFunction(1);
+							mainWindow.getFunctionLinear().setText(poliReal.toString());
+						}
+						break;
+					case"polinomial":
+						if(centroidsTemp.size()>0){
+							String spinnerPoly = mainWindow.getSpinnerPolinomio().getValue().toString();
+							float spinnerPolyFloat = Float.parseFloat(spinnerPoly);
+							PolynomialRegression poliRegValue = calculatePolinomial(camRAPAnel,(int)spinnerPolyFloat);
+							PolynomialRegression poliReal = calculatePolinomialRealFunction((int)spinnerPolyFloat);
+							mainWindow.getFunctionPolinomioValue().setText(poliReal.toString());
+						}
+						break;
+					default:
+						camRAPAnel.setCentroids(centroidsTemp);
+						break;
+				}
+				
+				camRAPAnel.setAxeX(linearXTemp);
+				camRAPAnel.setAxeY(linearYTemp);
+				camRAPAnel.setMaster(imgAlgorithms.getOutput());
+				camRAPAnel.revalidate();
+				camRAPAnel.repaint();
 			}
-			CamRAPanel camRAPAnel = mainWindow.getRAPanel();
-			String selectedAlgorithm = mainWindow.getAlgorithmSelected();
-			camRAPAnel.setAlgorithm(selectedAlgorithm);
-			String spinnerValue;
-			float spinnerFloatValue;
-			switch(selectedAlgorithm){
-				case"kmeans":
-					spinnerValue = mainWindow.getSpinnerKmeans().getValue().toString();
-					spinnerFloatValue = Float.parseFloat(spinnerValue);
-					try {
-						Wekalib simpleKmeans = new Wekalib(centroidsTemp,(int)spinnerFloatValue);
-						camRAPAnel.setDataClusterAlgorithm(simpleKmeans.calculateKmeans());
-						camRAPAnel.setAlgorithm(selectedAlgorithm);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-					break;
-				case"farthestfirst":
-					spinnerValue = mainWindow.getSpinnerFarthestFirst().getValue().toString();
-					spinnerFloatValue = Float.parseFloat(spinnerValue);
-					try {
-						Wekalib farthestFirst = new Wekalib(centroidsTemp,(int)spinnerFloatValue);
-						camRAPAnel.setDataClusterAlgorithm(farthestFirst.calculateFarthestFirst());
-						camRAPAnel.setAlgorithm(selectedAlgorithm);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-					break;
-				case"hierarchical":
-					spinnerValue = mainWindow.getSpinnerHierarchical().getValue().toString();
-					spinnerFloatValue = Float.parseFloat(spinnerValue);
-					try {
-						Wekalib hierarchical = new Wekalib(centroidsTemp,(int)spinnerFloatValue);
-						hierarchical.setLinkType(mainWindow.getLinkTypesComboBox().getSelectedItem().toString());
-						camRAPAnel.setDataClusterAlgorithm(hierarchical.calculateHierarchical());
-						camRAPAnel.setAlgorithm(selectedAlgorithm);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-					break;
-				case"linear":
-					if(centroidsTemp.size()>0){
-						PolynomialRegression poliReg = calculatePolinomial(camRAPAnel,1);
-						PolynomialRegression poliReal = calculatePolinomialRealFunction(1);
-						mainWindow.getFunctionLinear().setText(poliReal.toString());
-					}
-					break;
-				case"polinomial":
-					if(centroidsTemp.size()>0){
-						String spinnerPoly = mainWindow.getSpinnerPolinomio().getValue().toString();
-						float spinnerPolyFloat = Float.parseFloat(spinnerPoly);
-						PolynomialRegression poliRegValue = calculatePolinomial(camRAPAnel,(int)spinnerPolyFloat);
-						PolynomialRegression poliReal = calculatePolinomialRealFunction((int)spinnerPolyFloat);
-						mainWindow.getFunctionPolinomioValue().setText(poliReal.toString());
-					}
-					break;
-				default:
-					camRAPAnel.setCentroids(centroidsTemp);
-					break;
+			else{
+				CamRAPanel camRAPAnel = mainWindow.getRAPanel();
+				camRAPAnel.setAlgorithm("none");
+				camRAPAnel.setMaster(image);
+				camRAPAnel.revalidate();
+				camRAPAnel.repaint();
 			}
-			
-			camRAPAnel.setAxeX(linearXTemp);
-			camRAPAnel.setAxeY(linearYTemp);
-			camRAPAnel.setMaster(imgAlgorithms.getOutput());
-			camRAPAnel.revalidate();
-			camRAPAnel.repaint();
 			
 			try {
 				Thread.sleep(GETIMAGETIMEMILI);

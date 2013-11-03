@@ -45,6 +45,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JTextPane;
+import javax.swing.JCheckBox;
 public class MainWindow implements Runnable{
 
 	private JFrame frmAplicaoDeRealidade;
@@ -53,7 +54,12 @@ public class MainWindow implements Runnable{
 	private JToggleButton tglbtnAcionarAlgoritmo;
 	private JSlider sliderThreshold;
 	private boolean algoritmoLigado;
-	private boolean binaryImage;
+	private JCheckBox chckbxImgBinria;
+	private JCheckBox chckbxDesativarRa;
+	private JCheckBox chckbxEixos;
+	
+	private boolean axes;
+	
 	private JToolBar toolBar;
 	private JButton buttonKmeans;
 	private JButton buttonFarthestFirst;
@@ -78,7 +84,8 @@ public class MainWindow implements Runnable{
 	private void initialize() {
 		
 		algoritmoLigado = false;
-		algorithmSelected = "";
+		algorithmSelected = "";		
+		
 		setFrmAplicaoDeRealidade(new JFrame());
 		getFrmAplicaoDeRealidade().setIconImage(new ImageIcon("icons/iconWindow.png").getImage());
 		getFrmAplicaoDeRealidade().setPreferredSize(new Dimension(1000, 600));
@@ -115,17 +122,6 @@ public class MainWindow implements Runnable{
 		lblNewLabel2.setBounds(730, 11, 270, 23);
 		frmAplicaoDeRealidade.getContentPane().add(lblNewLabel2);
 		
-		tglbtnAcionarAlgoritmo = new JToggleButton("Visualizar Algoritmo");
-		tglbtnAcionarAlgoritmo.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		tglbtnAcionarAlgoritmo.setBounds(665, 82, 117, 19);
-		tglbtnAcionarAlgoritmo.addChangeListener(new ChangeListener( ) {
-		      public void stateChanged(ChangeEvent ev) {
-		    	  if(algoritmoLigado) algoritmoLigado=false;
-		    	  else algoritmoLigado=true;
-		      }
-		    });
-		frmAplicaoDeRealidade.getContentPane().add(tglbtnAcionarAlgoritmo);
-		
 		generatePainelInitial();
 		
 		
@@ -133,6 +129,21 @@ public class MainWindow implements Runnable{
 		lblPainelAlgoritmo.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblPainelAlgoritmo.setBounds(665, 115, 117, 14);
 		frmAplicaoDeRealidade.getContentPane().add(lblPainelAlgoritmo);
+		
+		chckbxImgBinria = new JCheckBox("Img Bin\u00E1ria");
+		chckbxImgBinria.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxImgBinria.setBounds(708, 80, 79, 23);
+		frmAplicaoDeRealidade.getContentPane().add(chckbxImgBinria);
+		
+		chckbxEixos = new JCheckBox("Eixos");
+		chckbxEixos.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxEixos.setBounds(789, 80, 47, 23);
+		frmAplicaoDeRealidade.getContentPane().add(chckbxEixos);
+		
+		chckbxDesativarRa = new JCheckBox("Desativar RA");
+		chckbxDesativarRa.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxDesativarRa.setBounds(840, 80, 86, 23);
+		frmAplicaoDeRealidade.getContentPane().add(chckbxDesativarRa);
 		
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -529,5 +540,29 @@ public class MainWindow implements Runnable{
 
 	public void setLinkTypesComboBox(JComboBox linkTypesComboBox) {
 		this.linkTypesComboBox = linkTypesComboBox;
+	}
+
+	public JCheckBox getChckbxImgBinria() {
+		return chckbxImgBinria;
+	}
+
+	public void setChckbxImgBinria(JCheckBox chckbxImgBinria) {
+		this.chckbxImgBinria = chckbxImgBinria;
+	}
+
+	public JCheckBox getChckbxDesativarRa() {
+		return chckbxDesativarRa;
+	}
+
+	public void setChckbxDesativarRa(JCheckBox chckbxDesativarRa) {
+		this.chckbxDesativarRa = chckbxDesativarRa;
+	}
+
+	public JCheckBox getChckbxEixos() {
+		return chckbxEixos;
+	}
+
+	public void setChckbxEixos(JCheckBox chckbxEixos) {
+		this.chckbxEixos = chckbxEixos;
 	}
 }

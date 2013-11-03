@@ -27,6 +27,7 @@ public class CamRAPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String algorithm;
+	private boolean axesOn;
 	private BufferedImage master;
 	private ArrayList<Pixel> centroids;
 	private ArrayList<Color> colors;
@@ -61,7 +62,8 @@ public class CamRAPanel extends JPanel {
     protected void paintComponent(Graphics g) {
     	super.paintComponent(g);
     	g.drawImage(getMaster(), 0, 0, null);
-    	paintAxes(g);
+    	if(algorithm!="none")
+    		if(axesOn==true) paintAxes(g);
     	switch(algorithm){
 	    	case "kmeans":
 	    	case "farthestfirst":
@@ -82,6 +84,8 @@ public class CamRAPanel extends JPanel {
 	    		}
 	    		paintDots(g);
 	    		break;
+	    	case "none":
+	    	break;
 	    	default:
 	    		paintDots(g);
 	    		break;
@@ -234,6 +238,14 @@ public class CamRAPanel extends JPanel {
 
 	public void setDataPolinomial(ArrayList<Data> dataPolinomial) {
 		this.dataPolinomial = dataPolinomial;
+	}
+
+	public boolean isAxesOn() {
+		return axesOn;
+	}
+
+	public void setAxesOn(boolean axesOn) {
+		this.axesOn = axesOn;
 	}
 
 }

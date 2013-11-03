@@ -14,3 +14,7 @@
 1383480446771	Encapsulate field 'linkTypesComboBox'
 1383481823275	Extract method 'initializeAlgorithm'
 1383484554959	Delete elements
+1383499254990	Encapsulate field 'chckbxImgBinria'
+1383499267092	Encapsulate field 'chckbxDesativarRa'
+1383499280827	Encapsulate field 'chckbxEixos'
+1383499999439	Encapsulate field 'axesOn'
