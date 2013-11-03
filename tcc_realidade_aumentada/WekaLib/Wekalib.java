@@ -2,14 +2,18 @@ package WekaLib;
 
 import weka.classifiers.Evaluation;
 import weka.clusterers.ClusterEvaluation;
+import weka.clusterers.Cobweb;
 import weka.clusterers.DensityBasedClusterer;
 import weka.clusterers.FarthestFirst;
+import weka.clusterers.HierarchicalClusterer;
 import weka.clusterers.SimpleKMeans;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.core.Attribute;
 import weka.core.FastVector;
 import weka.core.Instance;
 import weka.core.Instances;
+import weka.core.SelectedTag;
+import weka.core.Tag;
 
 import java.util.ArrayList;
 
@@ -20,13 +24,23 @@ import Model.Pixel;
 public class Wekalib {
 	
 	private Instances data;
-	public int numberOfClusters;
-	public ArrayList<Pixel> arrayPixels;
+	private int numberOfClusters;
+	private String linkType;
+	private ArrayList<Pixel> arrayPixels;
 	
 	
 	public Wekalib(ArrayList<Pixel> arrayPixels, int numberOfClusters) throws Exception{
-		this.arrayPixels = arrayPixels;
 		this.numberOfClusters = numberOfClusters;
+		initializeAlgorithm(arrayPixels);		
+	}
+	
+	public Wekalib(ArrayList<Pixel> arrayPixels) throws Exception{
+		initializeAlgorithm(arrayPixels);
+		
+	}
+
+	public void initializeAlgorithm(ArrayList<Pixel> arrayPixels) {
+		this.arrayPixels = arrayPixels;
 		ArrayList<Attribute> atts = new ArrayList<Attribute>(2);
 		atts.add(new Attribute("X"));
 		atts.add(new Attribute("Y"));
@@ -41,8 +55,8 @@ public class Wekalib {
 			instance.setValue((Attribute)fvWekaAttributes.elementAt(1), (double)arrayPixels.get(i).getY());
 			data.add(instance);
 		}
-		
 	}
+	
 
 	public ArrayList<Data> calculateKmeans() throws Exception {
 		SimpleKMeans simpleKMeans = new SimpleKMeans();
@@ -86,6 +100,50 @@ public class Wekalib {
 		return dataClusters;
 	}
 	
+	public ArrayList<Data> calculateHierarchical() throws Exception {
+		HierarchicalClusterer hierarchicalClusterer = new HierarchicalClusterer();
+		String[] options = hierarchicalClusterer.getOptions();
+		options[3] = linkType;
+		hierarchicalClusterer.setOptions(options);
+		hierarchicalClusterer.setNumClusters(numberOfClusters);
+		hierarchicalClusterer.buildClusterer(data);
+		
+		ClusterEvaluation eval = new ClusterEvaluation();
+		eval.setClusterer(hierarchicalClusterer);
+		eval.evaluateClusterer(data);
+		double[] clusters = eval.getClusterAssignments();
+		ArrayList<Data> dataClusters = new ArrayList<Data>();
+		for(int i=0;i<data.numInstances();i++){
+			int x= arrayPixels.get(i).getX();
+			int y= arrayPixels.get(i).getY();
+			int cluster = (int) Math.round(clusters[i]);
+			Data data = new Data(x, y);
+			data.cluster(cluster);
+			dataClusters.add(data);
+		}
+		return dataClusters;
+	}
+	
+	public ArrayList<Data> calculateCobWeb() throws Exception {
+		Cobweb cobWeb = new Cobweb();
+		cobWeb.buildClusterer(data);
+		
+		ClusterEvaluation eval = new ClusterEvaluation();
+		eval.setClusterer(cobWeb);
+		eval.evaluateClusterer(data);
+		double[] clusters = eval.getClusterAssignments();
+		ArrayList<Data> dataClusters = new ArrayList<Data>();
+		for(int i=0;i<data.numInstances();i++){
+			int x= arrayPixels.get(i).getX();
+			int y= arrayPixels.get(i).getY();
+			int cluster = (int) Math.round(clusters[i]);
+			Data data = new Data(x, y);
+			data.cluster(cluster);
+			dataClusters.add(data);
+		}
+		return dataClusters;
+	}
+	
 	public static void main(String[] args) throws Exception {
 		ArrayList<Pixel> arrayPixel = new ArrayList<Pixel>();
 		arrayPixel.add(new Pixel(1,2));
@@ -97,7 +155,15 @@ public class Wekalib {
 		arrayPixel.add(new Pixel(7,14));
 		arrayPixel.add(new Pixel(7,11));
 		Wekalib wekaLib= new Wekalib(arrayPixel,4);
-		wekaLib.calculateFarthestFirst();
+		wekaLib.calculateCobWeb();
+	}
+
+	public String getLinkType() {
+		return linkType;
+	}
+
+	public void setLinkType(String linkType) {
+		this.linkType = linkType;
 	}
 
 }

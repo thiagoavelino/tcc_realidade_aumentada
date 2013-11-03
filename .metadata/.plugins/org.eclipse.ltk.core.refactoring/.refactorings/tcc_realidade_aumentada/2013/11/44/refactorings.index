@@ -6,3 +6,11 @@
 1383416601740	Copy compilation unit
 1383419169318	Rename type 'SimpleKMeansWeka'
 1383419273138	Rename method 'calculate'
+1383476803136	Rename field 'dataKmeans'
+1383477676310	Encapsulate field 'spinnerFarthestFirst'
+1383477695785	Encapsulate field 'spinnerHierarchical'
+1383477710076	Encapsulate field 'spinnerCobWeb'
+1383480179445	Encapsulate field 'linkType'
+1383480446771	Encapsulate field 'linkTypesComboBox'
+1383481823275	Extract method 'initializeAlgorithm'
+1383484554959	Delete elements

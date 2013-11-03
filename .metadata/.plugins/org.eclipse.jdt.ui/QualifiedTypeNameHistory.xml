@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.awt.image.ColorConvertOp"/>
-<fullyQualifiedTypeName name="java.awt.color.ColorSpace"/>
 <fullyQualifiedTypeName name="org.opencv.imgproc.Imgproc"/>
 <fullyQualifiedTypeName name="Model.ImgAlgorithms"/>
 <fullyQualifiedTypeName name="java.awt.Graphics2D"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="weka.classifiers.Evaluation"/>
 <fullyQualifiedTypeName name="weka.clusterers.ClusterEvaluation"/>
 <fullyQualifiedTypeName name="weka.clusterers.FarthestFirst"/>
+<fullyQualifiedTypeName name="javax.swing.JComboBox"/>
+<fullyQualifiedTypeName name="weka.core.Tag"/>
 </qualifiedTypeNameHistroy>

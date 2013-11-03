@@ -30,7 +30,7 @@ public class CamRAPanel extends JPanel {
 	private BufferedImage master;
 	private ArrayList<Pixel> centroids;
 	private ArrayList<Color> colors;
-	private ArrayList<Data> dataKmeans;
+	private ArrayList<Data> dataClusterAlgorithm;
 	private ArrayList<Data> dataPolinomial;
 	private int axeX;
 	private int axeY;
@@ -41,7 +41,7 @@ public class CamRAPanel extends JPanel {
 	public CamRAPanel(BufferedImage master) {
 		setMaster(master);
 		centroids = new ArrayList<Pixel>();
-		dataKmeans = new ArrayList<Data>();
+		dataClusterAlgorithm = new ArrayList<Data>();
 		dataPolinomial = new ArrayList<Data>();
         Graphics2D g2d = getMaster().createGraphics();
         g2d.drawImage(getMaster(), 0, 0, null);
@@ -64,15 +64,12 @@ public class CamRAPanel extends JPanel {
     	paintAxes(g);
     	switch(algorithm){
 	    	case "kmeans":
+	    	case "farthestfirst":
+	    	case "hierarchical":
+	    	case "cobweb":
 	    		paintClusters(g);
 	    		break;
 	    	case "linear":
-	    		g.setColor(Color.BLACK);
-	    		
-	    		/*g.drawLine(linearRegressionInit.getX(), linearRegressionInit.getY(), 
-	    				linearRegressionFinal.getX(), linearRegressionFinal.getY());
-	    		g.drawLine(linearRegressionInit.getX()-1, linearRegressionInit.getY()-1, 
-	    				linearRegressionFinal.getX()-1, linearRegressionFinal.getY()-1);*/
 	    		g.setColor(Color.BLACK);
 	    		for(int i=0; i<dataPolinomial.size(); i++){
 	    			g.drawRect((int) Math.round(dataPolinomial.get(i).X()), (int) Math.round(dataPolinomial.get(i).Y()), 1, 1);
@@ -100,8 +97,8 @@ public class CamRAPanel extends JPanel {
 
 	public void paintClusters(Graphics g) {
 		ArrayList<Integer> clusters = new ArrayList<Integer>();
-		for(int i=0; i< dataKmeans.size(); i++){
-			Data data = dataKmeans.get(i);
+		for(int i=0; i< dataClusterAlgorithm.size(); i++){
+			Data data = dataClusterAlgorithm.get(i);
 			int cluster = data.cluster();
 			int xPix = (int)data.X(); 
 			int yPix = (int)data.Y();
@@ -122,8 +119,8 @@ public class CamRAPanel extends JPanel {
 			int numberOfPoints = 0;
 			int []xPoints = new int[100];
 			int []yPoints = new int[100];
-			for(int l=0; l<dataKmeans.size(); l++){
-				Data data = dataKmeans.get(l);
+			for(int l=0; l<dataClusterAlgorithm.size(); l++){
+				Data data = dataClusterAlgorithm.get(l);
 				int xPix = (int)data.X(); 
 				int yPix = (int)data.Y();
 				int cluster = data.cluster();
@@ -192,12 +189,12 @@ public class CamRAPanel extends JPanel {
 		}
 	}
 
-	public ArrayList<Data> getDataKmeans() {
-		return dataKmeans;
+	public ArrayList<Data> getDataClusterAlgorithm() {
+		return dataClusterAlgorithm;
 	}
 
-	public void setDataKmeans(ArrayList<Data> dataKmeans) {
-		this.dataKmeans = dataKmeans;
+	public void setDataClusterAlgorithm(ArrayList<Data> dataKmeans) {
+		this.dataClusterAlgorithm = dataKmeans;
 	}
 
 	public int getAxeX() {

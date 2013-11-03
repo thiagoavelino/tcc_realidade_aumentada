@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -62,9 +63,14 @@ public class MainWindow implements Runnable{
 	private JPanel panelConfig;
 	private String algorithmSelected;
 	private JSpinner spinnerKmeans;
+	private JSpinner spinnerFarthestFirst;
+	private JSpinner spinnerHierarchical;
+	private JSpinner spinnerCobWeb;
 	private JSpinner spinnerPolinomio;
 	private JLabel functionLinear;
 	private JLabel functionPolinomioValue;
+	private JComboBox linkTypesComboBox;
+	
 
 	public MainWindow() {
 		initialize();
@@ -272,6 +278,15 @@ public class MainWindow implements Runnable{
 				JLabel farthestFirst  = new JLabel("Farthest First");
 				farthestFirst.setFont(new Font("Tahoma", Font.BOLD, 11));
 				panelConfig.add(farthestFirst);
+				JLabel numeroClustersField = new JLabel("Defina o número de clusters:");
+				numeroClustersField.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panelConfig.add(numeroClustersField);
+				SpinnerNumberModel model = new SpinnerNumberModel(1.0, 1.0, 30.0, 1.0);  
+				spinnerFarthestFirst = new JSpinner(model);
+				JFormattedTextField tf = ((JSpinner.DefaultEditor)spinnerFarthestFirst.getEditor())
+						.getTextField();
+						  tf.setEditable(false);
+				panelConfig.add(spinnerFarthestFirst);
 				panelConfig.revalidate();
 				panelConfig.repaint();
 				
@@ -288,6 +303,19 @@ public class MainWindow implements Runnable{
 				JLabel hierarchical = new JLabel("Hierarquico");
 				hierarchical.setFont(new Font("Tahoma", Font.BOLD, 11));
 				panelConfig.add(hierarchical);
+				JLabel numeroClustersField = new JLabel("Defina o número de clusters:");
+				numeroClustersField.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panelConfig.add(numeroClustersField);
+				SpinnerNumberModel model = new SpinnerNumberModel(1.0, 1.0, 30.0, 1.0);  
+				spinnerHierarchical = new JSpinner(model);
+				JFormattedTextField tf = ((JSpinner.DefaultEditor)spinnerHierarchical.getEditor())
+						.getTextField();
+						  tf.setEditable(false);
+				panelConfig.add(spinnerHierarchical);
+				String[] linkTypes = { "SINGLE", "COMPLETE", "AVERAGE", "MEAN", "CENTROID", "WARD", "ADJCOMLPETE", "NEIGHBOR_JOINING" };
+				linkTypesComboBox = new JComboBox(linkTypes);
+				linkTypesComboBox.setSelectedIndex(1);
+				panelConfig.add(linkTypesComboBox);
 				panelConfig.revalidate();
 				panelConfig.repaint();
 				
@@ -299,11 +327,20 @@ public class MainWindow implements Runnable{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "";
+				algorithmSelected = "cobweb";
 				panelConfig.removeAll();
 				JLabel cobWeb = new JLabel("CobWeb");
 				cobWeb.setFont(new Font("Tahoma", Font.BOLD, 11));
 				panelConfig.add(cobWeb);
+				JLabel numeroClustersField = new JLabel("Defina o número de clusters:");
+				numeroClustersField.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				panelConfig.add(numeroClustersField);
+				SpinnerNumberModel model = new SpinnerNumberModel(1.0, 1.0, 30.0, 1.0);  
+				spinnerCobWeb = new JSpinner(model);
+				JFormattedTextField tf = ((JSpinner.DefaultEditor)spinnerCobWeb.getEditor())
+						.getTextField();
+						  tf.setEditable(false);
+				panelConfig.add(spinnerCobWeb);
 				panelConfig.revalidate();
 				panelConfig.repaint();
 				
@@ -475,5 +512,37 @@ public class MainWindow implements Runnable{
 
 	public void setSpinnerPolinomio(JSpinner spinnerPolinomio) {
 		this.spinnerPolinomio = spinnerPolinomio;
+	}
+
+	public JSpinner getSpinnerFarthestFirst() {
+		return spinnerFarthestFirst;
+	}
+
+	public void setSpinnerFarthestFirst(JSpinner spinnerFarthestFirst) {
+		this.spinnerFarthestFirst = spinnerFarthestFirst;
+	}
+
+	public JSpinner getSpinnerHierarchical() {
+		return spinnerHierarchical;
+	}
+
+	public void setSpinnerHierarchical(JSpinner spinnerHierarchical) {
+		this.spinnerHierarchical = spinnerHierarchical;
+	}
+
+	public JSpinner getSpinnerCobWeb() {
+		return spinnerCobWeb;
+	}
+
+	public void setSpinnerCobWeb(JSpinner spinnerCobWeb) {
+		this.spinnerCobWeb = spinnerCobWeb;
+	}
+
+	public JComboBox getLinkTypesComboBox() {
+		return linkTypesComboBox;
+	}
+
+	public void setLinkTypesComboBox(JComboBox linkTypesComboBox) {
+		this.linkTypesComboBox = linkTypesComboBox;
 	}
 }
