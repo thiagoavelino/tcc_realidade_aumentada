@@ -54,9 +54,6 @@ public class MainWindow implements Runnable{
 	private boolean binaryImage;
 	private JToolBar toolBar;
 	private JButton buttonKmeans;
-	private JButton buttonFarthestFirst;
-	private JButton buttonHierarchical;
-	private JButton buttonCobWeb;
 	private JButton buttonLinear;
 	private JButton buttonPolinomial;
 	private JPanel panelConfig;
@@ -157,37 +154,18 @@ public class MainWindow implements Runnable{
 
 	public void createToolBar() {
 		toolBar = new JToolBar();
-		
 		buttonKmeans = new JButton();
 		buttonKmeans.setIcon(new ImageIcon("icons/kmeans.jpg"));
 		buttonKmeans.addActionListener(this.buttonKmeansAction());
 		toolBar.add(buttonKmeans);
-		
-		buttonFarthestFirst = new JButton();
-		buttonFarthestFirst.setIcon(new ImageIcon("icons/farthestfirst.jpg"));
-		buttonFarthestFirst.addActionListener(this.buttonFarthestFirstAction());
-		toolBar.add(buttonFarthestFirst);
-		
-		buttonHierarchical = new JButton();
-		buttonHierarchical.setIcon(new ImageIcon("icons/hierarquico.jpg"));
-		buttonHierarchical.addActionListener(this.buttonHierarchicalAction());
-		toolBar.add(buttonHierarchical);
-		
-		buttonCobWeb = new JButton();
-		buttonCobWeb.setIcon(new ImageIcon("icons/cobweb.jpg"));
-		buttonCobWeb.addActionListener(this.buttonCobWebAction());
-		toolBar.add(buttonCobWeb);
-		
 		buttonLinear = new JButton();
 		buttonLinear.setIcon(new ImageIcon("icons/linear.jpg"));
 		buttonLinear.addActionListener(this.buttonLinearAction());
 		toolBar.add(buttonLinear);
-		
 		buttonPolinomial = new JButton();
 		buttonPolinomial.setIcon(new ImageIcon("icons/polinomial.jpg"));
 		buttonPolinomial.addActionListener(this.buttonPolinomialAction());
 		toolBar.add(buttonPolinomial);
-		
 		toolBar.setBounds(0, 0, 645, 40);
 		toolBar.setFloatable(false);
 		frmAplicaoDeRealidade.getContentPane().add(toolBar);
@@ -261,56 +239,6 @@ public class MainWindow implements Runnable{
 			}
 		};
 	}
-	
-	
-	public ActionListener buttonFarthestFirstAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "farthestfirst";
-				panelConfig.removeAll();
-				JLabel farthestFirst  = new JLabel("Farthest First");
-				farthestFirst.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(farthestFirst);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	
-	public ActionListener buttonHierarchicalAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "hierarchical";
-				panelConfig.removeAll();
-				JLabel hierarchical = new JLabel("Hierarquico");
-				hierarchical.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(hierarchical);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	
-	public ActionListener buttonCobWebAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "";
-				panelConfig.removeAll();
-				JLabel cobWeb = new JLabel("CobWeb");
-				cobWeb.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(cobWeb);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	
 	public ActionListener buttonLinearAction() {
 		return new ActionListener() {
 			@Override

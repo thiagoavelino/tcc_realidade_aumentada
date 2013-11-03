@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="View.CamRAPanel"/>
 <fullyQualifiedTypeName name="java.awt.image.ColorConvertOp"/>
 <fullyQualifiedTypeName name="java.awt.color.ColorSpace"/>
 <fullyQualifiedTypeName name="org.opencv.imgproc.Imgproc"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="Model.Pixel"/>
 <fullyQualifiedTypeName name="weka.classifiers.Evaluation"/>
 <fullyQualifiedTypeName name="weka.clusterers.ClusterEvaluation"/>
+<fullyQualifiedTypeName name="weka.clusterers.FarthestFirst"/>
 </qualifiedTypeNameHistroy>

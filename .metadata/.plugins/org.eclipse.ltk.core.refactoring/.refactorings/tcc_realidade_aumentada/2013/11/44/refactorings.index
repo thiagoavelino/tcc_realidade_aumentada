@@ -4,3 +4,5 @@
 1383412770352	Rename type 'SimpleKMeans'
 1383416137823	Extract method 'calculate'
 1383416601740	Copy compilation unit
+1383419169318	Rename type 'SimpleKMeansWeka'
+1383419273138	Rename method 'calculate'

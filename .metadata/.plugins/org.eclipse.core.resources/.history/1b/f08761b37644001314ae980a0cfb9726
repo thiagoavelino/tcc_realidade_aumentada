@@ -267,9 +267,9 @@ public class MainWindow implements Runnable{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "farthestfirst";
+				algorithmSelected = "";
 				panelConfig.removeAll();
-				JLabel farthestFirst  = new JLabel("Farthest First");
+				JLabel farthestFirst  = new JLabel("");
 				farthestFirst.setFont(new Font("Tahoma", Font.BOLD, 11));
 				panelConfig.add(farthestFirst);
 				panelConfig.revalidate();
@@ -283,11 +283,11 @@ public class MainWindow implements Runnable{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "hierarchical";
+				algorithmSelected = "";
 				panelConfig.removeAll();
-				JLabel hierarchical = new JLabel("Hierarquico");
-				hierarchical.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(hierarchical);
+				JLabel  = new JLabel("");
+				.setFont(new Font("Tahoma", Font.BOLD, 11));
+				panelConfig.add();
 				panelConfig.revalidate();
 				panelConfig.repaint();
 				
@@ -301,9 +301,9 @@ public class MainWindow implements Runnable{
 			public void actionPerformed(ActionEvent e) {
 				algorithmSelected = "";
 				panelConfig.removeAll();
-				JLabel cobWeb = new JLabel("CobWeb");
-				cobWeb.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(cobWeb);
+				JLabel  = new JLabel("");
+				.setFont(new Font("Tahoma", Font.BOLD, 11));
+				panelConfig.add();
 				panelConfig.revalidate();
 				panelConfig.repaint();
 				

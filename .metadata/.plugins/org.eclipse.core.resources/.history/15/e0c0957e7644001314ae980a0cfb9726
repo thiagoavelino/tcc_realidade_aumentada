@@ -261,56 +261,6 @@ public class MainWindow implements Runnable{
 			}
 		};
 	}
-	
-	
-	public ActionListener buttonFarthestFirstAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "farthestfirst";
-				panelConfig.removeAll();
-				JLabel farthestFirst  = new JLabel("Farthest First");
-				farthestFirst.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(farthestFirst);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	
-	public ActionListener buttonHierarchicalAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "hierarchical";
-				panelConfig.removeAll();
-				JLabel hierarchical = new JLabel("Hierarquico");
-				hierarchical.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(hierarchical);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	
-	public ActionListener buttonCobWebAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "";
-				panelConfig.removeAll();
-				JLabel cobWeb = new JLabel("CobWeb");
-				cobWeb.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(cobWeb);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	
 	public ActionListener buttonLinearAction() {
 		return new ActionListener() {
 			@Override

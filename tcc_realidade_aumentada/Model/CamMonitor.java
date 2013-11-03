@@ -13,7 +13,7 @@ import LinearRegression.LinearRegression;
 import PolyRegression.PolynomialRegression;
 import View.CamRAPanel;
 import View.MainWindow;
-import WekaLib.SimpleKMeansWeka;
+import WekaLib.Wekalib;
 
 import com.github.sarxos.webcam.Webcam;
 
@@ -63,16 +63,12 @@ public class CamMonitor extends Thread {
 					String spinnerValue = mainWindow.getSpinnerKmeans().getValue().toString();
 					float spinnerFloatValue = Float.parseFloat(spinnerValue);
 					try {
-						SimpleKMeansWeka simpleKmeans = new SimpleKMeansWeka(centroidsTemp,(int)spinnerFloatValue);
-						camRAPAnel.setDataKmeans(simpleKmeans.calculate());
+						Wekalib simpleKmeans = new Wekalib(centroidsTemp,(int)spinnerFloatValue);
+						camRAPAnel.setDataKmeans(simpleKmeans.calculateKmeans());
 						camRAPAnel.setAlgorithm(selectedAlgorithm);
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
-					/*imgAlgorithms.setNumberClustersKmeans((int)spinnerFloatValue);
-					imgAlgorithms.calculateKmeans();
-					camRAPAnel.setDataKmeans(imgAlgorithms.getDataKmeans());
-					camRAPAnel.setAlgorithm(selectedAlgorithm);*/
 					break;
 				case"linear":
 					if(centroidsTemp.size()>0){

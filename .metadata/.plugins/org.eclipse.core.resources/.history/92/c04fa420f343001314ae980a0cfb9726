@@ -8,17 +8,20 @@ import java.awt.image.ColorConvertOp;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import WekaLib.Data;
 import LinearRegression.LinearRegression;
+import PolyRegression.PolynomialRegression;
 import View.CamRAPanel;
 import View.MainWindow;
+import WekaLib.Wekalib;
 
 import com.github.sarxos.webcam.Webcam;
 
 
 
 public class CamMonitor extends Thread {
-	public static final int GETIMAGETIMEMILI = 500;
-	public static final int NUMBERCYCLESGETINFORMATION = 10;
+	public static final int GETIMAGETIMEMILI = 1000;
+	public static final int NUMBERCYCLESGETINFORMATION = 5;
 	private MainWindow mainWindow;
 	private ArrayList<Pixel> centroidsTemp;
 	private BufferedImage image;
@@ -30,7 +33,7 @@ public class CamMonitor extends Thread {
 	private double[]regressionArray;
 	private Pixel linearRegressionInit;
 	private Pixel linearRegressionFinal;
-	public static final double THRESHOLANGLE = 0.8;
+	public static final double THRESHOLANGLE = 0.2;
 	public static final double ANGLEX = Math.PI;
 	public static final double ANGLEY = Math.PI/2;
 	
@@ -51,7 +54,6 @@ public class CamMonitor extends Thread {
 			getInformation(imgAlgorithms);
 			if(!mainWindow.isAlgoritmoLigado()){
 				imgAlgorithms.setOutput(image);
-				//PaintHougLines(linesTemp, imgAlgorithms);
 			}
 			CamRAPanel camRAPAnel = mainWindow.getRAPanel();
 			String selectedAlgorithm = mainWindow.getAlgorithmSelected();
@@ -60,35 +62,33 @@ public class CamMonitor extends Thread {
 				case"kmeans":
 					String spinnerValue = mainWindow.getSpinnerKmeans().getValue().toString();
 					float spinnerFloatValue = Float.parseFloat(spinnerValue);
-					imgAlgorithms.setNumberClustersKmeans((int)spinnerFloatValue);
-					imgAlgorithms.calculateKmeans();
-					camRAPAnel.setDataKmeans(imgAlgorithms.getDataKmeans());
-					camRAPAnel.setAlgorithm(selectedAlgorithm);
-					break;
-				case"linear":
-					LinearRegression lr = new LinearRegression();
-					double[] xp = new double[centroidsTemp.size()];
-					double[] yp = new double[centroidsTemp.size()];
-					for(int i=0; i<centroidsTemp.size(); i++){
-						xp[i] = centroidsTemp.get(i).getX();
-						yp[i] = image.getHeight() - centroidsTemp.get(i).getY();
-					}
 					try {
-						regressionArray = lr.getRegression(xp, yp);
-						double x1 = 0;
-						double y1 = x1*regressionArray[3] + regressionArray[4];
-						y1 = Math.abs(y1-image.getHeight());
-						
-						double x2 = image.getWidth()-1;
-						double y2 = x2*regressionArray[3] + regressionArray[4];
-						y2 = Math.abs(y2-image.getHeight());
-						camRAPAnel.setLinearRegressionInit(new Pixel((int)x1,(int)y1));
-						camRAPAnel.setLinearRegressionFinal(new Pixel((int)x2,(int)y2));
+						Wekalib simpleKmeans = new Wekalib(centroidsTemp,(int)spinnerFloatValue);
+						camRAPAnel.setDataKmeans(simpleKmeans.calculateKmeans());
+						camRAPAnel.setAlgorithm(selectedAlgorithm);
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
-					
-					
+					/*imgAlgorithms.setNumberClustersKmeans((int)spinnerFloatValue);
+					imgAlgorithms.calculateKmeans();
+					camRAPAnel.setDataKmeans(imgAlgorithms.getDataKmeans());
+					camRAPAnel.setAlgorithm(selectedAlgorithm);*/
+					break;
+				case"linear":
+					if(centroidsTemp.size()>0){
+						PolynomialRegression poliReg = calculatePolinomial(camRAPAnel,1);
+						PolynomialRegression poliReal = calculatePolinomialRealFunction(1);
+						mainWindow.getFunctionLinear().setText(poliReal.toString());
+					}
+					break;
+				case"polinomial":
+					if(centroidsTemp.size()>0){
+						String spinnerPoly = mainWindow.getSpinnerPolinomio().getValue().toString();
+						float spinnerPolyFloat = Float.parseFloat(spinnerPoly);
+						PolynomialRegression poliRegValue = calculatePolinomial(camRAPAnel,(int)spinnerPolyFloat);
+						PolynomialRegression poliReal = calculatePolinomialRealFunction((int)spinnerPolyFloat);
+						mainWindow.getFunctionPolinomioValue().setText(poliReal.toString());
+					}
 					break;
 				default:
 					camRAPAnel.setCentroids(centroidsTemp);
@@ -110,12 +110,44 @@ public class CamMonitor extends Thread {
 		}
 	}
 
+	public PolynomialRegression calculatePolinomial(CamRAPanel camRAPAnel, int degree) {
+		double[] xPoly = new double[centroidsTemp.size()];
+		double[] yPoly = new double[centroidsTemp.size()];
+		for(int i=0; i<centroidsTemp.size(); i++){
+			xPoly[i] = centroidsTemp.get(i).getX();
+			yPoly[i] = image.getHeight() - centroidsTemp.get(i).getY();
+		}
+		PolynomialRegression pReg = new PolynomialRegression(xPoly, yPoly, degree);
+		ArrayList<Data> dataPolinomial = new ArrayList<Data>();
+		for(int x=0; x<image.getWidth(); x++){
+			double yCalc = pReg.calculatePoly(x);
+			if(yCalc<image.getHeight())	dataPolinomial.add(new Data(x,Math.abs(yCalc-image.getHeight())));
+			else dataPolinomial.add(new Data(x,Math.abs(yCalc+image.getHeight())));
+		}
+		camRAPAnel.setDataPolinomial(dataPolinomial);
+		return pReg;
+	}
+	
+	public PolynomialRegression calculatePolinomialRealFunction(int degree) {
+		double[] xPoly = new double[centroidsTemp.size()];
+		double[] yPoly = new double[centroidsTemp.size()];
+		int yReal = image.getHeight() - this.linearYTemp;
+		for(int i=0; i<centroidsTemp.size(); i++){
+			xPoly[i] = centroidsTemp.get(i).getX() - this.linearXTemp;
+			yPoly[i] = image.getHeight() - centroidsTemp.get(i).getY();
+			yPoly[i] = yPoly[i] - yReal;
+		}
+		PolynomialRegression pReg = new PolynomialRegression(xPoly, yPoly, degree);
+		return pReg;
+	}
+
 	public void defineAxes() {
 		boolean selectedAxeX = false;
 		boolean selectedAxeY = false;
 		for(int i=0;i<linesTemp.size();i++){
 			HoughLine selected = linesTemp.get(i);
-			if( selected.getTheta()<(ANGLEX+THRESHOLANGLE) && selected.getTheta()>(ANGLEX-THRESHOLANGLE)){
+			if( (selected.getTheta()<(ANGLEX+THRESHOLANGLE) && selected.getTheta()>(ANGLEX-THRESHOLANGLE))
+					|| (selected.getTheta()<(THRESHOLANGLE) && selected.getTheta()>(-THRESHOLANGLE)) ){
 				if(!selectedAxeX){
 					selectedAxeX = true;
 					linearXTemp = selected.getVertical(image.getWidth(), image.getHeight());

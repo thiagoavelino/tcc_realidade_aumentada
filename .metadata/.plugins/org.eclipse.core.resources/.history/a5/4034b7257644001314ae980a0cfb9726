@@ -163,6 +163,11 @@ public class MainWindow implements Runnable{
 		buttonKmeans.addActionListener(this.buttonKmeansAction());
 		toolBar.add(buttonKmeans);
 		
+
+		private JButton buttonFarthestFirst;
+		private JButton buttonHierarchical;
+		private JButton buttonCobWeb;
+		
 		buttonFarthestFirst = new JButton();
 		buttonFarthestFirst.setIcon(new ImageIcon("icons/farthestfirst.jpg"));
 		buttonFarthestFirst.addActionListener(this.buttonFarthestFirstAction());
@@ -182,12 +187,10 @@ public class MainWindow implements Runnable{
 		buttonLinear.setIcon(new ImageIcon("icons/linear.jpg"));
 		buttonLinear.addActionListener(this.buttonLinearAction());
 		toolBar.add(buttonLinear);
-		
 		buttonPolinomial = new JButton();
 		buttonPolinomial.setIcon(new ImageIcon("icons/polinomial.jpg"));
 		buttonPolinomial.addActionListener(this.buttonPolinomialAction());
 		toolBar.add(buttonPolinomial);
-		
 		toolBar.setBounds(0, 0, 645, 40);
 		toolBar.setFloatable(false);
 		frmAplicaoDeRealidade.getContentPane().add(toolBar);
@@ -261,56 +264,6 @@ public class MainWindow implements Runnable{
 			}
 		};
 	}
-	
-	
-	public ActionListener buttonFarthestFirstAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "farthestfirst";
-				panelConfig.removeAll();
-				JLabel farthestFirst  = new JLabel("Farthest First");
-				farthestFirst.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(farthestFirst);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	
-	public ActionListener buttonHierarchicalAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "hierarchical";
-				panelConfig.removeAll();
-				JLabel hierarchical = new JLabel("Hierarquico");
-				hierarchical.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(hierarchical);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	
-	public ActionListener buttonCobWebAction() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				algorithmSelected = "";
-				panelConfig.removeAll();
-				JLabel cobWeb = new JLabel("CobWeb");
-				cobWeb.setFont(new Font("Tahoma", Font.BOLD, 11));
-				panelConfig.add(cobWeb);
-				panelConfig.revalidate();
-				panelConfig.repaint();
-				
-			}
-		};
-	}
-	
 	public ActionListener buttonLinearAction() {
 		return new ActionListener() {
 			@Override
