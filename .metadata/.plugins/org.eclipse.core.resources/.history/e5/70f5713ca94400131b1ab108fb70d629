@@ -148,7 +148,7 @@ public class MainWindow implements Runnable{
 		mnArquivo.add(mntmSair);
 		
 		
-		JMenu mnClusterers = new JMenu("Clusterização");
+		JMenu mnClusterers = new JMenu("Algoritmos de Clusterização");
 		menuBar.add(mnClusterers);
 		JMenuItem mntmKmeans = new JMenuItem("K Means");
 		mntmKmeans.addActionListener(this.buttonKmeansAction());
@@ -160,14 +160,8 @@ public class MainWindow implements Runnable{
 		mntmHierarchical.addActionListener(this.buttonHierarchicalAction());
 		mnClusterers.add(mntmHierarchical);
 				
-		JMenu mnRegressao = new JMenu("Regressão");
-		menuBar.add(mnRegressao);
-		JMenuItem mntmLinear = new JMenuItem("Linear");
-		mntmLinear.addActionListener(this.buttonLinearAction());
-		mnRegressao.add(mntmLinear);
-		JMenuItem mntmPolinomial = new JMenuItem("Polinomial");
-		mntmPolinomial.addActionListener(this.buttonPolinomialAction());
-		mnRegressao.add(mntmPolinomial);
+		JMenu mnRegressao = new JMenu("Regressão Linear");
+		menuBar.add(mnClusterers);
 		
 		
 	}

@@ -124,7 +124,25 @@ public class Wekalib {
 		return dataClusters;
 	}
 	
-	
+	public ArrayList<Data> calculateCobWeb() throws Exception {
+		Cobweb cobWeb = new Cobweb();
+		cobWeb.buildClusterer(data);
+		
+		ClusterEvaluation eval = new ClusterEvaluation();
+		eval.setClusterer(cobWeb);
+		eval.evaluateClusterer(data);
+		double[] clusters = eval.getClusterAssignments();
+		ArrayList<Data> dataClusters = new ArrayList<Data>();
+		for(int i=0;i<data.numInstances();i++){
+			int x= arrayPixels.get(i).getX();
+			int y= arrayPixels.get(i).getY();
+			int cluster = (int) Math.round(clusters[i]);
+			Data data = new Data(x, y);
+			data.cluster(cluster);
+			dataClusters.add(data);
+		}
+		return dataClusters;
+	}
 	
 	public static void main(String[] args) throws Exception {
 		ArrayList<Pixel> arrayPixel = new ArrayList<Pixel>();
@@ -137,6 +155,7 @@ public class Wekalib {
 		arrayPixel.add(new Pixel(7,14));
 		arrayPixel.add(new Pixel(7,11));
 		Wekalib wekaLib= new Wekalib(arrayPixel,4);
+		wekaLib.calculateCobWeb();
 	}
 
 	public String getLinkType() {

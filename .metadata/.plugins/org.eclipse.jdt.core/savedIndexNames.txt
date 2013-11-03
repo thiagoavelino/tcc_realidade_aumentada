@@ -34,3 +34,4 @@ INDEX VERSION 1.126+C:\Users\Thiago\Documents\GitHub\tcc_realidade_aumentada\.me
 3936743520.index
 2560765223.index
 810944544.index
+1965450815.index

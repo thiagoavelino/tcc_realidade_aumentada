@@ -66,6 +66,7 @@ public class CamRAPanel extends JPanel {
 	    	case "kmeans":
 	    	case "farthestfirst":
 	    	case "hierarchical":
+	    	case "cobweb":
 	    		paintClusters(g);
 	    		break;
 	    	case "linear":

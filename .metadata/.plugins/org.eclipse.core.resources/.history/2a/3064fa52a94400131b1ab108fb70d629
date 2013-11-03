@@ -148,7 +148,7 @@ public class MainWindow implements Runnable{
 		mnArquivo.add(mntmSair);
 		
 		
-		JMenu mnClusterers = new JMenu("Clusterização");
+		JMenu mnClusterers = new JMenu("Algoritmos de Clusterização");
 		menuBar.add(mnClusterers);
 		JMenuItem mntmKmeans = new JMenuItem("K Means");
 		mntmKmeans.addActionListener(this.buttonKmeansAction());

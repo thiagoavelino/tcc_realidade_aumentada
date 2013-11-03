@@ -140,36 +140,14 @@ public class MainWindow implements Runnable{
 		
 		JMenu mnArquivo = new JMenu("Arquivo");
 		menuBar.add(mnArquivo);
+		
 		JMenuItem mntmSalvarImagem = new JMenuItem("Salvar Imagem...");
 		mntmSalvarImagem.addActionListener(actionListSalvarImg());
 		mnArquivo.add(mntmSalvarImagem);
+		
 		JMenuItem mntmSair = new JMenuItem("Sair");
 		mntmSair.addActionListener(closeFrame());
 		mnArquivo.add(mntmSair);
-		
-		
-		JMenu mnClusterers = new JMenu("Clusterização");
-		menuBar.add(mnClusterers);
-		JMenuItem mntmKmeans = new JMenuItem("K Means");
-		mntmKmeans.addActionListener(this.buttonKmeansAction());
-		mnClusterers.add(mntmKmeans);
-		JMenuItem mntmFarthestFirst = new JMenuItem("Farthest First");
-		mntmFarthestFirst.addActionListener(this.buttonFarthestFirstAction());
-		mnClusterers.add(mntmFarthestFirst);
-		JMenuItem mntmHierarchical = new JMenuItem("Hierárquico");
-		mntmHierarchical.addActionListener(this.buttonHierarchicalAction());
-		mnClusterers.add(mntmHierarchical);
-				
-		JMenu mnRegressao = new JMenu("Regressão");
-		menuBar.add(mnRegressao);
-		JMenuItem mntmLinear = new JMenuItem("Linear");
-		mntmLinear.addActionListener(this.buttonLinearAction());
-		mnRegressao.add(mntmLinear);
-		JMenuItem mntmPolinomial = new JMenuItem("Polinomial");
-		mntmPolinomial.addActionListener(this.buttonPolinomialAction());
-		mnRegressao.add(mntmPolinomial);
-		
-		
 	}
 
 	public void generatePainelInitial() {
@@ -235,9 +213,19 @@ public class MainWindow implements Runnable{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				BufferedImage image = new BufferedImage(RAPanel.getWidth(), RAPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
-                Graphics2D graphics2D = image.createGraphics();
-                RAPanel.paint(graphics2D);
+				
+				 BufferedImage image = new BufferedImage(RAPanel.getWidth(), RAPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
+                 Graphics2D graphics2D = image.createGraphics(); 
+
+                 RAPanel.paint(graphics2D);
+                 try{
+                     ImageIO.write(image,"png", new File("Example.png"));
+                     }
+                 catch(Exception ex){
+                      ex.printStackTrace();
+                     }
+				/*Webcam.setAutoOpenMode(true);
+				BufferedImage image = Webcam.getDefault().getImage();
 				JFileChooser arquivo = new JFileChooser();
 				setFileChooser(arquivo);
 				int retorno = arquivo.showOpenDialog(null);
@@ -245,7 +233,7 @@ public class MainWindow implements Runnable{
 					String caminhoArquivo = arquivo.getSelectedFile().getAbsolutePath();
 					Model.Cam cam = new Model.Cam();
 					cam.saveImage(caminhoArquivo, image);
-				}
+				}*/
 				
 			}
 		};

@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics2D;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 
@@ -58,6 +57,7 @@ public class MainWindow implements Runnable{
 	private JButton buttonKmeans;
 	private JButton buttonFarthestFirst;
 	private JButton buttonHierarchical;
+	private JButton buttonCobWeb;
 	private JButton buttonLinear;
 	private JButton buttonPolinomial;
 	private JPanel panelConfig;
@@ -65,6 +65,7 @@ public class MainWindow implements Runnable{
 	private JSpinner spinnerKmeans;
 	private JSpinner spinnerFarthestFirst;
 	private JSpinner spinnerHierarchical;
+	private JSpinner spinnerCobWeb;
 	private JSpinner spinnerPolinomio;
 	private JLabel functionLinear;
 	private JLabel functionPolinomioValue;
@@ -140,36 +141,14 @@ public class MainWindow implements Runnable{
 		
 		JMenu mnArquivo = new JMenu("Arquivo");
 		menuBar.add(mnArquivo);
+		
 		JMenuItem mntmSalvarImagem = new JMenuItem("Salvar Imagem...");
 		mntmSalvarImagem.addActionListener(actionListSalvarImg());
 		mnArquivo.add(mntmSalvarImagem);
+		
 		JMenuItem mntmSair = new JMenuItem("Sair");
 		mntmSair.addActionListener(closeFrame());
 		mnArquivo.add(mntmSair);
-		
-		
-		JMenu mnClusterers = new JMenu("Clusterização");
-		menuBar.add(mnClusterers);
-		JMenuItem mntmKmeans = new JMenuItem("K Means");
-		mntmKmeans.addActionListener(this.buttonKmeansAction());
-		mnClusterers.add(mntmKmeans);
-		JMenuItem mntmFarthestFirst = new JMenuItem("Farthest First");
-		mntmFarthestFirst.addActionListener(this.buttonFarthestFirstAction());
-		mnClusterers.add(mntmFarthestFirst);
-		JMenuItem mntmHierarchical = new JMenuItem("Hierárquico");
-		mntmHierarchical.addActionListener(this.buttonHierarchicalAction());
-		mnClusterers.add(mntmHierarchical);
-				
-		JMenu mnRegressao = new JMenu("Regressão");
-		menuBar.add(mnRegressao);
-		JMenuItem mntmLinear = new JMenuItem("Linear");
-		mntmLinear.addActionListener(this.buttonLinearAction());
-		mnRegressao.add(mntmLinear);
-		JMenuItem mntmPolinomial = new JMenuItem("Polinomial");
-		mntmPolinomial.addActionListener(this.buttonPolinomialAction());
-		mnRegressao.add(mntmPolinomial);
-		
-		
 	}
 
 	public void generatePainelInitial() {
@@ -235,9 +214,8 @@ public class MainWindow implements Runnable{
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				BufferedImage image = new BufferedImage(RAPanel.getWidth(), RAPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
-                Graphics2D graphics2D = image.createGraphics();
-                RAPanel.paint(graphics2D);
+				Webcam.setAutoOpenMode(true);
+				BufferedImage image = Webcam.getDefault().getImage();
 				JFileChooser arquivo = new JFileChooser();
 				setFileChooser(arquivo);
 				int retorno = arquivo.showOpenDialog(null);
@@ -246,7 +224,6 @@ public class MainWindow implements Runnable{
 					Model.Cam cam = new Model.Cam();
 					cam.saveImage(caminhoArquivo, image);
 				}
-				
 			}
 		};
 	}
@@ -521,6 +498,14 @@ public class MainWindow implements Runnable{
 
 	public void setSpinnerHierarchical(JSpinner spinnerHierarchical) {
 		this.spinnerHierarchical = spinnerHierarchical;
+	}
+
+	public JSpinner getSpinnerCobWeb() {
+		return spinnerCobWeb;
+	}
+
+	public void setSpinnerCobWeb(JSpinner spinnerCobWeb) {
+		this.spinnerCobWeb = spinnerCobWeb;
 	}
 
 	public JComboBox getLinkTypesComboBox() {
