@@ -55,8 +55,7 @@ public class PDFCreatorMain {
 		arrayOfItems.add(new ImStr("Naica Cave","tmp/image03.jpg","Gypsum crystals of the Naica cave. Note person for scale."));
 		arrayOfItems.add(new ImStr("Black bird","tmp/image04.jpg","Common Blackbird having a delicious meal"));
 		arrayOfItems.add(new ImStr("Bald Eagle","tmp/image05.jpg","Head of Bald Eagle. peneee"));
-		PDFCreator pdf = new PDFCreator(".\\ITextTest.pdf");
-		pdf.InsertArrayOfItens(arrayOfItems);
+		PDFCreator pdf = new PDFCreator(arrayOfItems);
 	}
 }
 

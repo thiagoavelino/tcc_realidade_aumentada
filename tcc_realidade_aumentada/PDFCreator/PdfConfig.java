@@ -6,6 +6,13 @@ class PdfConfig implements Serializable{
 	private String materia;
 	private String professor;
 	private String assunto;
+	
+	public PdfConfig(String prof, String mat, String ass){
+		this.materia = mat;
+		this.professor=prof;
+		this.assunto = ass;
+	}
+	
 	public String getMateria() {
 		return materia;
 	}

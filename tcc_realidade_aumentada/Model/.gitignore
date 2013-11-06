@@ -2,3 +2,9 @@
 /LabelArea.class
 /Pixel.class
 /PixelGrey.class
+/Cam.class
+/CamMonitor.class
+/HoughLine.class
+/HoughTransform.class
+/ImgAlgorithms.class
+/LinearHT.class

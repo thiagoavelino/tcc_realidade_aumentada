@@ -27,47 +27,51 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 class PDFCreator{
 	private Document document;
+	private Phrase materia;
+	private Phrase professor;
+	private Phrase assunto;
+	private ArrayList<ImStr> ItemsList;
+	private PdfFrame pdfframe;
 	
-	public PDFCreator(String pathpdf) throws DocumentException, MalformedURLException, IOException{
+	public PDFCreator(ArrayList<ImStr> list) throws DocumentException, MalformedURLException, IOException{
 		document = new Document(PageSize.A4, 50, 50, 50, 50);
-		PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream(pathpdf));
-		document.open();
-		this.CreatePDF();
-	}
-	
-	private void CreatePDF() throws MalformedURLException,
-		IOException, DocumentException{
-		
-		Paragraph p = new Paragraph();
-		Image image2;
-		PdfPTable t = new PdfPTable(2);
-		t.setWidthPercentage(100);
-		t.setSpacingBefore(0);
-		t.setSpacingAfter(0);
 		PdfConfig pdfcfg;
+		ItemsList = list;
+		
+		
 		pdfcfg=loadConfig();
-		Phrase materia;
-		Phrase professor;
-		Phrase assunto;
 		if(pdfcfg!=null){
 			System.out.println("Config file loaded!");
 			materia=new Phrase(pdfcfg.getMateria(),
 				FontFactory.getFont(FontFactory.HELVETICA, 15, Font.BOLDITALIC));
 			professor = new Phrase("Professor: "+pdfcfg.getProfessor());
 			assunto = new Phrase("Aula: "+pdfcfg.getAssunto());
+			pdfframe = new PdfFrame(this,pdfcfg.getProfessor(),pdfcfg.getMateria(), pdfcfg.getAssunto()); 
+			pdfframe.setVisible(true);
 		}
 		else{
-			System.out.println("Config file not found!");
-			pdfcfg = new PdfConfig();
-			pdfcfg.setMateria("Processamento digital de imagens");
-			pdfcfg.setProfessor("Gustavo Borba");
-			pdfcfg.setAssunto("Segmentação");
-			materia=new Phrase("Processamento digital de imagens",
-				FontFactory.getFont(FontFactory.HELVETICA, 15, Font.BOLDITALIC));
-			professor = new Phrase("Professor: Gustavo Borba");
-			assunto = new Phrase("Aula: Segmentação");
-			saveConfig(pdfcfg);
+			pdfframe = new PdfFrame(this,"","","");
+			pdfframe.setVisible(true);
 		}
+	}
+	
+	public  void CreatePDF(String pathpdf) throws MalformedURLException,
+		IOException, DocumentException{
+		
+		materia=new Phrase(pdfframe.getMateria(),
+				FontFactory.getFont(FontFactory.HELVETICA, 15, Font.BOLDITALIC));
+		professor = new Phrase("Professor: "+pdfframe.getProfessor());
+		assunto = new Phrase("Aula: "+pdfframe.getAssunto());
+		
+		PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream(pathpdf));
+		document.open();
+		Paragraph p = new Paragraph();
+		Image image2;
+		PdfPTable t = new PdfPTable(2);
+		t.setWidthPercentage(100);
+		t.setSpacingBefore(0);
+		t.setSpacingAfter(0);
+		
 		image2 = Image.getInstance("image.jpg");
 		image2.scalePercent(25);
 		Date data = (new Date(System.currentTimeMillis()));
@@ -89,9 +93,11 @@ class PDFCreator{
 		t.addCell(c2);
 		p.add(t);
 		document.add(p);
+		
+		this.InsertArrayOfItens(ItemsList);
 	}
 	
-	public void InsertArrayOfItens(ArrayList<ImStr> list) throws MalformedURLException, IOException, DocumentException{
+	private void InsertArrayOfItens(ArrayList<ImStr> list) throws MalformedURLException, IOException, DocumentException{
 		Paragraph initP = new Paragraph();
 		initP.add(new Phrase("\n\n"));
 		document.add(initP);
