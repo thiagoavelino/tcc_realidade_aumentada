@@ -1,7 +1,7 @@
 package KMeansPackage;
 
 
-class Ponto{
+public class Ponto{
 	private float X;
 	private float Y;
 	private int centroid;

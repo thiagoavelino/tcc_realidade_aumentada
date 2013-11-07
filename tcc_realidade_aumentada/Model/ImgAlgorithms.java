@@ -21,7 +21,7 @@ public class ImgAlgorithms {
 	private int threshold;
 	private ArrayList<Color> colors;
 	private int numberClustersKmeans;
-	private ArrayList<Data> dataKmeans;
+	private ArrayList<Ponto> dataKmeans;
 	
 	
 	public ImgAlgorithms(BufferedImage imageTemp){
@@ -30,7 +30,7 @@ public class ImgAlgorithms {
 		this.setImage(imageTemp);
 		labeledAreas = new ArrayList<LabelArea>();
 		centroids = new ArrayList<Pixel>();
-		dataKmeans = new ArrayList<Data>();
+		dataKmeans = new ArrayList<Ponto>();
 		this.CreateArrayColors();
 	}
 	
@@ -77,12 +77,13 @@ public class ImgAlgorithms {
 	}
 	
 	public void calculateKmeans(){
-		ArrayList<Data> dataList = new ArrayList<Data>();
+		ArrayList<Ponto> dataList = new ArrayList<Ponto>();
 		for(int i=0; i<this.centroids.size(); i++){
 			Pixel dataPixel  = centroids.get(i);
-			dataList.add(new Data(dataPixel.getX(),dataPixel.getY()));
+			dataList.add(new Ponto(dataPixel.getX(),dataPixel.getY()));
 		}
-		KMeans kmeans = new KMeans(dataList, this.numberClustersKmeans);
+		kMeans kmeans = new kMeans(dataList);
+		kmeans.ExecutaKMeans(this.numberClustersKmeans);
 		dataKmeans.clear();
 		dataKmeans = kmeans.getProcessedData();
 	}
@@ -228,11 +229,11 @@ public class ImgAlgorithms {
 		this.numberClustersKmeans = numberClustersKmeans;
 	}
 
-	public ArrayList<Data> getDataKmeans() {
+	public ArrayList<Ponto> getDataKmeans() {
 		return dataKmeans;
 	}
 
-	public void setDataKmeans(ArrayList<Data> dataKmeans) {
+	public void setDataKmeans(ArrayList<Ponto> dataKmeans) {
 		this.dataKmeans = dataKmeans;
 	}
 

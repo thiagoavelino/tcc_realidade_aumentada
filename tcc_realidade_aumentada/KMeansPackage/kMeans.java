@@ -3,7 +3,7 @@ package KMeansPackage;
 import java.util.ArrayList;
 import java.util.Random;
 
-class kMeans{
+public class kMeans{
 	private ArrayList<Ponto> pontos;
 	private ArrayList<Ponto> centroides;
 	public kMeans(ArrayList<Ponto> p){
@@ -91,5 +91,9 @@ class kMeans{
 					centroides.set(i,V.get(i));
 			}
 		}
+	}
+	
+	public ArrayList<Ponto> getProcessedData(){
+		return pontos;
 	}
 }
