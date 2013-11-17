@@ -45,7 +45,6 @@
 <fullyQualifiedTypeName name="java.awt.Composite"/>
 <fullyQualifiedTypeName name="LinearRegression.LinearRegression"/>
 <fullyQualifiedTypeName name="org.gstreamer.lowlevel.MainLoop"/>
-<fullyQualifiedTypeName name="KMeansPackage.Data"/>
 <fullyQualifiedTypeName name="PolyRegression.PolynomialRegression"/>
 <fullyQualifiedTypeName name="View.SplashScreenSetaRA"/>
 <fullyQualifiedTypeName name="weka.core.Instance"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="javax.swing.JComboBox"/>
 <fullyQualifiedTypeName name="weka.core.Tag"/>
 <fullyQualifiedTypeName name="java.awt.Graphics2D"/>
+<fullyQualifiedTypeName name="KMeansPackage.Data"/>
 </qualifiedTypeNameHistroy>

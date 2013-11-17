@@ -25,14 +25,10 @@ public class CamMonitor extends Thread {
 	private MainWindow mainWindow;
 	private ArrayList<Pixel> centroidsTemp;
 	private BufferedImage image;
-	private BufferedImage imageCamera;
 	private Vector<HoughLine> linesTemp;
 	private int linearXTemp;
 	private int linearYTemp;
 	private int timeCallAlgorithm;
-	private double[]regressionArray;
-	private Pixel linearRegressionInit;
-	private Pixel linearRegressionFinal;
 	public static final double THRESHOLANGLE = 0.2;
 	public static final double ANGLEX = Math.PI;
 	public static final double ANGLEY = Math.PI/2;
@@ -231,7 +227,7 @@ public class CamMonitor extends Thread {
 		imgAlgorithms.erosion();
 		
 		return imgAlgorithms;
-	}
+	}	
 
 	public ArrayList<Pixel> getCentroidsTemp() {
 		return centroidsTemp;
