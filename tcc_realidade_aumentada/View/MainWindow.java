@@ -10,6 +10,9 @@ import java.awt.Toolkit;
 
 import javax.swing.JFileChooser;
 
+import PDFCreator.ImStr;
+import PDFCreator.SavePdfSectionDialog;
+
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 
@@ -36,14 +39,23 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.awt.ScrollPane;
+
 import javax.swing.JSlider;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JToggleButton;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
+
 import javax.swing.JTextPane;
 import javax.swing.JCheckBox;
 public class MainWindow implements Runnable{
@@ -76,12 +88,15 @@ public class MainWindow implements Runnable{
 	private JLabel functionPolinomioValue;
 	private JComboBox linkTypesComboBox;
 	
+	private ArrayList<ImStr> pdfItemList;
+	
 
 	public MainWindow() {
 		initialize();
 	}
 	
 	private void initialize() {
+		pdfItemList  = new ArrayList<ImStr>();
 		
 		algoritmoLigado = false;
 		algorithmSelected = "";		
@@ -249,15 +264,13 @@ public class MainWindow implements Runnable{
 				BufferedImage image = new BufferedImage(RAPanel.getWidth(), RAPanel.getHeight(), BufferedImage.TYPE_INT_RGB);
                 Graphics2D graphics2D = image.createGraphics();
                 RAPanel.paint(graphics2D);
-				JFileChooser arquivo = new JFileChooser();
-				setFileChooser(arquivo);
-				int retorno = arquivo.showOpenDialog(null);
-				if(retorno == JFileChooser.APPROVE_OPTION){
-					String caminhoArquivo = arquivo.getSelectedFile().getAbsolutePath();
-					Model.Cam cam = new Model.Cam();
-					cam.saveImage(caminhoArquivo, image);
-				}
-				
+                
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        		Calendar cal = Calendar.getInstance();
+				String caminhoArquivo = "tmp/" +dateFormat.format(cal.getTime())+".png";
+				Model.Cam cam = new Model.Cam();
+				cam.saveImage(caminhoArquivo, image);
+				SavePdfSectionDialog savePdf = new SavePdfSectionDialog(pdfItemList,caminhoArquivo);
 			}
 		};
 	}

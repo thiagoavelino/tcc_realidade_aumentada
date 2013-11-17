@@ -6,7 +6,7 @@ package PDFCreator;
  * @author FARINHAKI
  *
  */
-class ImStr{
+public class ImStr{
 	private String text;
 	private String image;
 	private String description;
