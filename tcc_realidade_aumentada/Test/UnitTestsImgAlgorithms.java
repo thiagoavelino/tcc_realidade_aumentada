@@ -17,7 +17,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.opencv.core.Core;
 
 public class UnitTestsImgAlgorithms {
 	
