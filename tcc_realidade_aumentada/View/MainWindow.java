@@ -267,10 +267,10 @@ public class MainWindow implements Runnable{
                 
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         		Calendar cal = Calendar.getInstance();
-				String caminhoArquivo = "tmp/" +dateFormat.format(cal.getTime())+".png";
+				String caminhoArquivo = "tmp/" +dateFormat.format(cal.getTime());
 				Model.Cam cam = new Model.Cam();
 				cam.saveImage(caminhoArquivo, image);
-				SavePdfSectionDialog savePdf = new SavePdfSectionDialog(pdfItemList,caminhoArquivo);
+				SavePdfSectionDialog savePdf = new SavePdfSectionDialog(pdfItemList,caminhoArquivo+".png");
 			}
 		};
 	}
